@@ -1,4 +1,4 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Code taken from https://github.com/Uniswap/web3-react/tree/main/packages/example-next
 
 ## Getting Started
 
