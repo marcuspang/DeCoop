@@ -17,7 +17,7 @@ const NetworkButton = ({ className }: NetworkButtonProps) => {
       className={`relative w-40 px-4 mx-auto text-[15px] ${className}`}
     >
       <Menu.Button
-        className="flex items-center justify-between w-full px-3 py-2 text-gray-500 bg-white border rounded-md shadow-sm hover:bg-slate-100 transition-all outline-none focus:border-blue-600"
+        className="flex items-center justify-between w-full px-3 py-2 text-gray-500 bg-white border-2 border-gray-200 rounded-md shadow-sm hover:bg-gray-100 hover:border-gray-400 transition-all outline-none focus:border-blue-600"
         aria-haspopup="true"
         aria-expanded="true"
         id="menu-button"

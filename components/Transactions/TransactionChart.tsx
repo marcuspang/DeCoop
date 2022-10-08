@@ -65,7 +65,7 @@ const TransactionChart = () => {
   const [showETH, setShowETH] = useState(true);
 
   return (
-    <div className="py-4 w-[97%] h-[300px]">
+    <div className="py-4 mb-4 w-[97%] h-[300px]">
       <div className="flex flex-wrap space-x-4 justify-end">
         <div className="flex items-center mb-4">
           <input
@@ -101,7 +101,7 @@ const TransactionChart = () => {
         </div>
       </div>
       <ResponsiveContainer width="100%" height="100%">
-        <LineChart data={composedChartData} margin={{ right: 4 }}>
+        <LineChart data={composedChartData}>
           <XAxis dataKey="name" />
           <YAxis />
           <Tooltip content={CustomTooltip} />
