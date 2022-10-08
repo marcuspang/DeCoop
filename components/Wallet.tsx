@@ -22,11 +22,9 @@ export const Wallet = ({ className }) => {
             >
               <img src="/wallet.svg" className="w-8 h-8" />
             </button>
-            <div className="lg:hidden">
-              <span className="block">Micheal John</span>
-              <span className="block text-sm text-gray-500">
-                john@gmail.com
-              </span>
+            <div className="lg:hidden text-gray-600">
+              <p className="font-bold">Address:</p>
+              <span className="break-words">{address}</span>
             </div>
           </div>
           <ul
@@ -35,7 +33,7 @@ export const Wallet = ({ className }) => {
             }`}
           >
             <li>
-              <div className="block text-gray-600 lg:p-2.5">
+              <div className="hidden lg:block text-gray-600 lg:p-2.5">
                 <p className="font-bold">Address:</p>
                 <span className="break-words">{address}</span>
               </div>
@@ -55,17 +53,19 @@ export const Wallet = ({ className }) => {
               </Link>
             </li>
             <li>
-              <div
-                className="block text-gray-600 lg:hover:bg-gray-50 lg:p-2.5 cursor-pointer"
+              <button
+                className="block text-gray-600 lg:hover:bg-gray-50 lg:p-2.5 w-full text-left"
                 onClick={disconnect}
               >
                 Log out
-              </div>
+              </button>
             </li>
           </ul>
         </>
       ) : (
-        <ConnectButton label="Sign In" />
+        <div className="flex justify-center">
+          <ConnectButton label="Sign In" />
+        </div>
       )}
     </div>
   );

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useState } from "react";
+import NetworkButton from "./NetworkButton";
 import Search from "./Search";
 import { Wallet } from "./Wallet";
 
@@ -15,15 +16,16 @@ const NavBar = () => {
         </Link>
         <Search search={search} setSearch={setSearch} />
 
-        <div className="flex-1 flex items-center justify-between">
+        <div className="flex-1 flex items-center justify-end">
           <div
             className={`bg-white absolute z-20 top-16 left-0 border-b lg:static lg:block lg:border-none ${
-              menuState ? "w-full p-4 border-t" : "w-80 hidden"
+              menuState ? "w-full p-4 border-t" : "hidden"
             }`}
           >
+            <NetworkButton />
             <Wallet className="lg:hidden" />
           </div>
-          <div className="flex-1 flex items-center justify-end space-x-2 sm:space-x-6">
+          <div className="items-center justify-end space-x-2 sm:space-x-6">
             <Wallet className="hidden lg:block" />
             <button
               className="outline-none text-gray-400 block lg:hidden"
