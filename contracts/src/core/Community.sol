@@ -22,7 +22,7 @@ contract Community is CallbackERC20Receiver {
     }
 
     function withdraw(uint256 amount) external {
-        require(soulboundToken.balanceOf(from) >= 1, "Community SoulBoundToken not present"); // TODO: >= 1 or == 1
+        require(soulboundToken.balanceOf(msg.sender) >= 1, "Community SoulBoundToken not present"); // TODO: >= 1 or == 1
 
         unchecked {
             netAmount[msg.sender] -= int256(amount);
