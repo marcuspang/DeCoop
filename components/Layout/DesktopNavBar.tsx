@@ -1,6 +1,6 @@
 import { useState } from "react";
-import NetworkButton from "./NetworkButton";
-import { Wallet } from "./Wallet";
+import NetworkButton from "../Wallet/NetworkButton";
+import { Wallet } from "../Wallet/Wallet";
 
 const DesktopNavBar = () => {
   return (

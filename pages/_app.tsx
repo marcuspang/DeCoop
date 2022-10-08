@@ -2,9 +2,9 @@ import { chains, providers } from "@web3modal/ethereum";
 import type { ConfigOptions } from "@web3modal/react";
 import { Web3Modal } from "@web3modal/react";
 import { useEffect } from "react";
-import Footer from "../components/Footer";
-import NavBar from "../components/NavBar";
-import Sidebar from "../components/Sidebar";
+import Footer from "../components/Layout/Footer";
+import NavBar from "../components/Layout/NavBar";
+import Sidebar from "../components/Layout/Sidebar";
 
 import "../styles/globals.css";
 
@@ -15,7 +15,13 @@ const modalConfig: ConfigOptions = {
   ethereum: {
     appName: "web3Modal",
     autoConnect: true,
-    chains: [chains.mainnet, chains.goerli, chains.polygon, chains.optimism],
+    chains: [
+      chains.mainnet,
+      chains.goerli,
+      chains.polygon,
+      chains.optimism,
+      chains.arbitrum,
+    ],
     providers: [
       providers.walletConnectProvider({
         projectId: process.env.NEXT_PUBLIC_PROJECT_ID,
@@ -41,15 +47,15 @@ function App({ Component, pageProps }) {
   }, []);
 
   return (
-    <>
+    <div className="bg-slate-50">
       <NavBar />
-      <main className="max-w-screen-xl mx-auto min-h-[500px]">
-        <Component {...pageProps} />
+      <main className="max-w-screen-xl mx-auto min-h-[500px] flex space-x-4 mt-4">
         <Sidebar />
+        <Component {...pageProps} />
       </main>
       <Footer />
       <Web3Modal config={modalConfig} />
-    </>
+    </div>
   );
 }
 

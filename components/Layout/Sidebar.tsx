@@ -100,9 +100,9 @@ const links = [
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
-          fill-rule="evenodd"
+          fillRule="evenodd"
           d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-          clip-rule="evenodd"
+          clipRule="evenodd"
         ></path>
       </svg>
     ),
@@ -115,9 +115,9 @@ const links = [
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
-          fill-rule="evenodd"
+          fillRule="evenodd"
           d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-          clip-rule="evenodd"
+          clipRule="evenodd"
         ></path>
       </svg>
     ),
@@ -127,7 +127,7 @@ const links = [
 const Sidebar = () => {
   return (
     <aside className="" aria-label="Sidebar">
-      <div className="w-64 hidden lg:block overflow-y-auto py-4 px-3 mt-4 ml-4 bg-gray-50 rounded-xl dark:bg-gray-800 shadow">
+      <div className="w-64 hidden lg:block overflow-y-auto py-4 px-3 ml-4 bg-white rounded-xl dark:bg-gray-800 shadow">
         <ul className="space-y-2">
           {links.map((link) => (
             <li key={link.name}>

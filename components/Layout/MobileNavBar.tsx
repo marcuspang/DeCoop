@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useAccount, useDisconnect } from "@web3modal/react";
-import NetworkButton from "./NetworkButton";
-import { links, Wallet } from "./Wallet";
+import NetworkButton from "../Wallet/NetworkButton";
+import { links, Wallet } from "../Wallet/Wallet";
 
 const MobileNavBar = () => {
   const [menuState, setMenuState] = useState(false);

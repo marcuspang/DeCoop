@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useState } from "react";
 import DesktopNavBar from "./DesktopNavBar";
 import MobileNavBar from "./MobileNavBar";
-import Search from "./Search";
+import Search from "../Wallet/Search";
 
 const NavBar = () => {
   const [search, setSearch] = useState("");
