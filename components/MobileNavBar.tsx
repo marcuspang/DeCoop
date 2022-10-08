@@ -10,9 +10,9 @@ const MobileNavBar = () => {
   const disconnect = useDisconnect();
 
   return (
-    <div className="flex-1 flex items-center justify-end lg:hidden">
+    <div className="flex-1 flex items-center justify-end lg:hidden ">
       <div
-        className={`bg-white absolute z-20 top-16 left-0 border-b lg:static lg:block lg:border-none w-full p-4 border-t ${
+        className={`bg-white absolute z-20 top-16 bottom-0 left-0 border-b lg:static lg:block lg:border-none w-full p-4 border-t h-screen ${
           menuState ? "" : "hidden"
         }`}
       >

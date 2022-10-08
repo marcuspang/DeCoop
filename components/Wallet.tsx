@@ -3,10 +3,7 @@ import { ConnectButton, useAccount, useDisconnect } from "@web3modal/react";
 import Link from "next/link";
 import { Fragment } from "react";
 
-export const links = [
-  { name: "Dashboard", link: "/" },
-  { name: "Settings", link: "/" },
-];
+export const links = [{ name: "Settings", link: "/" }];
 
 export const Wallet = ({ className }) => {
   const { status, address } = useAccount();
@@ -50,25 +47,20 @@ export const Wallet = ({ className }) => {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items
-          className={`bg-white top-12 right-0 mt-5 space-y-5 lg:absolute lg:border lg:rounded-md lg:text-sm lg:w-52 lg:shadow-md lg:space-y-0 lg:mt-0
-          `}
-        >
+        <Menu.Items className="bg-white top-12 right-0 mt-5 space-y-5 lg:absolute lg:border lg:rounded-md lg:text-sm lg:w-52 lg:shadow-md lg:space-y-0 lg:mt-0">
           <Menu.Item>
-            <div className="hidden lg:block text-gray-600 lg:p-2.5">
+            <div className="hidden lg:block text-gray-600 lg:p-2.5 border-b-2">
               <p className="font-bold">Address:</p>
               <span className="break-words">{address}</span>
             </div>
           </Menu.Item>
           {links.map((link) => (
             <Menu.Item key={link.name}>
-              <div>
-                <Link href={link.link} passHref>
-                  <a className="block text-gray-600 lg:hover:bg-gray-50 lg:p-2.5">
-                    {link.name}
-                  </a>
-                </Link>
-              </div>
+              <Link href={link.link} passHref>
+                <a className="block text-gray-600 lg:hover:bg-gray-50 lg:p-2.5">
+                  {link.name}
+                </a>
+              </Link>
             </Menu.Item>
           ))}
           <Menu.Item>
