@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.3",
+    "@heroicons/react": "^2.0.12",
     "@web3modal/ethereum": "^2.0.0-alpha.6",
     "@web3modal/react": "^2.0.0-alpha.6",
     "axios": "^1.1.2",
