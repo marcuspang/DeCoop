@@ -10,14 +10,22 @@ export default function Home() {
         <meta name="description" content="Optimity 2022" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div>
-        <div className="flex flex-wrap lg:flex-nowrap justify-between">
-          <TransactionCard />
-          <TransactionCard />
-          <TransactionCard />
-        </div>
+      <div className="flex flex-wrap lg:flex-nowrap justify-between">
+        <TransactionCard title="Current Balance" amount={10000} />
+        <TransactionCard
+          title="Latest Deposit"
+          amount={200}
+          latest="By Adi, 5 October 2022"
+        />
+        <TransactionCard
+          title="Latest Withdrawal"
+          latest="By Colin, 4 October 2022"
+          amount={150}
+        />
       </div>
-      {/* <TransactionChart /> */}
+      <div className="py-4">
+        <TransactionChart />
+      </div>
       <div>all transaction</div>
       <div>list</div>
     </div>
