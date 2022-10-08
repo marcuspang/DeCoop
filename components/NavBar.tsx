@@ -1,16 +1,11 @@
 import Link from "next/link";
 import { useState } from "react";
+import Search from "./Search";
 import { Wallet } from "./Wallet";
-
-const navigation = [
-  { title: "Customers", path: "/" },
-  { title: "Careers", path: "/" },
-  { title: "Guides", path: "/" },
-  { title: "Partners", path: "/" },
-];
 
 const NavBar = () => {
   const [menuState, setMenuState] = useState(false);
+  const [search, setSearch] = useState("");
 
   return (
     <nav className="bg-white border-b">
@@ -18,20 +13,15 @@ const NavBar = () => {
         <Link href={"/"} passHref>
           <a className="flex-none lg:flex-initial">Optimity</a>
         </Link>
+        <Search search={search} setSearch={setSearch} />
+
         <div className="flex-1 flex items-center justify-between">
           <div
-            className={`bg-white absolute z-20 top-16 left-0 p-4 border-b lg:static lg:block lg:border-none ${
-              menuState ? "" : "w-80 hidden"
+            className={`bg-white absolute z-20 top-16 left-0 border-b lg:static lg:block lg:border-none ${
+              menuState ? "w-full p-4 border-t" : "w-80 hidden"
             }`}
           >
-            <ul className="mt-12 space-y-5 lg:flex lg:space-x-6 lg:space-y-0 lg:mt-0">
-              {navigation.map((item, idx) => (
-                <li key={idx} className="text-gray-600 hover:text-gray-900">
-                  <a href={item.path}>{item.title}</a>
-                </li>
-              ))}
-            </ul>
-            <Wallet className="mt-5 pt-5 border-t lg:hidden" />
+            <Wallet className="lg:hidden" />
           </div>
           <div className="flex-1 flex items-center justify-end space-x-2 sm:space-x-6">
             <Wallet className="hidden lg:block" />
