@@ -65,7 +65,7 @@ const TransactionChart = () => {
   const [showETH, setShowETH] = useState(true);
 
   return (
-    <>
+    <div className="py-4 w-[97%] h-[300px]">
       <div className="flex flex-wrap space-x-4 justify-end">
         <div className="flex items-center mb-4">
           <input
@@ -73,7 +73,7 @@ const TransactionChart = () => {
             type="checkbox"
             checked={showBTC}
             className="w-4 h-4 cursor-pointer text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-            onClick={() => setShowBTC((prev) => !prev)}
+            onChange={() => setShowBTC((prev) => !prev)}
           />
           <label
             htmlFor="btc-checkbox"
@@ -89,7 +89,7 @@ const TransactionChart = () => {
               type="checkbox"
               checked={showETH}
               className="w-4 h-4 cursor-pointer text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-              onClick={() => setShowETH((prev) => !prev)}
+              onChange={() => setShowETH((prev) => !prev)}
             />
             <label
               htmlFor="eth-checkbox"
@@ -100,8 +100,8 @@ const TransactionChart = () => {
           </div>
         </div>
       </div>
-      <ResponsiveContainer width="100%" height={300}>
-        <LineChart data={composedChartData}>
+      <ResponsiveContainer width="100%" height="100%">
+        <LineChart data={composedChartData} margin={{ right: 4 }}>
           <XAxis dataKey="name" />
           <YAxis />
           <Tooltip content={CustomTooltip} />
@@ -109,7 +109,7 @@ const TransactionChart = () => {
           <Line dataKey="eth" hide={!showETH} stroke="#ff7300" dot={null} />
         </LineChart>
       </ResponsiveContainer>
-    </>
+    </div>
   );
 };
 

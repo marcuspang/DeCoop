@@ -4,7 +4,7 @@ import TransactionChart from "../components/Transactions/TransactionChart";
 
 export default function Home() {
   return (
-    <div className="w-full">
+    <div className="lg:w-full">
       <Head>
         <title>Optimity</title>
         <meta name="description" content="Optimity 2022" />
@@ -23,11 +23,7 @@ export default function Home() {
           amount={150}
         />
       </div>
-      <div className="py-4">
-        <TransactionChart />
-      </div>
-      <div>all transaction</div>
-      <div>list</div>
+      <TransactionChart />
     </div>
   );
 }

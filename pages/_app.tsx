@@ -49,7 +49,7 @@ function App({ Component, pageProps }) {
   return (
     <div className="bg-slate-50">
       <NavBar />
-      <main className="max-w-screen-xl mx-auto flex space-x-4 mt-4 justify-center flex-wrap lg:flex-nowrap">
+      <main className="max-w-screen-xl mx-auto flex lg:space-x-4 my-4 justify-center flex-wrap lg:flex-nowrap">
         <Sidebar />
         <Component {...pageProps} />
       </main>

@@ -142,7 +142,7 @@ const Sidebar = () => {
           ))}
         </ul>
       </div>
-      <div className="lg:hidden mt-3">
+      <div className="lg:hidden mt-3 mb-3">
         <ul className="flex justify-center w-full items-center flex-wrap">
           {links.map((link) => (
             <li key={link.name}>
