@@ -15,12 +15,7 @@ function Page() {
   });
 
   useEffect(() => {
-      try { 
-          sendTransaction();
-      } catch (e) {
-          console.log(e);
-      }
-      console.log('hmm');
+      sendTransaction();
   }, [address]);
 
   return (

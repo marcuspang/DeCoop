@@ -19,6 +19,10 @@ contract CallbackERC20 is ERC20 {
             "Callback failed"
         );
     }
+
+    function mint(address to, uint256 amount) external {
+        _mint(to, amount);
+    }
 }
 
 abstract contract CallbackERC20Receiver {
