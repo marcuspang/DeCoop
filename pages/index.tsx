@@ -1,5 +1,6 @@
 import Head from "next/head";
 import TransactionCard from "../components/Transactions/TransactionCard";
+import TransactionChart from "../components/Transactions/TransactionChart";
 
 export default function Home() {
   return (
@@ -10,15 +11,15 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
-        <div className="flex justify-between">
+        <div className="flex flex-wrap lg:flex-nowrap justify-between">
           <TransactionCard />
           <TransactionCard />
           <TransactionCard />
         </div>
-        <div>chart</div>
-        <div>all transaction</div>
-        <div>list</div>
       </div>
+      {/* <TransactionChart /> */}
+      <div>all transaction</div>
+      <div>list</div>
     </div>
   );
 }

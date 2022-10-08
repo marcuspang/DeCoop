@@ -126,8 +126,8 @@ const links = [
 
 const Sidebar = () => {
   return (
-    <aside className="" aria-label="Sidebar">
-      <div className="w-64 hidden lg:block overflow-y-auto py-4 px-3 ml-4 bg-white rounded-xl dark:bg-gray-800 shadow">
+    <aside className="inline-flex" aria-label="Sidebar">
+      <div className="w-64 hidden lg:inline-block overflow-y-auto py-4 px-3 ml-4 mb-10 bg-white rounded-xl dark:bg-gray-800 shadow">
         <ul className="space-y-2">
           {links.map((link) => (
             <li key={link.name}>
