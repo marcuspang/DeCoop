@@ -8,6 +8,7 @@ import "./Community.sol";
 
 contract CommunityFactory {
     address[] public communities;
+    uint256 public lastIndex;
 
     function create(string memory name) external returns (address) {
         string memory sbtName = string.concat(name, "-SBT");
@@ -16,9 +17,10 @@ contract CommunityFactory {
         string memory tName = string.concat(name, "-T");
         CallbackERC20 t = new CallbackERC20(tName, tName, 8);
 
-        Community community = new Community(name, address(sbt), address(t));
+        Community community = new Community(name, address(t), address(sbt));
 
         communities.push(address(community));
+        lastIndex++;
 
         return address(community);
     }
