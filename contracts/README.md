@@ -1,5 +1,9 @@
 # Contracts
 
+## Architecture
+![image](https://user-images.githubusercontent.com/46377366/194743414-ad431acf-ead7-483f-874c-74dd77e89871.png)
+
+
 ## Deployed on:
 
 CommunityFactory: https://goerli.etherscan.io/address/0xcf6e8963778931bfa9f5a1012654e0941f80ce6f
