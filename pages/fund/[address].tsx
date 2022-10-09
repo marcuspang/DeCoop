@@ -32,7 +32,7 @@ const ViewFundPage = () => {
   const [name, setName] = useState("TOKEN");
   const [balance, setBalance] = useState("0");
 
-  const [transactions, setTransactions] = useState([]);
+  const [transactions, setTransactions] = useState<any>([]);
 
   useEffect(() => {
     if (router.query && router.query.address) {
@@ -93,8 +93,11 @@ const ViewFundPage = () => {
             isLoading
               ? "-"
               : "By " +
-                truncate(transactions.deposits[transactions.deposits.length - 1]
-                  .address, 12) +
+                truncate(
+                  transactions.deposits[transactions.deposits.length - 1]
+                    .address,
+                  12
+                ) +
                 ", 9 October 2022"
           }
         />
@@ -111,41 +114,45 @@ const ViewFundPage = () => {
             isLoading
               ? "-"
               : "By " +
-                truncate(transactions.withdrawals[transactions.withdrawals.length - 1]
-                  .address, 12) +
+                truncate(
+                  transactions.withdrawals[transactions.withdrawals.length - 1]
+                    .address,
+                  12
+                ) +
                 ", 9 October 2022"
           }
         />
       </div>
       <div className="flex flex-wrap lg:flex-nowrap justify-between space-x-2">
         <FundCard title="All Contributors">
-          <FundDistributionChart data={(() => {
-            if (transactions && transactions.deposits) {
-              const dict = {};
-              for (const deposit of transactions.deposits) {
-                if (!dict[deposit.address]) dict[deposit.address] = 0;
-                dict[deposit.address] += deposit.value;
-              }
+          <FundDistributionChart
+            data={(() => {
+              if (transactions && transactions.deposits) {
+                const dict = {};
+                for (const deposit of transactions.deposits) {
+                  if (!dict[deposit.address]) dict[deposit.address] = 0;
+                  dict[deposit.address] += deposit.value;
+                }
 
-              for (const withdrawal of transactions.withdrawals) {
-                if (!dict[withdrawal.address]) dict[withdrawal.address] = 0;
-                dict[withdrawal.address] -= withdrawal.value;
-              }
+                for (const withdrawal of transactions.withdrawals) {
+                  if (!dict[withdrawal.address]) dict[withdrawal.address] = 0;
+                  dict[withdrawal.address] -= withdrawal.value;
+                }
 
-              let dist: FundContribution[] = [];
+                let dist: FundContribution[] = [];
 
-              for (const address in dict) {
+                for (const address in dict) {
                   dist.push({
                     name: truncate(address, 12),
                     value: dict[address],
                   });
+                }
+
+                return dist;
               }
-
-              return dist;
-
-            }
-            return [];
-          })()} />
+              return [];
+            })()}
+          />
         </FundCard>
         <FundCard title="Contribution Credit Scores">
           <FundCreditScores data={data} />
@@ -164,11 +171,12 @@ const ViewFundPage = () => {
         </div>
       </FundCard>
       <div className="ml-2">
-        <FundTransactionTable data={(() => {
-          if (transactions && transactions.deposits) {
-            let ret = [];
+        <FundTransactionTable
+          data={(() => {
+            if (transactions && transactions.deposits) {
+              let ret = [];
 
-            for (const deposit of transactions.deposits) {
+              for (const deposit of transactions.deposits) {
                 ret.push({
                   address: deposit.address,
                   date: new Date(),
@@ -183,9 +191,9 @@ const ViewFundPage = () => {
                     </a>
                   ),
                 });
-            }
+              }
 
-            for (const deposit of transactions.withdrawals) {
+              for (const deposit of transactions.withdrawals) {
                 ret.push({
                   address: deposit.address,
                   date: new Date(),
@@ -200,14 +208,15 @@ const ViewFundPage = () => {
                     </a>
                   ),
                 });
+              }
+
+              console.log(ret);
+
+              return ret;
             }
-
-            console.log(ret);
-
-            return ret;
-          }
-          return [];
-        })()}/>
+            return [];
+          })()}
+        />
       </div>
     </div>
   );

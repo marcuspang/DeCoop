@@ -163,7 +163,7 @@ const transactions = [
 
 const PAGE_SIZE = 3;
 
-const FundTransactionTable = ({data}) => {
+const FundTransactionTable = ({ data }) => {
   const [pageIndex, setPageIndex] = useState(0);
   const PAGE_COUNT = Math.ceil(transactions.length / PAGE_SIZE);
 
@@ -174,7 +174,7 @@ const FundTransactionTable = ({data}) => {
           <thead className="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" className="py-3 px-6">
-                Account 
+                Account
               </th>
               <th scope="col" className="py-3 px-6">
                 Date
@@ -188,37 +188,41 @@ const FundTransactionTable = ({data}) => {
             </tr>
           </thead>
           <tbody>
-            {data?data
-              .slice(pageIndex * PAGE_SIZE, (pageIndex + 1) * PAGE_SIZE)
-              .map((transaction, index) => (
-                <tr
-                  className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                  // key={transaction.address}
-                  key={index}
-                >
-                  <th
-                    scope="row"
-                    className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                  >
-                    <Link
-                      href={"https://etherscan.io/tx/" + transaction.address}
-                      passHref
+            {data
+              ? data
+                  .slice(pageIndex * PAGE_SIZE, (pageIndex + 1) * PAGE_SIZE)
+                  .map((transaction, index) => (
+                    <tr
+                      className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                      // key={transaction.address}
+                      key={index}
                     >
-                      <a className="text-blue-600 dark:text-blue-500 hover:underline">
-                        {transaction.address} 
-                        <ArrowTopRightOnSquareIcon
-                          height={16}
-                          width={16}
-                          className="inline-block ml-1 mb-1"
-                        />
-                      </a>
-                    </Link>
-                  </th>
-                  <td className="py-4 px-6">09/10/2022</td>
-                  <td className="py-4 px-6">{transaction.method}</td>
-                  <td className="py-4 px-6">{transaction.amount}</td>
-                </tr>
-              )): ""}
+                      <th
+                        scope="row"
+                        className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      >
+                        <Link
+                          href={
+                            "https://etherscan.io/tx/" + transaction.address
+                          }
+                          passHref
+                        >
+                          <a className="text-blue-600 dark:text-blue-500 hover:underline">
+                            {transaction.address}
+                            <ArrowTopRightOnSquareIcon
+                              height={16}
+                              width={16}
+                              className="inline-block ml-1 mb-1"
+                            />
+                          </a>
+                        </Link>
+                      </th>
+                      <td className="py-4 px-6">09/10/2022</td>
+                      <td className="py-4 px-6">{transaction.method}</td>
+                      <td className="py-4 px-6">{transaction.amount}</td>
+                    </tr>
+                  ))
+              : ""}
           </tbody>
         </table>
       </div>

@@ -23,10 +23,10 @@ export default async function handler(
 
     depositSum += deposits
       .map((deposit) => deposit.value)
-      .reduce((x, y) => x.add(y));
+      .reduce((x, y) => x + y);
     withdrawSum += withdrawals
       .map((withdrawal) => withdrawal.value)
-      .reduce((x, y) => x.add(y));
+      .reduce((x, y) => x + y);
   }
 
   const creditScore = Math.min(depositSum, withdrawSum) / 100000000;

@@ -81,7 +81,7 @@ export async function getCommunitiesForPerson(
         community,
         name,
         erc: erc20,
-        fundBalance: (await erc20Contract.balanceOf(address) / 100000000).toString(),
+        fundBalance: +(await erc20Contract.balanceOf(address)) / 100000000,
         ercName: name + "-T",
       });
     }
