@@ -3,7 +3,7 @@ import {
   ArrowsRightLeftIcon,
 } from "@heroicons/react/20/solid";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import router, { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import FundCard from "../../components/Fund/FundCard";
@@ -35,7 +35,12 @@ const ViewFundPage = () => {
   const [transactions, setTransactions] = useState<any>([]);
 
   useEffect(() => {
-    if (router.query && router.query.address) {
+    if (
+      router.query &&
+      router.query.address &&
+      router.query.name &&
+      router.query.balance
+    ) {
       setAddress(router.query.address.toString());
       setName(router.query.name.toString() + "-T");
       setBalance(router.query.balance.toString());
