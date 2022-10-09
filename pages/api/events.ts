@@ -19,7 +19,7 @@ export async function getEvents(community: string, address: string) {
     )
   ).map((deposit) => ({
     address: deposit.args[0],
-    value: deposit.args[1].toString(),
+    value: deposit.args[1].toString() / 100000000,
   }));
 
   const withdrawals = (
@@ -28,7 +28,7 @@ export async function getEvents(community: string, address: string) {
     )
   ).map((withdrawal) => ({
     address: withdrawal.args[0],
-    value: withdrawal.args[1].toString(),
+    value: withdrawal.args[1].toString() / 100000000,
   }));
 
   return { deposits, withdrawals };

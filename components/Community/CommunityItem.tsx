@@ -11,7 +11,7 @@ const CommunityItem = ({
 }: CommunityItem & { baseURL: string }) => {
   return (
     <li>
-      <Link href={baseURL + community} passHref>
+      <Link href={baseURL + community + "?name="+name + "&balance=" + fundBalance} passHref>
         <a className="text-blue-600 dark:text-blue-500 hover:underline">
           {community}
         </a>

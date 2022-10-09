@@ -5,6 +5,7 @@ import {
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import axios from "axios";
 import FundCard from "../../components/Fund/FundCard";
 import FundCreditScores from "../../components/Fund/FundCreditScores";
 import FundDistributionChart from "../../components/Fund/FundDistributionChart";
@@ -26,13 +27,43 @@ export interface FundContribution {
 
 const ViewFundPage = () => {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(true);
   const [address, setAddress] = useState("default");
+  const [name, setName] = useState("TOKEN");
+  const [balance, setBalance] = useState("0");
+
+  const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
     if (router.query && router.query.address) {
       setAddress(router.query.address.toString());
+      setName(router.query.name.toString() + "-T");
+      setBalance(router.query.balance.toString());
+
+      axios
+        .post("/api/events", { community: router.query.address.toString() })
+        .then((res) => {
+          setTransactions(res.data);
+          setIsLoading(false);
+        });
     }
   }, [router.query]);
+
+  const truncate = (fullStr, strLen) => {
+    if (fullStr.length <= strLen) return fullStr;
+    const separator = "...";
+
+    var sepLen = separator.length,
+      charsToShow = strLen - sepLen,
+      frontChars = Math.ceil(charsToShow / 2),
+      backChars = Math.floor(charsToShow / 2);
+
+    return (
+      fullStr.substr(0, frontChars) +
+      separator +
+      fullStr.substr(fullStr.length - backChars)
+    );
+  };
 
   return (
     <div className="w-full px-4">
@@ -49,21 +80,72 @@ const ViewFundPage = () => {
         </Link>
       </div>
       <div className="flex flex-wrap lg:flex-nowrap justify-between space-x-2">
-        <FundCard title="Current Balance" amount={10000} />
+        <FundCard symbol={name} title="Current Balance" amount={balance} />
         <FundCard
           title="Latest Deposit"
-          amount={200}
-          description="By Adi, 5 October 2022"
+          symbol={name}
+          amount={
+            isLoading
+              ? "-"
+              : transactions.deposits[transactions.deposits.length - 1].value
+          }
+          description={
+            isLoading
+              ? "-"
+              : "By " +
+                truncate(transactions.deposits[transactions.deposits.length - 1]
+                  .address, 12) +
+                ", 9 October 2022"
+          }
         />
         <FundCard
           title="Latest Withdrawal"
-          description="By Colin, 4 October 2022"
-          amount={150}
+          symbol={name}
+          amount={
+            isLoading
+              ? "-"
+              : transactions.withdrawals[transactions.withdrawals.length - 1]
+                  .value
+          }
+          description={
+            isLoading
+              ? "-"
+              : "By " +
+                truncate(transactions.withdrawals[transactions.withdrawals.length - 1]
+                  .address, 12) +
+                ", 9 October 2022"
+          }
         />
       </div>
       <div className="flex flex-wrap lg:flex-nowrap justify-between space-x-2">
         <FundCard title="All Contributors">
-          <FundDistributionChart data={data} />
+          <FundDistributionChart data={(() => {
+            if (transactions && transactions.deposits) {
+              const dict = {};
+              for (const deposit of transactions.deposits) {
+                if (!dict[deposit.address]) dict[deposit.address] = 0;
+                dict[deposit.address] += deposit.value;
+              }
+
+              for (const withdrawal of transactions.withdrawals) {
+                if (!dict[withdrawal.address]) dict[withdrawal.address] = 0;
+                dict[withdrawal.address] -= withdrawal.value;
+              }
+
+              let dist: FundContribution[] = [];
+
+              for (const address in dict) {
+                  dist.push({
+                    name: truncate(address, 12),
+                    value: dict[address],
+                  });
+              }
+
+              return dist;
+
+            }
+            return [];
+          })()} />
         </FundCard>
         <FundCard title="Contribution Credit Scores">
           <FundCreditScores data={data} />
@@ -82,7 +164,50 @@ const ViewFundPage = () => {
         </div>
       </FundCard>
       <div className="ml-2">
-        <FundTransactionTable />
+        <FundTransactionTable data={(() => {
+          if (transactions && transactions.deposits) {
+            let ret = [];
+
+            for (const deposit of transactions.deposits) {
+                ret.push({
+                  address: deposit.address,
+                  date: new Date(),
+                  method: "Deposit",
+                  amount: deposit.value,
+                  actionBy: (
+                    <a
+                      href="#"
+                      className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                    >
+                      Edit
+                    </a>
+                  ),
+                });
+            }
+
+            for (const deposit of transactions.withdrawals) {
+                ret.push({
+                  address: deposit.address,
+                  date: new Date(),
+                  method: "Withdrawal",
+                  amount: deposit.value,
+                  actionBy: (
+                    <a
+                      href="#"
+                      className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                    >
+                      Edit
+                    </a>
+                  ),
+                });
+            }
+
+            console.log(ret);
+
+            return ret;
+          }
+          return [];
+        })()}/>
       </div>
     </div>
   );

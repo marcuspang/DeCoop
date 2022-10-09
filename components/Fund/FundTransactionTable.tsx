@@ -163,9 +163,8 @@ const transactions = [
 
 const PAGE_SIZE = 3;
 
-const FundTransactionTable = () => {
+const FundTransactionTable = ({data}) => {
   const [pageIndex, setPageIndex] = useState(0);
-
   const PAGE_COUNT = Math.ceil(transactions.length / PAGE_SIZE);
 
   return (
@@ -175,7 +174,7 @@ const FundTransactionTable = () => {
           <thead className="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" className="py-3 px-6">
-                Transaction
+                Account 
               </th>
               <th scope="col" className="py-3 px-6">
                 Date
@@ -186,16 +185,10 @@ const FundTransactionTable = () => {
               <th scope="col" className="py-3 px-6">
                 Amount
               </th>
-              <th scope="col" className="py-3 px-6">
-                Coin
-              </th>
-              <th scope="col" className="py-3 px-6">
-                Action By
-              </th>
             </tr>
           </thead>
           <tbody>
-            {transactions
+            {data?data
               .slice(pageIndex * PAGE_SIZE, (pageIndex + 1) * PAGE_SIZE)
               .map((transaction, index) => (
                 <tr
@@ -212,7 +205,7 @@ const FundTransactionTable = () => {
                       passHref
                     >
                       <a className="text-blue-600 dark:text-blue-500 hover:underline">
-                        0x000123123
+                        {transaction.address} 
                         <ArrowTopRightOnSquareIcon
                           height={16}
                           width={16}
@@ -222,18 +215,10 @@ const FundTransactionTable = () => {
                     </Link>
                   </th>
                   <td className="py-4 px-6">09/10/2022</td>
-                  <td className="py-4 px-6">Deposit</td>
-                  <td className="py-4 px-6">$2000</td>
-                  <td className="py-4 px-6">USDC</td>
-                  <td className="py-4 px-6">
-                    <Link href="/" passHref>
-                      <a className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
-                        Marcus
-                      </a>
-                    </Link>
-                  </td>
+                  <td className="py-4 px-6">{transaction.method}</td>
+                  <td className="py-4 px-6">{transaction.amount}</td>
                 </tr>
-              ))}
+              )): ""}
           </tbody>
         </table>
       </div>
