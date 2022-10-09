@@ -7,7 +7,7 @@ import "../tokens/SoulBoundToken.sol";
 
 contract Community is CallbackERC20Receiver {
     string public name;
-    ERC20 public communityToken;
+    CallbackERC20 public communityToken;
     SoulBoundToken public soulboundToken;
 
     mapping(address => int256) public netAmount;
@@ -34,7 +34,9 @@ contract Community is CallbackERC20Receiver {
             "Individual cannot borrow more than 20% of the total fund"
         );
 
-        communityToken.transfer(address(this), amount);
+        communityToken.transfer(msg.sender, amount);
+
+        emit Withdraw(msg.sender, amount);
     }
 
     function onTransfer(address token, address from, uint256 amount) external override returns (bytes4) {
