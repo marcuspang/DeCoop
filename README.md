@@ -27,7 +27,7 @@ Code taken from https://github.com/Uniswap/web3-react/tree/main/packages/example
 
 7. Click on the link to connect your wallet.
 
-8. Visit our website at `crypto-2022-hackathon.vercel.app/` to see the fund's balance and your transactions.
+8. Visit our website at https://decoop.vercel.app/ to see the fund's balance and your transactions.
 
 ## Architecture
 
