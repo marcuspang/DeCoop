@@ -1,4 +1,33 @@
+# Crypto.com 2022 Hackathon Demo By Wen Lambo
+
 Code taken from https://github.com/Uniswap/web3-react/tree/main/packages/example-next
+
+## Problem
+- People in less developed countries right now have access to the internet but they do not have access to financial services because of expensive bank fees and lack of infrastructure.
+
+## Solution
+- Giving rural communities access to financial services and forms of identity through the Internet. 
+- Able to create pseudonymous banking accounts to exchange with one another and form groups (eg. as mini entities/organisations) to track expenses and treasury related manners. Includes lending/borrowing
+- Empowers people with all the benefits of coop banking without of drawbacks like centralisation or maintaining a large tally system
+
+
+
+## How to run our prototype
+1. Add our telegram bot `@decoop_bot` to your telegram group that you want to start your community fund with.
+
+2. Run `/start` for a list of commands.
+
+3. Run `/create <fund name>` to create a fund.
+
+4. Run `/lend <amount>` to deposit or lend money into the fund.
+
+5. Run `/borrow <amount>` to withdraw money from the fund.
+
+6. Run `/balance <address>` to check your balance.
+
+7. Click on the link to connect your wallet.
+
+8. Visit our website at https://decoop.vercel.app/ to see the fund's balance and your transactions.
 
 ## Getting Started
 
