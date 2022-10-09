@@ -53,11 +53,13 @@ export const Wallet = ({ className }: { className: string }) => {
           </Menu.Item>
           {links.map((link) => (
             <Menu.Item key={link.name}>
-              <Link href={link.link} passHref>
-                <a className="block text-gray-600 lg:hover:bg-gray-50 lg:p-2.5">
-                  {link.name}
-                </a>
-              </Link>
+              <div>
+                <Link href={link.link} passHref>
+                  <a className="block text-gray-600 lg:hover:bg-gray-50 lg:p-2.5">
+                    {link.name}
+                  </a>
+                </Link>
+              </div>
             </Menu.Item>
           ))}
           <Menu.Item>

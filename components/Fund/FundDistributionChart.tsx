@@ -74,7 +74,7 @@ const renderCustomizedLabel = ({ cx, cy, percent, name, x, y }) => {
       name={name}
       x={x}
       y={y}
-      alignment-baseline="middle"
+      alignmentBaseline="middle"
       className="recharts-text recharts-pie-label-text"
       textAnchor={x > cx ? "start" : "end"}
     >

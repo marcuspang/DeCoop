@@ -17,8 +17,8 @@ const modalConfig: ConfigOptions = {
     appName: "DeCoop",
     autoConnect: true,
     chains: [
-      chains.mainnet,
       chains.goerli,
+      chains.mainnet,
       chains.polygon,
       chains.optimism,
       chains.arbitrum,

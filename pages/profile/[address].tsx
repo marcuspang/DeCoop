@@ -1,4 +1,6 @@
 import { useAccount, useBalance } from "@web3modal/react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import FundCard from "../../components/Fund/FundCard";
 
 const ProfilePage = () => {
@@ -8,8 +10,8 @@ const ProfilePage = () => {
   });
 
   return (
-    <div className="w-full">
-      <div className="flex">
+    <div className="w-full px-4">
+      <div className="flex space-x-2">
         <FundCard
           amount={+balanceData?.formatted.slice(0, 6) || 0}
           symbol={balanceData?.symbol}
@@ -17,15 +19,18 @@ const ProfilePage = () => {
         />
         <FundCard
           amount={0}
-          title="Your Last Deposit"
+          title="Total Deposits"
           description="5 October 2022"
         />
         <FundCard
           amount={0}
-          title="Amount Borrowed"
+          title="Total Withdrawals"
           description="4 October 2022"
         />
       </div>
+      <FundCard title="Credit Score" amount="100" symbol="">
+        
+      </FundCard>
     </div>
   );
 };

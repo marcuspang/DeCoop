@@ -6,20 +6,30 @@ interface FundCreditScoresProps {
 
 const creditScores = {
   Adithya: 100,
-  Marcus: 89,
+  Marcus: 20,
   Kasshif: 75,
   "Yong Kang": 100,
-  Colin: 100,
+  Colin: 49,
 };
 
 const FundCreditScores = ({ data }: FundCreditScoresProps) => {
   return (
-    <ul>
-      {data.map((person) => (
-        <li key={person.name}>
-          {person.name}: {creditScores[person.name]}
-        </li>
-      ))}
+    <ul className="list-inside list-disc text-lg">
+      {data.map((person) => {
+        const score = creditScores[person.name];
+        return (
+          <li
+            key={person.name}
+            className={`pl-2 font-bold ${
+              score > 50 ? `text-green-700` : `text-red-700`
+            }`}
+          >
+            <span className="text-black-800">
+              {person.name}: {score}
+            </span>
+          </li>
+        );
+      })}
     </ul>
   );
 };
