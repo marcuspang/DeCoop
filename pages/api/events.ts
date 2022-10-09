@@ -16,13 +16,13 @@ export default async function handler(
   const communityContract = new ethers.Contract(
     community,
     abi,
-    ethers.getDefaultProvider("goerli")
+    new ethers.providers.InfuraProvider("goerli", process.env.INFURA_API_KEY)
   );
 
-  const deposits = communityContract.queryFilter(
+  const deposits = await communityContract.queryFilter(
     communityContract.filters.Deposit(address)
   );
-  const withdraws = communityContract.queryFilter(
+  const withdraws = await communityContract.queryFilter(
     communityContract.filters.Withdraw(address)
   );
 
