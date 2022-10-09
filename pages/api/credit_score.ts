@@ -29,7 +29,7 @@ export default async function handler(
       .reduce((x, y) => x.add(y));
   }
 
-  const creditScore = Math.min(depositSum, withdrawSum);
+  const creditScore = Math.min(depositSum, withdrawSum) / 100000000;
 
   res.status(200).send({ creditScore });
 }
