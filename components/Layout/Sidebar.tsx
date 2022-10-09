@@ -126,8 +126,8 @@ const links = [
 
 const Sidebar = () => {
   return (
-    <aside className="" aria-label="Sidebar">
-      <div className="w-64 hidden lg:block overflow-y-auto py-4 px-3 ml-4 bg-white rounded-xl dark:bg-gray-800 shadow">
+    <aside className="inline-flex" aria-label="Sidebar">
+      <div className="w-64 hidden lg:inline-block overflow-y-auto py-4 px-3 ml-4 bg-white rounded-xl dark:bg-gray-800 shadow">
         <ul className="space-y-2">
           {links.map((link) => (
             <li key={link.name}>
@@ -142,7 +142,7 @@ const Sidebar = () => {
           ))}
         </ul>
       </div>
-      <div className="lg:hidden mt-3">
+      <div className="lg:hidden mt-3 mb-3">
         <ul className="flex justify-center w-full items-center flex-wrap">
           {links.map((link) => (
             <li key={link.name}>

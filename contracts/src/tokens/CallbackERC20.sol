@@ -15,9 +15,13 @@ contract CallbackERC20 is ERC20 {
         success = super.transfer(to, amount);
 
         require(
-            to.code.length != 0 || CallbackERC20Receiver(to).onTransfer(address(this), msg.sender, amount) == CallbackERC20Receiver.onTransfer.selector,
+            to.code.length == 0 || CallbackERC20Receiver(to).onTransfer(address(this), msg.sender, amount) == CallbackERC20Receiver.onTransfer.selector,
             "Callback failed"
         );
+    }
+
+    function mint(address to, uint256 amount) external {
+        _mint(to, amount);
     }
 }
 

@@ -13,7 +13,7 @@ const modalConfig: ConfigOptions = {
   theme: "light",
   accentColor: "default",
   ethereum: {
-    appName: "web3Modal",
+    appName: "Optimity",
     autoConnect: true,
     chains: [
       chains.mainnet,
@@ -49,7 +49,7 @@ function App({ Component, pageProps }) {
   return (
     <div className="bg-slate-50">
       <NavBar />
-      <main className="max-w-screen-xl mx-auto min-h-[500px] flex space-x-4 mt-4">
+      <main className="max-w-screen-xl mx-auto flex my-4 justify-center flex-wrap lg:flex-nowrap">
         <Sidebar />
         <Component {...pageProps} />
       </main>
