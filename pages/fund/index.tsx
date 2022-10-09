@@ -1,5 +1,6 @@
 import { useAccount } from "@web3modal/react";
 import axios from "axios";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import FundCard from "../../components/Fund/FundCard";
 import { Community } from "../api/communities";
@@ -18,17 +19,26 @@ const ViewFundsPage = () => {
 
   return (
     <div className="w-full">
-      <div className="ml-2">
-        <FundCard title="Your Funds">
-          <ul>
-            {communities.map((community) => (
+      <FundCard title="Your Funds" className="mt-0">
+        <ul>
+          {communities.length !== 0 ? (
+            communities.map((community) => (
               <li key={community.community}>
                 {community.community} {community.erc}
               </li>
-            ))}
-          </ul>
-        </FundCard>
-      </div>
+            ))
+          ) : (
+            <div>
+              <p>No funds found :(</p>
+              <Link href="/fund/default" passHref>
+                <a className="text-blue-600 dark:text-blue-500 hover:underline">
+                  Click here to see a default fund
+                </a>
+              </Link>
+            </div>
+          )}
+        </ul>
+      </FundCard>
     </div>
   );
 };

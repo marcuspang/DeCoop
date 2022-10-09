@@ -8,7 +8,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const communityFactory: string = process.env.COMMUNITY_FACTORY;
-  const address: string = req.body["address"] || null;
+  const address: string = req.body["address"];
 
   const communities = await getCommunitiesForPerson(communityFactory, address);
 

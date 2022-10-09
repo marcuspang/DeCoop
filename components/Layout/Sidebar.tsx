@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 const links = (address?: string) => [
   {
     name: "View Funds",
-    href: "/fund/" + address,
+    href: "/fund/",
     requiresLogIn: true,
     desktopIcon: <ChartPieIcon width={28} height={28} />,
     mobileIcon: <ChartPieIcon width={20} height={20} />,
@@ -25,7 +25,7 @@ const links = (address?: string) => [
   },
   {
     name: "Lend/Borrow",
-    href: "/",
+    href: "/trade",
     requiresLogIn: false,
     desktopIcon: <ArrowsRightLeftIcon width={24} height={24} />,
     mobileIcon: <ArrowsRightLeftIcon width={20} height={20} />,
@@ -44,7 +44,7 @@ const Sidebar = () => {
   const router = useRouter();
 
   return (
-    <aside className="inline-flex" aria-label="Sidebar">
+    <aside className="inline-flex mr-4" aria-label="Sidebar">
       <div className="w-64 hidden lg:inline-block overflow-y-auto py-4 px-3 ml-4 bg-white rounded-xl dark:bg-gray-800 shadow">
         <ul className="space-y-2">
           {links(address).map((link) => (
@@ -57,7 +57,9 @@ const Sidebar = () => {
                       : ""
                   }
                   ${
-                    link.requiresLogIn && address === "cursor-default " ? "" : ""
+                    link.requiresLogIn && address === "cursor-default "
+                      ? ""
+                      : ""
                   }
                   `}
                 >

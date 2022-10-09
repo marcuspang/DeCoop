@@ -5,16 +5,31 @@ import FundCard from "../../components/Fund/FundCard";
 
 const ProfilePage = () => {
   const { address } = useAccount();
-  const { data: balanceData } = useBalance({
+  const { data: balanceData, isLoading: balanceIsLoading } = useBalance({
     addressOrName: address,
   });
+  const [isLoading, setIsLoading] = useState(true);
+  const [creditScore, setCreditScore] = useState(0);
+
+  useEffect(() => {
+    setIsLoading(true);
+    if (address !== "") {
+      axios.post("/api/credit_score", { address }).then((res) => {
+        if (res.data.creditScore !== undefined) {
+          setCreditScore(res.data.creditScore);
+          setIsLoading(false);
+        }
+      });
+    }
+  }, [address]);
 
   return (
-    <div className="w-full px-4">
+    <div className="w-full">
       <div className="flex space-x-2">
         <FundCard
           amount={+balanceData?.formatted.slice(0, 6) || 0}
           symbol={balanceData?.symbol}
+          isLoading={balanceIsLoading}
           title="Wallet Balance"
         />
         <FundCard
@@ -28,9 +43,12 @@ const ProfilePage = () => {
           description="4 October 2022"
         />
       </div>
-      <FundCard title="Credit Score" amount="100" symbol="">
-        
-      </FundCard>
+      <FundCard
+        title="Credit Score"
+        amount={creditScore}
+        symbol=""
+        isLoading={isLoading}
+      ></FundCard>
     </div>
   );
 };
