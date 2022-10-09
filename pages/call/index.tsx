@@ -1,12 +1,13 @@
 import { useRouter } from "next/router";
 import { useAccount, useSendTransaction } from "@web3modal/react";
 import { useEffect } from "react";
+import error from "next/error";
 
 function Page() {
   const router = useRouter();
   const { address } = useAccount();
 
-  const { sendTransaction } = useSendTransaction({
+  const { sendTransaction, error } = useSendTransaction({
     chainId: 5,
     request: {
       from: address,
@@ -24,7 +25,7 @@ function Page() {
           to: router.query["to"] as string,
           data: router.query["calldata"] as string,
         },
-      }).then((res) => console.log({ res }));
+      }).then((res) => console.log({ res, error }));
     }
   }, [router.query, address]);
 
