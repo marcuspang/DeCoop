@@ -8,8 +8,9 @@ const communityFactoryAbi = [
 const communityAbi = [
   "function communityToken() view returns (address)",
   "function soulboundToken() view returns (address)",
+  "function name() view returns (string memory)",
 ];
-const soulboundAbi = [
+const balanceAbi = [
   "function balanceOf(address owner) view returns (uint256)",
 ];
 
@@ -35,6 +36,10 @@ export async function getAllCommunities(
 export interface Community {
   community: string;
   erc: string;
+
+  name: string;
+  fundBalance: number;
+  ercName: string;
 }
 
 export async function getCommunitiesForPerson(
@@ -56,15 +61,28 @@ export async function getCommunitiesForPerson(
 
     const soulboundContract = new ethers.Contract(
       soulboundToken,
-      soulboundAbi,
+      balanceAbi,
       new ethers.providers.InfuraProvider("goerli", process.env.INFURA_API_KEY)
     );
 
-    if ((await soulboundContract.balanceOf(address)) > 0) {
-      communities.push({
-        community,
-        erc: await communityContract.communityToken(),
-      });
+    if (await soulboundContract.balanceOf(address) > 0) {
+        const erc20 = await communityContract.communityToken();
+
+        const erc20Contract = new ethers.Contract(
+          erc20,
+          balanceAbi,
+          new ethers.providers.InfuraProvider("goerli", process.env.INFURA_API_KEY)
+        );
+
+        const name = await communityContract.name();
+
+        communities.push({
+            community,
+            name,
+            erc: erc20,
+            fundBalance: (await erc20Contract.balanceOf(address)).toString(),
+            ercName: name + "-T",
+        });
     }
   }
 
