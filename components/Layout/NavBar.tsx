@@ -8,10 +8,10 @@ const NavBar = () => {
   const [search, setSearch] = useState("");
 
   return (
-    <nav className="bg-white border-b">
+    <nav className="bg-white border-b-2">
       <div className="flex items-center space-x-8 py-3 px-4 max-w-screen-xl mx-auto">
         <Link href={"/"} passHref>
-          <a className="flex-none lg:flex-initial">Optimity</a>
+          <a className="flex-none lg:flex-initial">DeCoop</a>
         </Link>
         <Search search={search} setSearch={setSearch} />
 

@@ -51,8 +51,8 @@ const CustomTooltip = ({ active, payload, label }) => {
     return (
       <div className="bg-white p-4 rounded-lg shadow-lg">
         <p className="font-bold">Time: {label}</p>
-        <p className="">BTC: {payload[0].value}</p>
-        <p className="">ETH: {payload[1].value}</p>
+        <p>BTC: {payload[0].value}</p>
+        <p>ETH: {payload[1].value}</p>
       </div>
     );
   }
@@ -60,7 +60,7 @@ const CustomTooltip = ({ active, payload, label }) => {
   return null;
 };
 
-const TransactionChart = () => {
+const FundTransactionChart = () => {
   const [showBTC, setShowBTC] = useState(true);
   const [showETH, setShowETH] = useState(true);
 
@@ -113,4 +113,4 @@ const TransactionChart = () => {
   );
 };
 
-export default TransactionChart;
+export default FundTransactionChart;

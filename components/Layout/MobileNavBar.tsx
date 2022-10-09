@@ -2,22 +2,29 @@ import Link from "next/link";
 import { useState } from "react";
 import { useAccount, useDisconnect } from "@web3modal/react";
 import NetworkButton from "../Wallet/NetworkButton";
-import { links, Wallet } from "../Wallet/Wallet";
+import { links } from "../Wallet/Wallet";
+import { WalletIcon } from "@heroicons/react/24/outline";
 
 const MobileNavBar = () => {
   const [menuState, setMenuState] = useState(false);
-  const { status } = useAccount();
+  const { status, address } = useAccount();
   const disconnect = useDisconnect();
 
   return (
-    <div className="flex-1 flex items-center justify-end lg:hidden ">
+    <div className="flex-1 flex items-center justify-end lg:hidden">
       <div
-        className={`bg-white absolute z-20 top-16 bottom-0 left-0 border-b lg:static lg:block lg:border-none w-full p-4 border-t h-screen ${
+        className={`bg-white absolute z-20 top-[4.125rem] bottom-0 left-0 border-b-2 border-t-2 lg:static lg:block lg:border-none w-full p-4  h-screen ${
           menuState ? "" : "hidden"
         }`}
       >
         <div className="flex items-center">
-          <Wallet className="" />
+          <div className="flex items-center">
+            <WalletIcon width={40} height={40} className="mr-3" />
+            <div className="text-gray-600">
+              <p className="font-bold">Address:</p>
+              <span className="break-all">{address}</span>
+            </div>
+          </div>
           <NetworkButton className="ml-0" />
         </div>
         <ul className="top-12 right-0 mt-5 space-y-5">

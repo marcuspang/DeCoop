@@ -6,7 +6,7 @@ const DesktopNavBar = () => {
   return (
     <div className="flex-1 items-center justify-end hidden lg:flex">
       <div
-        className={`bg-white flex absolute z-20 top-16 left-0 border-b lg:static lg:flex lg:border-none`}
+        className={`bg-white flex absolute z-20 top-16 left-0 border-b-2 lg:static lg:flex lg:border-none`}
       >
         <NetworkButton className="" />
         <Wallet className="" />

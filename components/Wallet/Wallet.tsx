@@ -1,11 +1,12 @@
 import { Menu, Transition } from "@headlessui/react";
+import { WalletIcon } from "@heroicons/react/24/outline";
 import { ConnectButton, useAccount, useDisconnect } from "@web3modal/react";
 import Link from "next/link";
 import { Fragment } from "react";
 
 export const links = [{ name: "Settings", link: "/" }];
 
-export const Wallet = ({ className }) => {
+export const Wallet = ({ className }: { className: string }) => {
   const { status, address } = useAccount();
   const disconnect = useDisconnect();
 
@@ -27,17 +28,13 @@ export const Wallet = ({ className }) => {
           id="menu-button"
           type="button"
         >
-          <img src="/wallet.svg" className="w-8 h-8" />
+          <WalletIcon
+            width={30}
+            height={30}
+            className="hover:text-gray-500 mx-auto transition-colors"
+          />
         </Menu.Button>
       </div>
-      <div className="lg:hidden flex items-center">
-        <img src="/wallet.svg" className="w-8 h-8 mr-3" />
-        <div className="lg:hidden text-gray-600">
-          <p className="font-bold">Address:</p>
-          <span className="break-all">{address}</span>
-        </div>
-      </div>
-
       <Transition
         as={Fragment}
         enter="transition ease-out duration-100"

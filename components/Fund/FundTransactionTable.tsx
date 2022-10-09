@@ -163,7 +163,7 @@ const transactions = [
 
 const PAGE_SIZE = 3;
 
-const TransactionsTable = () => {
+const FundTransactionTable = () => {
   const [pageIndex, setPageIndex] = useState(0);
 
   const PAGE_COUNT = Math.ceil(transactions.length / PAGE_SIZE);
@@ -248,4 +248,4 @@ const TransactionsTable = () => {
   );
 };
 
-export default TransactionsTable;
+export default FundTransactionTable;

@@ -1,6 +1,7 @@
 import { chains, providers } from "@web3modal/ethereum";
 import type { ConfigOptions } from "@web3modal/react";
 import { Web3Modal } from "@web3modal/react";
+import Head from "next/head";
 import { useEffect } from "react";
 import Footer from "../components/Layout/Footer";
 import NavBar from "../components/Layout/NavBar";
@@ -13,7 +14,7 @@ const modalConfig: ConfigOptions = {
   theme: "light",
   accentColor: "default",
   ethereum: {
-    appName: "Optimity",
+    appName: "DeCoop",
     autoConnect: true,
     chains: [
       chains.mainnet,
@@ -48,6 +49,11 @@ function App({ Component, pageProps }) {
 
   return (
     <div className="bg-slate-50">
+      <Head>
+        <title>DeCoop</title>
+        <meta name="description" content="DeCoop 2022" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <NavBar />
       <main className="max-w-screen-xl mx-auto flex my-4 justify-center flex-wrap lg:flex-nowrap">
         <Sidebar />
