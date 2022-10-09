@@ -1,10 +1,13 @@
 import { useAccount, useBalance } from "@web3modal/react";
 import axios from "axios";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import FundCard from "../../components/Fund/FundCard";
 
 const ProfilePage = () => {
-  const { address } = useAccount();
+  const router = useRouter();
+  const address = router.query ? router.query.address.toString() : "";
+
   const { data: balanceData, isLoading: balanceIsLoading } = useBalance({
     addressOrName: address,
   });

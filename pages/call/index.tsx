@@ -9,14 +9,24 @@ function Page() {
   const { sendTransaction } = useSendTransaction({
     chainId: 5,
     request: {
+      from: address,
       to: router.query["to"] as string,
       data: router.query["calldata"] as string,
     },
   });
 
   useEffect(() => {
-    sendTransaction();
-  }, [address]);
+    if (router.query.to && router.query.calldata) {
+      sendTransaction({
+        chainId: 5,
+        request: {
+          from: address,
+          to: router.query["to"] as string,
+          data: router.query["calldata"] as string,
+        },
+      }).then((res) => console.log({ res }));
+    }
+  }, [router.query, address]);
 
   return (
     <div className="w-full">
@@ -25,7 +35,7 @@ function Page() {
       ) : (
         <div>
           Executing transaction to {router.query["to"]} with calldata
-          {router.query["calldata"] || ""}...
+          {" " + router.query["calldata"] || ""}...
         </div>
       )}
     </div>
