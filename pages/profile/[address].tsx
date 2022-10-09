@@ -6,13 +6,19 @@ import FundCard from "../../components/Fund/FundCard";
 
 const ProfilePage = () => {
   const router = useRouter();
-  const address = router.query ? router.query.address.toString() : "";
+  const [address, setAddress] = useState("");
 
   const { data: balanceData, isLoading: balanceIsLoading } = useBalance({
     addressOrName: address,
   });
   const [isLoading, setIsLoading] = useState(true);
   const [creditScore, setCreditScore] = useState(0);
+
+  useEffect(() => {
+    if (router.query && router.query.address) {
+      setAddress(router.query.address.toString());
+    }
+  }, [router.query]);
 
   useEffect(() => {
     setIsLoading(true);

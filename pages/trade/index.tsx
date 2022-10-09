@@ -4,28 +4,33 @@ import { useAccount } from "@web3modal/react";
 import { Community } from "../api/communities";
 import FundCard from "../../components/Fund/FundCard";
 import Link from "next/link";
+import CommunityItem from "../../components/Community/CommunityItem";
 
 const TradeMainPage = () => {
   const { address } = useAccount();
   const [communities, setCommunities] = useState<Community[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (address) {
-      axios
-        .post("/api/communities", { address })
-        .then((res) => setCommunities(res.data));
+      axios.post("/api/communities", { address }).then((res) => {
+        setCommunities(res.data);
+        setIsLoading(false);
+      });
     }
   }, [address]);
 
   return (
     <div className="w-full">
-      <FundCard title="Click a fund to deposit/withdraw" className="mt-0">
-        <ul>
+      <FundCard
+        title="Click a fund to deposit/withdraw"
+        className="mt-0"
+        isLoading={isLoading}
+      >
+        <ul className="list-disc list-inside">
           {communities.length !== 0 ? (
             communities.map((community) => (
-              <li key={community.community}>
-                {community.community} {community.erc}
-              </li>
+              <CommunityItem key={community.community} {...community} baseURL="/trade/" />
             ))
           ) : (
             <div>

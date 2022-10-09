@@ -35,9 +35,9 @@ const FundCard = ({
             {amount} {amount ? symbol : ""}
           </span>
           {description && <p className="text-blue-700">{description}</p>}
+          {children}
         </>
       )}
-      {children}
     </div>
   );
 };
