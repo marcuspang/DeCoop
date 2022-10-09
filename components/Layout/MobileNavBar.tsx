@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useState } from "react";
-import { useAccount, useDisconnect } from "@web3modal/react";
+import { ConnectButton, useAccount, useDisconnect } from "@web3modal/react";
 import NetworkButton from "../Wallet/NetworkButton";
 import { links } from "../Wallet/Wallet";
 import { WalletIcon } from "@heroicons/react/24/outline";
@@ -35,7 +35,7 @@ const MobileNavBar = () => {
               </Link>
             </li>
           ))}
-          {status === "connected" && (
+          {status === "connected" ? (
             <li>
               <button
                 className="block text-gray-600 p-1 w-full text-left"
@@ -43,6 +43,10 @@ const MobileNavBar = () => {
               >
                 Log out
               </button>
+            </li>
+          ) : (
+            <li>
+              <ConnectButton label="Sign In" />
             </li>
           )}
         </ul>

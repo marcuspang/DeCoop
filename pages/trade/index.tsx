@@ -30,7 +30,11 @@ const TradeMainPage = () => {
         <ul className="list-disc list-inside">
           {communities.length !== 0 ? (
             communities.map((community) => (
-              <CommunityItem key={community.community} {...community} baseURL="/trade/" />
+              <CommunityItem
+                key={community.community}
+                {...community}
+                baseURL="/trade/"
+              />
             ))
           ) : (
             <div>

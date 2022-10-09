@@ -11,7 +11,7 @@ const NavBar = () => {
     <nav className="bg-white border-b-2">
       <div className="flex items-center space-x-8 py-3 px-4 max-w-screen-xl mx-auto">
         <Link href={"/"} passHref>
-          <a className="flex-none lg:flex-initial">DeCoop</a>
+          <a className="flex-none lg:flex-initial font-bold">DeCoop</a>
         </Link>
         <Search search={search} setSearch={setSearch} />
 
