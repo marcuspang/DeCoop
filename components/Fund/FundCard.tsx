@@ -1,12 +1,14 @@
+import Link from "next/link";
 import { ReactNode } from "react";
-import Spinner from "../Layout/Spinner";
 import Card from "../Layout/Card";
+import Spinner from "../Layout/Spinner";
 
 interface FundCardProps {
   title?: string;
   amount?: number | string;
   symbol?: string;
   description?: string; // description of person who performed last transaction
+  descriptionLink?: string;
   className?: string;
   isLoading?: boolean;
   children?: ReactNode;
@@ -15,8 +17,9 @@ interface FundCardProps {
 const FundCard = ({
   amount,
   title,
-  symbol = "ETH",
+  symbol,
   description,
+  descriptionLink,
   className,
   isLoading,
   children,
@@ -33,7 +36,15 @@ const FundCard = ({
       <span className="font-bold text-3xl">
         {amount} {amount ? symbol : ""}
       </span>
-      {description && <p className="text-blue-700">{description}</p>}
+      {descriptionLink && (
+        <Link href={descriptionLink} passHref>
+          {description && (
+            <a className="link block" target={"_blank"} rel="noopener">
+              {description}
+            </a>
+          )}
+        </Link>
+      )}
       {children}
     </Card>
   );

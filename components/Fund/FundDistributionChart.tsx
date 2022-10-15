@@ -103,7 +103,7 @@ interface FundDistributionChartProps {
 
 const FundDistributionChart = ({ data }: FundDistributionChartProps) => {
   return (
-    <div className="py-4 mb-4 w-[97%] h-[300px]">
+    <div className="py-4 mb-4 h-[300px]">
       <ResponsiveContainer width="100%" height="100%">
         <PieChart>
           <Pie
@@ -118,7 +118,7 @@ const FundDistributionChart = ({ data }: FundDistributionChartProps) => {
             {data.map((entry, index) => (
               <Cell
                 key={`cell-${index}`}
-                fill={COLORS[index % COLORS.length]}
+                fill={COLORS[(COLORS.length - index - 1) % COLORS.length]}
               />
             ))}
           </Pie>

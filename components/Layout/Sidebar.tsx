@@ -8,7 +8,7 @@ import { useAccount } from "@web3modal/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-const links = (address?: string) => [
+const pages = (address?: string) => [
   {
     name: "View Funds",
     href: "/fund/",
@@ -50,7 +50,7 @@ const Sidebar = () => {
     >
       <div className="w-64 hidden lg:inline-block overflow-y-auto py-4 px-3 ml-4 mt-3 bg-white rounded-xl dark:bg-gray-800 shadow">
         <ul className="space-y-2">
-          {links(address).map((link) => (
+          {pages(address).map((link) => (
             <li key={link.name}>
               <Link href={link.href} passHref>
                 <a
@@ -76,7 +76,7 @@ const Sidebar = () => {
       </div>
       <div className="lg:hidden mt-3 mb-3">
         <ul className="flex justify-center w-full items-center flex-wrap">
-          {links(address).map((link) => (
+          {pages(address).map((link) => (
             <li key={link.name}>
               <Link href={link.href} passHref>
                 <a className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">

@@ -27,9 +27,7 @@ const TradeMainPage = () => {
           <div>
             <p>Please sign in with your wallet to see your funds.</p>
             <Link href="/trade/default" passHref>
-              <a className="text-blue-600 dark:text-blue-500 hover:underline">
-                Click here to see the default trade screen
-              </a>
+              <a className="link">Click here to see the default trade screen</a>
             </Link>
           </div>
         </FundCard>
@@ -57,7 +55,7 @@ const TradeMainPage = () => {
             <div>
               <p>No funds found :(</p>
               <Link href="/fund/default" passHref>
-                <a className="text-blue-600 dark:text-blue-500 hover:underline">
+                <a className="link">
                   Click here to see the default trade screen
                 </a>
               </Link>

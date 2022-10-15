@@ -13,9 +13,7 @@ const FundListCard = ({ funds }: FundListCardProps) => {
         <div>
           <p>No funds found :(</p>
           <Link href="/fund/default" passHref>
-            <a className="text-blue-600 dark:text-blue-500 hover:underline">
-              Click here to see a default fund
-            </a>
+            <a className="link">Click here to see a default fund</a>
           </Link>
         </div>
       </Card>

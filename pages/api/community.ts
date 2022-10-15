@@ -1,5 +1,6 @@
 import { ethers } from "ethers";
 import { NextApiRequest, NextApiResponse } from "next";
+import { Community } from "./communities";
 
 const communityAbi = [
   "function communityToken() view returns (address)",
@@ -8,7 +9,7 @@ const communityAbi = [
 ];
 const balanceAbi = ["function balanceOf(address owner) view returns (uint256)"];
 
-export async function getCommunity(community: string) {
+export async function getCommunity(community: string): Promise<Community> {
   const communityContract = new ethers.Contract(
     community,
     communityAbi,
@@ -24,9 +25,9 @@ export async function getCommunity(community: string) {
   return {
     community,
     name,
-    erc: await communityContract.communityToken(),
-    fundBalance: (await erc20Contract.balanceOf(community)).toString(),
-    ercName: name + "-T",
+    tokenAddress: await communityContract.communityToken(),
+    tokenBalance: await erc20Contract.balanceOf(community),
+    tokenSymbol: name + "-T",
   };
 }
 
@@ -34,7 +35,14 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const community: string = req.body["community"];
+  if (req.method === "GET") {
+    if (req.query.address === undefined || req.query.address === "") {
+      return res.status(400).send("Invalid address");
+    }
+    const address = req.query.address.toString();
+    const community = await getCommunity(address);
 
-  res.status(200).send(await getCommunity(community));
+    return res.status(200).send(community);
+  }
+  return res.status(200).send({});
 }

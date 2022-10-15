@@ -13,6 +13,10 @@ const creditScores = {
 };
 
 const FundCreditScores = ({ data }: FundCreditScoresProps) => {
+  if (data.length === 0) {
+    return <div>No credit scores found</div>;
+  }
+
   return (
     <ul className="list-inside list-disc text-lg">
       {data.map((person) => {

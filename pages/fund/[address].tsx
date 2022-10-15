@@ -2,78 +2,72 @@ import {
   ArrowDownTrayIcon,
   ArrowsRightLeftIcon,
 } from "@heroicons/react/20/solid";
+import { useAccount } from "@web3modal/react";
 import Link from "next/link";
-import router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import FundCard from "../../components/Fund/FundCard";
-import FundCreditScores from "../../components/Fund/FundCreditScores";
-import FundDistributionChart from "../../components/Fund/FundDistributionChart";
+import FundContributions from "../../components/Fund/FundContributions";
+import FundStatistics from "../../components/Fund/FundStatistics";
 import FundTransactionChart from "../../components/Fund/FundTransactionChart";
-import FundTransactionTable from "../../components/Fund/FundTransactionTable";
-
-const data: FundContribution[] = [
-  { name: "Adithya", value: 2400 },
-  { name: "Marcus", value: 4567 },
-  { name: "Colin", value: 1398 },
-  { name: "Yong Kang", value: 9800 },
-  { name: "Kasshif", value: 3908 },
-];
+import FundTransactionTable, {
+  FundTransactionRow,
+} from "../../components/Fund/FundTransactionTable";
+import useCommunityEvents from "../../hooks/useCommunityEvents";
+import { CommunityEvents } from "../api/events";
 
 export interface FundContribution {
   name: string;
   value: number;
 }
 
-const truncate = (fullStr, strLen) => {
-  if (fullStr.length <= strLen) return fullStr;
-  const separator = "...";
+const transformEvents = (events: CommunityEvents) => {
+  let rows: FundTransactionRow[] = [];
+  if (events) {
+    if (events.deposits && events.deposits.length !== 0) {
+      for (const event of events.deposits) {
+        rows.push({
+          address: event.address,
+          blockNumber: event.blockNumber,
+          method: "Deposit",
+          date: null,
+          amount: event.value,
+        });
+      }
+    }
 
-  var sepLen = separator.length,
-    charsToShow = strLen - sepLen,
-    frontChars = Math.ceil(charsToShow / 2),
-    backChars = Math.floor(charsToShow / 2);
-
-  return (
-    fullStr.substr(0, frontChars) +
-    separator +
-    fullStr.substr(fullStr.length - backChars)
-  );
+    if (events.withdrawals && events.withdrawals.length !== 0) {
+      for (const event of events.withdrawals) {
+        rows.push({
+          address: event.address,
+          blockNumber: event.blockNumber,
+          method: "Withdrawal",
+          date: null,
+          amount: event.value,
+        });
+      }
+    }
+  }
+  return rows;
 };
 
 const ViewFundPage = () => {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(true);
-  const [address, setAddress] = useState("default");
-  const [name, setName] = useState("TOKEN");
-  const [balance, setBalance] = useState("0");
+  const { address } = useAccount();
+  const [communityAddress, setCommunityAddress] = useState("");
 
-  const [transactions, setTransactions] = useState<any>([]);
+  const { data } = useCommunityEvents(communityAddress, address);
 
   useEffect(() => {
-    if (
-      router.query &&
-      router.query.address &&
-      router.query.name &&
-      router.query.balance
-    ) {
-      setAddress(router.query.address.toString());
-      setName(router.query.name.toString() + "-T");
-      setBalance(router.query.balance.toString());
-
-      axios
-        .post("/api/events", { community: router.query.address.toString() })
-        .then((res) => {
-          setTransactions(res.data);
-          setIsLoading(false);
-        });
+    if (router.query && router.query.address) {
+      setCommunityAddress(router.query.address.toString());
     }
   }, [router.query]);
 
   return (
     <div className="w-full px-4">
       <div className="flex justify-end">
-        <Link href={"/trade/" + address} passHref>
+        <Link href={"/trade/" + communityAddress} passHref>
           <a className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center shadow-md transition-all cursor-pointer">
             <ArrowsRightLeftIcon
               width={18}
@@ -84,88 +78,15 @@ const ViewFundPage = () => {
           </a>
         </Link>
       </div>
-      <div className="flex flex-wrap lg:flex-nowrap justify-between space-x-3">
-        <FundCard symbol={name} title="Current Balance" amount={balance} />
-        <FundCard
-          title="Latest Deposit"
-          symbol={name}
-          amount={
-            isLoading
-              ? "-"
-              : transactions.deposits[transactions.deposits.length - 1].value
-          }
-          description={
-            isLoading
-              ? "-"
-              : "By " +
-                truncate(
-                  transactions.deposits[transactions.deposits.length - 1]
-                    .address,
-                  12
-                ) +
-                ", 9 October 2022"
-          }
-        />
-        <FundCard
-          title="Latest Withdrawal"
-          symbol={name}
-          amount={
-            isLoading
-              ? "-"
-              : transactions.withdrawals[transactions.withdrawals.length - 1]
-                  .value
-          }
-          description={
-            isLoading
-              ? "-"
-              : "By " +
-                truncate(
-                  transactions.withdrawals[transactions.withdrawals.length - 1]
-                    .address,
-                  12
-                ) +
-                ", 9 October 2022"
-          }
-        />
-      </div>
-      <div className="flex flex-wrap lg:flex-nowrap justify-between space-x-3">
-        <FundCard title="All Contributors">
-          <FundDistributionChart
-            data={(() => {
-              if (transactions && transactions.deposits) {
-                const dict = {};
-                for (const deposit of transactions.deposits) {
-                  if (!dict[deposit.address]) dict[deposit.address] = 0;
-                  dict[deposit.address] += deposit.value;
-                }
-
-                for (const withdrawal of transactions.withdrawals) {
-                  if (!dict[withdrawal.address]) dict[withdrawal.address] = 0;
-                  dict[withdrawal.address] -= withdrawal.value;
-                }
-
-                let dist: FundContribution[] = [];
-
-                for (const address in dict) {
-                  dist.push({
-                    name: truncate(address, 12),
-                    value: dict[address],
-                  });
-                }
-
-                return dist;
-              }
-              return [];
-            })()}
-          />
-        </FundCard>
-        <FundCard title="Contribution Credit Scores">
-          <FundCreditScores data={data} />
-        </FundCard>
-      </div>
-      <FundCard title="Transactions over time">
-        <FundTransactionChart />
-      </FundCard>
+      <FundStatistics
+        communityAddress={communityAddress}
+        walletAddress={address}
+      />
+      <FundContributions
+        communityAddress={communityAddress}
+        walletAddress={address}
+      />
+      <FundTransactionChart />
       <FundCard>
         <div className="flex justify-between items-center">
           <h3 className="font-bold text-xl">All Transactions</h3>
@@ -175,54 +96,7 @@ const ViewFundPage = () => {
           </button>
         </div>
       </FundCard>
-      <div className="ml-2">
-        <FundTransactionTable
-          data={(() => {
-            if (transactions && transactions.deposits) {
-              let ret = [];
-
-              for (const deposit of transactions.deposits) {
-                ret.push({
-                  address: deposit.address,
-                  date: new Date(),
-                  method: "Deposit",
-                  amount: deposit.value,
-                  actionBy: (
-                    <a
-                      href="#"
-                      className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                    >
-                      Edit
-                    </a>
-                  ),
-                });
-              }
-
-              for (const deposit of transactions.withdrawals) {
-                ret.push({
-                  address: deposit.address,
-                  date: new Date(),
-                  method: "Withdrawal",
-                  amount: deposit.value,
-                  actionBy: (
-                    <a
-                      href="#"
-                      className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                    >
-                      Edit
-                    </a>
-                  ),
-                });
-              }
-
-              console.log(ret);
-
-              return ret;
-            }
-            return [];
-          })()}
-        />
-      </div>
+      <FundTransactionTable data={transformEvents(data)} />
     </div>
   );
 };

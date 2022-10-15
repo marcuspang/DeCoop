@@ -15,9 +15,7 @@ const ViewFundsPage = () => {
         <Card title="Your Funds" className="mt-0">
           <p>Please sign in with your wallet to see your funds.</p>
           <Link href="/fund/default" passHref>
-            <a className="text-blue-600 dark:text-blue-500 hover:underline">
-              Click here to see a default fund
-            </a>
+            <a className="link">Click here to see a default fund</a>
           </Link>
         </Card>
       </div>

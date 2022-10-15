@@ -1,5 +1,6 @@
 import { ethers } from "ethers";
 import { NextApiRequest, NextApiResponse } from "next";
+import createErrorResponse from "../../utils/createErrorResponse";
 
 const communityFactoryAbi = [
   "function lastIndex() view returns (uint256)",
@@ -13,11 +14,6 @@ const communityAbi = [
 ];
 
 const balanceAbi = ["function balanceOf(address owner) view returns (uint256)"];
-
-const createErrorResponse = (message: string, description?: string) => ({
-  message,
-  description,
-});
 
 export async function getAllCommunities(
   communityFactory: string
@@ -39,12 +35,13 @@ export async function getAllCommunities(
 }
 
 export interface Community {
+  // addresses
   community: string;
-  erc: string;
-
+  tokenAddress: string;
+  // other data
   name: string;
-  fundBalance: number;
-  ercName: string;
+  tokenBalance: ethers.BigNumber;
+  tokenSymbol: string;
 }
 
 export async function getCommunitiesForPerson(
