@@ -1,8 +1,10 @@
 import {
+  useAccount,
   useContractWrite,
   useNetwork,
   useWaitForTransaction,
 } from "@web3modal/react";
+import { toast } from "react-toastify";
 import useCommunity from "./useCommunity";
 
 const abi = [
@@ -19,6 +21,7 @@ const abi = [
 ];
 
 const useDeposit = (communityAddress: string) => {
+  const { status } = useAccount();
   const { data } = useCommunity(communityAddress);
   const { chain } = useNetwork();
   const {
@@ -36,6 +39,10 @@ const useDeposit = (communityAddress: string) => {
 
   // amount in 10 ** 8
   const deposit = (amount: number) => {
+    if (status === "disconnected") {
+      toast("Please sign in to your wallet");
+      return;
+    }
     return write({
       addressOrName: data.tokenAddress,
       contractInterface: abi,

@@ -13,6 +13,7 @@ import FundTransactionChart from "../../components/Fund/FundTransactionChart";
 import FundTransactionTable, {
   FundTransactionRow,
 } from "../../components/Fund/FundTransactionTable";
+import FancyButton from "../../components/Layout/FancyButton";
 import useCommunityEvents from "../../hooks/useCommunityEvents";
 import { CommunityEvents } from "../api/events";
 
@@ -62,17 +63,19 @@ const ViewFundPage = () => {
 
   return (
     <div className="w-full px-4">
-      <div className="flex justify-end">
-        <Link href={"/trade/" + communityAddress} passHref>
-          <a className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center shadow-md transition-all cursor-pointer">
-            <ArrowsRightLeftIcon
-              width={18}
-              height={18}
-              className="inline mr-2 mb-0.5"
-            />
-            Withdraw/Deposit
-          </a>
-        </Link>
+      <div className="flex justify-end pt-3">
+        <FancyButton spanClassName="px-4 py-2 text-md">
+          <Link href={"/trade/" + communityAddress} passHref>
+            <a>
+              <ArrowsRightLeftIcon
+                width={18}
+                height={18}
+                className="inline mr-2 mb-0.5"
+              />
+              Withdraw/Deposit
+            </a>
+          </Link>
+        </FancyButton>
       </div>
       <FundStatistics
         communityAddress={communityAddress}
@@ -83,7 +86,7 @@ const ViewFundPage = () => {
         walletAddress={address}
       />
       <FundTransactionChart />
-      <FundCard>
+      <FundCard className={`${!data ? "rounded-b" : "rounded-b-none"}`}>
         <div className="flex justify-between items-center">
           <h3 className="font-bold text-xl">All Transactions</h3>
           <button className="rounded border-2 p-2 border-gray-300 transition-all hover:bg-gray-100 hover:border-gray-400 focus:border-blue-600">

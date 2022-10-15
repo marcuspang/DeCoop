@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import { CommunityEvents } from "../pages/api/events";
-import useUserCommunity from "./useUserCommunity";
 
 const fetchCommunityEvents = (community: string, walletAddress: string) => {
   return fetch(

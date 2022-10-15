@@ -45,7 +45,11 @@ const FundTransactionTable = ({ data }: FundTransactionTableProps) => {
 
   return (
     <>
-      <div className="overflow-x-auto relative shadow sm:rounded-lg">
+      <div
+        className={`overflow-x-auto relative shadow ${
+          !data ? "sm:rounded-md" : "sm:rounded-b-md"
+        }`}
+      >
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
             <tr>
@@ -77,20 +81,9 @@ const FundTransactionTable = ({ data }: FundTransactionTableProps) => {
                       scope="row"
                       className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                     >
-                      <Link
-                        href={
-                          "https://goerli.etherscan.io/address/" +
-                          transaction.from
-                        }
-                        passHref
-                      >
-                        <a className="link" target={"_blank"} rel="noopener">
+                      <Link href={"/profile/" + transaction.from} passHref>
+                        <a className="link">
                           {truncateEthAddress(transaction.from)}
-                          <ArrowTopRightOnSquareIcon
-                            height={16}
-                            width={16}
-                            className="inline-block ml-1 mb-1"
-                          />
                         </a>
                       </Link>
                     </td>
