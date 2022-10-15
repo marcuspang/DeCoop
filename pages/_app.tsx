@@ -1,11 +1,9 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { chains, providers } from "@web3modal/ethereum";
 import type { ConfigOptions } from "@web3modal/react";
 import { Web3Modal } from "@web3modal/react";
-import Head from "next/head";
 import { useEffect } from "react";
-import Footer from "../components/Layout/Footer";
-import NavBar from "../components/Layout/NavBar";
-import Sidebar from "../components/Layout/Sidebar";
+import Layout from "../components/Layout/Layout";
 
 import "../styles/globals.css";
 
@@ -31,6 +29,8 @@ const modalConfig: ConfigOptions = {
   },
 };
 
+const queryClient = new QueryClient();
+
 function App({ Component, pageProps }) {
   useEffect(() => {
     // On page load or when changing themes, best to add inline in `head` to avoid FOUC
@@ -48,20 +48,12 @@ function App({ Component, pageProps }) {
   }, []);
 
   return (
-    <div className="bg-slate-50">
-      <Head>
-        <title>DeCoop</title>
-        <meta name="description" content="DeCoop 2022" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <NavBar />
-      <main className="max-w-screen-xl mx-auto flex my-4 justify-center flex-wrap lg:flex-nowrap">
-        <Sidebar />
+    <QueryClientProvider client={queryClient}>
+      <Layout>
         <Component {...pageProps} />
-      </main>
-      <Footer />
+      </Layout>
       <Web3Modal config={modalConfig} />
-    </div>
+    </QueryClientProvider>
   );
 }
 

@@ -17,7 +17,7 @@ export default async function handler(
 
   for (const community of communities) {
     const { deposits, withdrawals } = await getEvents(
-      community.community,
+      community,
       address
     );
 

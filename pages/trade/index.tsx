@@ -7,7 +7,7 @@ import Link from "next/link";
 import CommunityItem from "../../components/Community/CommunityItem";
 
 const TradeMainPage = () => {
-  const { address } = useAccount();
+  const { address, status } = useAccount();
   const [communities, setCommunities] = useState<Community[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -19,6 +19,23 @@ const TradeMainPage = () => {
       });
     }
   }, [address]);
+
+  if (status === "disconnected") {
+    return (
+      <div className="w-full">
+        <FundCard title="Your Funds" className="mt-0">
+          <div>
+            <p>Please sign in with your wallet to see your funds.</p>
+            <Link href="/trade/default" passHref>
+              <a className="text-blue-600 dark:text-blue-500 hover:underline">
+                Click here to see the default trade screen
+              </a>
+            </Link>
+          </div>
+        </FundCard>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full">
@@ -32,7 +49,7 @@ const TradeMainPage = () => {
             communities.map((community) => (
               <CommunityItem
                 key={community.community}
-                {...community}
+                address={community.community}
                 baseURL="/trade/"
               />
             ))

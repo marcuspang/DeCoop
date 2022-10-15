@@ -5,12 +5,19 @@ const communityFactoryAbi = [
   "function lastIndex() view returns (uint256)",
   "function communities(uint256 index) view returns (address)",
 ];
+
 const communityAbi = [
   "function communityToken() view returns (address)",
   "function soulboundToken() view returns (address)",
   "function name() view returns (string memory)",
 ];
+
 const balanceAbi = ["function balanceOf(address owner) view returns (uint256)"];
+
+const createErrorResponse = (message: string, description?: string) => ({
+  message,
+  description,
+});
 
 export async function getAllCommunities(
   communityFactory: string
@@ -43,10 +50,10 @@ export interface Community {
 export async function getCommunitiesForPerson(
   communityFactory: string,
   address: string
-): Promise<any[]> {
+) {
   let allCommunities = await getAllCommunities(communityFactory);
 
-  let communities: Community[] = [];
+  let communities: string[] = [];
 
   for (const community of allCommunities) {
     const communityContract = new ethers.Contract(
@@ -63,27 +70,29 @@ export async function getCommunitiesForPerson(
       new ethers.providers.InfuraProvider("goerli", process.env.INFURA_API_KEY)
     );
 
-    if ((await soulboundContract.balanceOf(address)) > 0) {
-      const erc20 = await communityContract.communityToken();
+    const hasJoinedCommunity = (await soulboundContract.balanceOf(address)) > 0;
+    if (hasJoinedCommunity) {
+      communities.push(community);
+      // const erc20 = await communityContract.communityToken();
 
-      const erc20Contract = new ethers.Contract(
-        erc20,
-        balanceAbi,
-        new ethers.providers.InfuraProvider(
-          "goerli",
-          process.env.INFURA_API_KEY
-        )
-      );
+      // const erc20Contract = new ethers.Contract(
+      //   erc20,
+      //   balanceAbi,
+      //   new ethers.providers.InfuraProvider(
+      //     "goerli",
+      //     process.env.INFURA_API_KEY
+      //   )
+      // );
 
-      const name = await communityContract.name();
+      // const name = await communityContract.name();
 
-      communities.push({
-        community,
-        name,
-        erc: erc20,
-        fundBalance: +(await erc20Contract.balanceOf(address)) / 100000000,
-        ercName: name + "-T",
-      });
+      // communities.push({
+      //   community,
+      //   name,
+      //   erc: erc20,
+      //   fundBalance: +(await erc20Contract.balanceOf(address)) / 100000000,
+      //   ercName: name + "-T",
+      // });
     }
   }
 
@@ -94,10 +103,25 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const communityFactory: string = process.env.COMMUNITY_FACTORY;
-  const address: string = req.body["address"];
+  if (req.method === "GET") {
+    const communityFactory: string = process.env.COMMUNITY_FACTORY;
+    if (req.query.wallet === undefined || req.query.wallet === "") {
+      return res
+        .status(400)
+        .send(createErrorResponse("Invalid wallet address"));
+    }
+    try {
+      const wallet = req.query.wallet.toString();
+      const communities = await getCommunitiesForPerson(
+        communityFactory,
+        wallet
+      );
 
-  res
-    .status(200)
-    .send(await getCommunitiesForPerson(communityFactory, address));
+      return res.status(200).send(communities);
+    } catch (error) {
+      console.log(error);
+      return res.status(400).send(error);
+    }
+  }
+  return res.status(200).send({});
 }

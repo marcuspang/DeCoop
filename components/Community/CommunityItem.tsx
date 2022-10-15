@@ -1,19 +1,16 @@
 import Link from "next/link";
-import { Community as CommunityItem } from "../../pages/api/communities";
 
-const CommunityItem = ({
-  community,
-  erc,
-  ercName,
-  fundBalance,
-  name,
-  baseURL,
-}: CommunityItem & { baseURL: string }) => {
+interface CommunityItemProps {
+  address: string;
+  baseURL: string;
+}
+
+const CommunityItem = ({ address, baseURL }: CommunityItemProps) => {
   return (
     <li>
-      <Link href={baseURL + community + "?name="+name + "&balance=" + fundBalance} passHref>
+      <Link href={baseURL + address} passHref>
         <a className="text-blue-600 dark:text-blue-500 hover:underline">
-          {community}
+          {address}
         </a>
       </Link>
     </li>

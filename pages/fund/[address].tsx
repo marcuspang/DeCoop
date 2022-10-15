@@ -25,6 +25,22 @@ export interface FundContribution {
   value: number;
 }
 
+const truncate = (fullStr, strLen) => {
+  if (fullStr.length <= strLen) return fullStr;
+  const separator = "...";
+
+  var sepLen = separator.length,
+    charsToShow = strLen - sepLen,
+    frontChars = Math.ceil(charsToShow / 2),
+    backChars = Math.floor(charsToShow / 2);
+
+  return (
+    fullStr.substr(0, frontChars) +
+    separator +
+    fullStr.substr(fullStr.length - backChars)
+  );
+};
+
 const ViewFundPage = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
@@ -54,37 +70,21 @@ const ViewFundPage = () => {
     }
   }, [router.query]);
 
-  const truncate = (fullStr, strLen) => {
-    if (fullStr.length <= strLen) return fullStr;
-    const separator = "...";
-
-    var sepLen = separator.length,
-      charsToShow = strLen - sepLen,
-      frontChars = Math.ceil(charsToShow / 2),
-      backChars = Math.floor(charsToShow / 2);
-
-    return (
-      fullStr.substr(0, frontChars) +
-      separator +
-      fullStr.substr(fullStr.length - backChars)
-    );
-  };
-
   return (
     <div className="w-full px-4">
       <div className="flex justify-end">
         <Link href={"/trade/" + address} passHref>
-          <a className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 transition-all cursor-pointer">
+          <a className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center shadow-md transition-all cursor-pointer">
             <ArrowsRightLeftIcon
               width={18}
               height={18}
-              className="inline mr-2 mb-1"
+              className="inline mr-2 mb-0.5"
             />
             Withdraw/Deposit
           </a>
         </Link>
       </div>
-      <div className="flex flex-wrap lg:flex-nowrap justify-between space-x-2">
+      <div className="flex flex-wrap lg:flex-nowrap justify-between space-x-3">
         <FundCard symbol={name} title="Current Balance" amount={balance} />
         <FundCard
           title="Latest Deposit"
@@ -128,7 +128,7 @@ const ViewFundPage = () => {
           }
         />
       </div>
-      <div className="flex flex-wrap lg:flex-nowrap justify-between space-x-2">
+      <div className="flex flex-wrap lg:flex-nowrap justify-between space-x-3">
         <FundCard title="All Contributors">
           <FundDistributionChart
             data={(() => {

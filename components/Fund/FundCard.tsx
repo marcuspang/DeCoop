@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import Spinner from "../Layout/Spinner";
+import Card from "../Layout/Card";
 
 interface FundCardProps {
   title?: string;
@@ -20,25 +21,21 @@ const FundCard = ({
   isLoading,
   children,
 }: FundCardProps) => {
-  return (
-    <div
-      className={`pt-4 px-4 pb-6 bg-white rounded shadow w-full mt-2 ${className}`}
-    >
-      {title && (
-        <h3 className="font-semibold text-xl text-gray-600 mb-2">{title}</h3>
-      )}
-      {isLoading ? (
+  if (isLoading) {
+    return (
+      <Card title={title} className={className}>
         <Spinner />
-      ) : (
-        <>
-          <span className="font-bold text-3xl">
-            {amount} {amount ? symbol : ""}
-          </span>
-          {description && <p className="text-blue-700">{description}</p>}
-          {children}
-        </>
-      )}
-    </div>
+      </Card>
+    );
+  }
+  return (
+    <Card title={title} className={className}>
+      <span className="font-bold text-3xl">
+        {amount} {amount ? symbol : ""}
+      </span>
+      {description && <p className="text-blue-700">{description}</p>}
+      {children}
+    </Card>
   );
 };
 
