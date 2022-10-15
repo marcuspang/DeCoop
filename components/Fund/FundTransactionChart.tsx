@@ -1,4 +1,5 @@
-import { useState } from "react";
+import router from "next/router";
+import { useEffect, useState } from "react";
 import {
   Line,
   LineChart,
@@ -7,6 +8,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { dummyTransactions } from "../../data/transactions";
 import { FundTransactionChartRow } from "../../pages/fund/[address]";
 import FundCard from "./FundCard";
 import { FundTransactionRow } from "./FundTransactionTable";
@@ -64,12 +66,47 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 interface FundTransactionChartProps {
-  data: FundTransactionChartRow[];
+  data: FundTransactionRow[];
 }
+
+const transformTransactionsData = (
+  transactions: FundTransactionRow[]
+): FundTransactionChartRow[] => {
+  const dateValuesMap: Record<string, FundTransactionChartRow> = {};
+  transactions.forEach((transaction) => {
+    const date = transaction.date.toLocaleDateString();
+    if (date in dateValuesMap) {
+      if (transaction.method === "Deposit") {
+        dateValuesMap[date].depositValue += transaction.value;
+      } else {
+        dateValuesMap[date].withdrawValue += transaction.value;
+      }
+      dateValuesMap[date].value += transaction.value;
+    } else {
+      dateValuesMap[date] = {
+        depositValue: transaction.method === "Deposit" ? transaction.value : 0,
+        withdrawValue:
+          transaction.method === "Withdrawal" ? transaction.value : 0,
+        date,
+        value: transaction.value,
+      };
+    }
+  });
+  return Object.values(dateValuesMap);
+};
 
 const FundTransactionChart = ({ data }: FundTransactionChartProps) => {
   const [showDeposits, setShowDeposits] = useState(true);
   const [showWithdrawals, setShowWithdrawals] = useState(true);
+  const [rows, setRows] = useState<FundTransactionChartRow[]>([]);
+
+  useEffect(() => {
+    if (data && router.query && router.query.address !== "default") {
+      setRows(transformTransactionsData(data));
+    } else if (router.query.address === "default") {
+      setRows(transformTransactionsData(dummyTransactions));
+    }
+  }, [data]);
 
   return (
     <FundCard title="Transactions over time">
@@ -109,7 +146,7 @@ const FundTransactionChart = ({ data }: FundTransactionChartProps) => {
           </div>
         </div>
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={data}>
+          <LineChart data={rows}>
             <XAxis dataKey="date" />
             <YAxis dataKey="value" />
             <Tooltip content={CustomTooltip} />
@@ -117,13 +154,11 @@ const FundTransactionChart = ({ data }: FundTransactionChartProps) => {
               dataKey="depositValue"
               hide={!showDeposits}
               stroke="#413ea0"
-              dot={null}
             />
             <Line
               dataKey="withdrawValue"
               hide={!showWithdrawals}
               stroke="#ff7300"
-              dot={null}
             />
           </LineChart>
         </ResponsiveContainer>

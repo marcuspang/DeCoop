@@ -23,33 +23,10 @@ export interface FundContribution {
 
 export interface FundTransactionChartRow {
   date: string;
-  address: string;
   value: number;
   depositValue: number;
   withdrawValue: number;
 }
-
-const transformTransactionsData = (transactions: FundTransactionRow[]) => {
-  return transactions.map((transaction) => {
-    if (transaction.method === "Deposit") {
-      return {
-        date: transaction.date.toLocaleDateString(),
-        address: transaction.address,
-        value: transaction.value,
-        depositValue: transaction.value,
-        withdrawValue: 0,
-      };
-    } else {
-      return {
-        date: transaction.date.toLocaleDateString(),
-        address: transaction.address,
-        value: transaction.value,
-        depositValue: 0,
-        withdrawValue: transaction.value,
-      };
-    }
-  });
-};
 
 const ViewFundPage = () => {
   const router = useRouter();
@@ -122,7 +99,7 @@ const ViewFundPage = () => {
         communityAddress={communityAddress}
         walletAddress={address}
       />
-      <FundTransactionChart data={transformTransactionsData(transactions)} />
+      <FundTransactionChart data={transactions} />
       <FundCard className={`${!data ? "rounded-b" : "rounded-b-none"}`}>
         <div className="flex justify-between items-center">
           <h3 className="font-bold text-xl">All Transactions</h3>

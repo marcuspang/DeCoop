@@ -14,7 +14,7 @@ const ViewFundsPage = () => {
 
   if (status !== "connected") {
     return (
-      <div className="w-full">
+      <div className="w-full lg:px-0 px-4">
         <Card title="Your Funds" className="mt-0">
           <p>Please sign in with your wallet to see your funds.</p>
           <Link href="/fund/default" passHref>
@@ -27,7 +27,17 @@ const ViewFundsPage = () => {
 
   if (isLoading) {
     return (
-      <div className="w-full">
+      <div className="w-full lg:px-0 px-4">
+        <div className="flex justify-end pt-3">
+          <FancyButton spanClassName="px-4 py-2 text-md">
+            <Link href={"/fund/new"} passHref>
+              <a>
+                <PlusIcon width={20} height={20} className="inline mr-2 mb-1" />
+                Create Fund
+              </a>
+            </Link>
+          </FancyButton>
+        </div>
         <Card title="Your Funds">
           <Spinner />
         </Card>

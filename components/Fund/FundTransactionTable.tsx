@@ -1,7 +1,9 @@
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/20/solid";
 import { useNetwork, useProvider } from "@web3modal/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { dummyTransactions } from "../../data/transactions";
 import { CommunityEvent } from "../../pages/api/events";
 import truncateEthAddress from "../../utils/truncateEthAddress";
 import Pagination from "../Layout/Pagination";
@@ -17,12 +19,23 @@ interface FundTransactionTableProps {
 }
 
 const FundTransactionTable = ({ data }: FundTransactionTableProps) => {
-  const { chain } = useNetwork();
-  const [pageIndex, setPageIndex] = useState(0);
   // no. of transactions in each page
   const PAGE_SIZE = 10;
   // no. of pages to display at any point of time
   const PAGE_COUNT = Math.ceil(data.length / PAGE_SIZE);
+
+  const router = useRouter();
+  const { chain } = useNetwork();
+  const [pageIndex, setPageIndex] = useState(0);
+  const [rows, setRows] = useState<FundTransactionRow[]>([]);
+
+  useEffect(() => {
+    if (data && router.query && router.query.address !== "default") {
+      setRows(data);
+    } else if (router.query && router.query.address === "default") {
+      setRows(dummyTransactions);
+    }
+  }, [data, router.query]);
 
   return (
     <>
@@ -50,84 +63,59 @@ const FundTransactionTable = ({ data }: FundTransactionTableProps) => {
             </tr>
           </thead>
           <tbody>
-            {data && data.length !== 0 ? (
-              data
-                .slice(pageIndex * PAGE_SIZE, (pageIndex + 1) * PAGE_SIZE)
-                .map((transaction, index) => (
-                  <tr
-                    className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                    key={index}
+            {rows
+              .slice(pageIndex * PAGE_SIZE, (pageIndex + 1) * PAGE_SIZE)
+              .map((transaction, index) => (
+                <tr
+                  className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                  key={index}
+                >
+                  <td
+                    scope="row"
+                    className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                   >
-                    <td
-                      scope="row"
-                      className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                    <Link href={"/profile/" + transaction.from} passHref>
+                      <a className="link">
+                        {truncateEthAddress(transaction.from)}
+                      </a>
+                    </Link>
+                  </td>
+                  <td className="py-4 px-6">
+                    {(transaction.date || new Date()).toLocaleDateString()}
+                  </td>
+                  <td
+                    className={`py-4 px-6 font-bold ${
+                      transaction.method === "Deposit"
+                        ? "text-green-600"
+                        : "text-red-600"
+                    }`}
+                  >
+                    {transaction.method}
+                  </td>
+                  <td className="py-4 px-6">{transaction.value}</td>
+                  <td className="text-left">
+                    <Link
+                      href={`https://${
+                        chain?.network || "goerli"
+                      }.etherscan.io/tx/${transaction.address}`}
+                      passHref
                     >
-                      <Link href={"/profile/" + transaction.from} passHref>
-                        <a className="link">
-                          {truncateEthAddress(transaction.from)}
-                        </a>
-                      </Link>
-                    </td>
-                    <td className="py-4 px-6">
-                      {(transaction.date || new Date()).toLocaleDateString()}
-                    </td>
-                    <td
-                      className={`py-4 px-6 font-bold ${
-                        transaction.method === "Deposit"
-                          ? "text-green-600"
-                          : "text-red-600"
-                      }`}
-                    >
-                      {transaction.method}
-                    </td>
-                    <td className="py-4 px-6">{transaction.value}</td>
-                    <td className="text-left">
-                      <Link
-                        href={`https://${
-                          chain?.network || "goerli"
-                        }.etherscan.io/tx/${transaction.address}`}
-                        passHref
-                      >
-                        <a className="link" target={"_blank"} rel="noopener">
-                          <ArrowTopRightOnSquareIcon
-                            height={16}
-                            width={16}
-                            className="inline-block ml-1 mb-1"
-                          />
-                        </a>
-                      </Link>
-                    </td>
-                  </tr>
-                ))
-            ) : (
-              <tr>
-                <td>
-                  <div className="flex p-2">
-                    <Spinner />
-                  </div>
-                </td>
-                <td>
-                  <div className="flex p-2">
-                    <Spinner />
-                  </div>
-                </td>
-                <td>
-                  <div className="flex p-2">
-                    <Spinner />
-                  </div>
-                </td>
-                <td>
-                  <div className="flex p-2">
-                    <Spinner />
-                  </div>
-                </td>
-              </tr>
-            )}
+                      <a className="link" target={"_blank"} rel="noopener">
+                        <ArrowTopRightOnSquareIcon
+                          height={16}
+                          width={16}
+                          className="inline-block ml-1 mb-1"
+                        />
+                      </a>
+                    </Link>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>
       <Pagination
-        data={data}
+        data={rows}
         pageCount={PAGE_COUNT}
         pageIndex={pageIndex}
         setPageIndex={setPageIndex}
