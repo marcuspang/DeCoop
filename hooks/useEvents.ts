@@ -11,7 +11,7 @@ const fetchCommunityEvents = (community: string, walletAddress: string) => {
   ).then((res) => res.json() as Promise<CommunityEvents>);
 };
 
-const useCommunityEvents = (community: string, walletAddress?: string) => {
+const useEvents = (community: string, walletAddress?: string) => {
   return useQuery(
     ["communityEvents", community, walletAddress],
     () => fetchCommunityEvents(community, walletAddress),
@@ -19,4 +19,4 @@ const useCommunityEvents = (community: string, walletAddress?: string) => {
   );
 };
 
-export default useCommunityEvents;
+export default useEvents;

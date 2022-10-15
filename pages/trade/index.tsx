@@ -1,14 +1,9 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
 import { useAccount } from "@web3modal/react";
-import communities, { Community } from "../api/communities";
-import FundCard from "../../components/Fund/FundCard";
 import Link from "next/link";
-import CommunityItem from "../../components/Community/CommunityItem";
-import useUserCommunity from "../../hooks/useUserCommunity";
+import FundListCard from "../../components/Fund/FundListCard";
 import Card from "../../components/Layout/Card";
 import Spinner from "../../components/Layout/Spinner";
-import FundListCard from "../../components/Fund/FundListCard";
+import useUserCommunity from "../../hooks/useUserCommunity";
 
 const TradeMainPage = () => {
   const { address, status } = useAccount();

@@ -1,6 +1,7 @@
 import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from "recharts";
 import colors from "tailwindcss/colors";
 import { FundContribution } from "../../pages/fund/[address]";
+import truncateEthAddress from "../../utils/truncateEthAddress";
 
 const COLORS = Object.values(colors.blue);
 
@@ -89,8 +90,10 @@ const CustomTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
     return (
       <div className="bg-white p-4 rounded-lg shadow-lg">
-        <span className="font-bold">{payload[0].name}: </span>
-        <span>{payload[0].value}</span>
+        <span className="font-bold">
+          {truncateEthAddress(payload[0].name)}:{" "}
+        </span>
+        <span>{payload[0].value.toFixed(8)}</span>
       </div>
     );
   }

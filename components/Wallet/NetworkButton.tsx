@@ -23,7 +23,7 @@ const NetworkButton = ({ className }: NetworkButtonProps) => {
         id="menu-button"
         type="button"
       >
-        {chain?.name || "Ethereum"}
+        {chain?.name || "Goerli"}
         <ChevronDownIcon className="-mr-1 ml-2 h-5 w-5" aria-hidden="true" />
       </Menu.Button>
 

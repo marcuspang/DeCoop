@@ -14,7 +14,6 @@
     "@tanstack/react-query": "^4.12.0",
     "@web3modal/ethereum": "^2.0.0-alpha.6",
     "@web3modal/react": "^2.0.0-alpha.6",
-    "axios": "^1.1.2",
     "ethers": "^5.7.1",
     "moralis": "^2.6.4",
     "next": "12.3.1",

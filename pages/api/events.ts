@@ -18,17 +18,18 @@ export interface CommunityEvents {
   withdrawals: CommunityEvent[];
 }
 
+// If walletAddress is null, events from all communities are retrieved
 export async function getEvents(
-  community: string,
-  address: string | null
+  communityAddress: string,
+  walletAddress: string | null
 ): Promise<CommunityEvents> {
   const communityContract = new ethers.Contract(
-    community,
+    communityAddress,
     abi,
     new ethers.providers.InfuraProvider("goerli", process.env.INFURA_API_KEY)
   );
   const depositEvents = await communityContract.queryFilter(
-    communityContract.filters.Deposit(address)
+    communityContract.filters.Deposit(walletAddress)
   );
   const deposits = depositEvents.map((deposit) => ({
     blockNumber: deposit.blockNumber,
@@ -38,7 +39,7 @@ export async function getEvents(
   }));
 
   const withdrawalEvents = await communityContract.queryFilter(
-    communityContract.filters.Withdraw(address)
+    communityContract.filters.Withdraw(walletAddress)
   );
   const withdrawals = withdrawalEvents.map((withdrawal) => ({
     blockNumber: withdrawal.blockNumber,
@@ -70,5 +71,5 @@ export default async function handler(
     const events = await getEvents(community, address);
     return res.status(200).send(events);
   }
-  return res.status(200).send({});
+  return res.status(404).send({});
 }

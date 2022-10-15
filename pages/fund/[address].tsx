@@ -14,38 +14,41 @@ import FundTransactionTable, {
   FundTransactionRow,
 } from "../../components/Fund/FundTransactionTable";
 import FancyButton from "../../components/Layout/FancyButton";
-import useCommunityEvents from "../../hooks/useCommunityEvents";
-import { CommunityEvents } from "../api/events";
+import useEvents from "../../hooks/useEvents";
 
 export interface FundContribution {
   name: string;
   value: number;
 }
 
-const transformEvents = (events: CommunityEvents) => {
-  let rows: FundTransactionRow[] = [];
-  if (events) {
-    if (events.deposits && events.deposits.length !== 0) {
-      for (const event of events.deposits) {
-        rows.push({
-          ...event,
-          method: "Deposit",
-          date: null,
-        });
-      }
-    }
+export interface FundTransactionChartRow {
+  date: string;
+  address: string;
+  value: number;
+  depositValue: number;
+  withdrawValue: number;
+}
 
-    if (events.withdrawals && events.withdrawals.length !== 0) {
-      for (const event of events.withdrawals) {
-        rows.push({
-          ...event,
-          method: "Withdrawal",
-          date: null,
-        });
-      }
+const transformTransactionsData = (transactions: FundTransactionRow[]) => {
+  return transactions.map((transaction) => {
+    if (transaction.method === "Deposit") {
+      return {
+        date: transaction.date.toLocaleDateString(),
+        address: transaction.address,
+        value: transaction.value,
+        depositValue: transaction.value,
+        withdrawValue: 0,
+      };
+    } else {
+      return {
+        date: transaction.date.toLocaleDateString(),
+        address: transaction.address,
+        value: transaction.value,
+        depositValue: 0,
+        withdrawValue: transaction.value,
+      };
     }
-  }
-  return rows;
+  });
 };
 
 const ViewFundPage = () => {
@@ -53,9 +56,9 @@ const ViewFundPage = () => {
   const provider = useProvider();
   const { address } = useAccount();
   const [communityAddress, setCommunityAddress] = useState("");
-  const { data } = useCommunityEvents(communityAddress, address);
-  
-  const [rows, setRows] = useState<FundTransactionRow[]>([]);
+  const { data } = useEvents(communityAddress, address);
+
+  const [transactions, setTransactions] = useState<FundTransactionRow[]>([]);
 
   useEffect(() => {
     if (router.query && router.query.address) {
@@ -67,11 +70,11 @@ const ViewFundPage = () => {
   useEffect(() => {
     const updateRows = async () => {
       if (data && provider) {
-        let transactionRows: FundTransactionRow[] = [];
+        let newTransactions: FundTransactionRow[] = [];
         if (data.deposits && data.deposits.length !== 0) {
           for (const event of data.deposits) {
             const block = await provider.getBlock(event.blockNumber);
-            transactionRows.push({
+            newTransactions.push({
               ...event,
               method: "Deposit",
               date: new Date(block.timestamp * 1000),
@@ -82,14 +85,14 @@ const ViewFundPage = () => {
         if (data.withdrawals && data.withdrawals.length !== 0) {
           for (const event of data.withdrawals) {
             const block = await provider.getBlock(event.blockNumber);
-            transactionRows.push({
+            newTransactions.push({
               ...event,
               method: "Withdrawal",
               date: new Date(block.timestamp * 1000),
             });
           }
         }
-        setRows(transactionRows);
+        setTransactions(newTransactions);
       }
     };
     updateRows();
@@ -119,7 +122,7 @@ const ViewFundPage = () => {
         communityAddress={communityAddress}
         walletAddress={address}
       />
-      <FundTransactionChart />
+      <FundTransactionChart data={transformTransactionsData(transactions)} />
       <FundCard className={`${!data ? "rounded-b" : "rounded-b-none"}`}>
         <div className="flex justify-between items-center">
           <h3 className="font-bold text-xl">All Transactions</h3>
@@ -129,7 +132,7 @@ const ViewFundPage = () => {
           </button>
         </div>
       </FundCard>
-      <FundTransactionTable data={rows} />
+      <FundTransactionTable data={transactions} />
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import useCommunity from "../../hooks/useCommunity";
-import useCommunityEvents from "../../hooks/useCommunityEvents";
+import useEvents from "../../hooks/useEvents";
+import { CommunityEvents } from "../../pages/api/events";
 import { FundContribution } from "../../pages/fund/[address]";
 import truncateEthAddress from "../../utils/truncateEthAddress";
 import FundCard from "./FundCard";
@@ -19,43 +20,42 @@ interface FundDistributionProps {
   walletAddress: string;
 }
 
+const transformEventsData = (events: CommunityEvents) => {
+  let dist: FundContribution[] = [];
+  if (events && events.deposits) {
+    const addressValueDict: Record<string, number> = {};
+
+    for (const deposit of events.deposits) {
+      if (!addressValueDict[deposit.from]) addressValueDict[deposit.from] = 0;
+      addressValueDict[deposit.from] += deposit.value;
+    }
+
+    for (const withdrawal of events.withdrawals) {
+      if (!addressValueDict[withdrawal.from])
+        addressValueDict[withdrawal.from] = 0;
+      addressValueDict[withdrawal.from] -= withdrawal.value;
+    }
+
+    for (const address in addressValueDict) {
+      dist.push({
+        name: address,
+        value: addressValueDict[address],
+      });
+    }
+  }
+  return dist;
+};
+
 const FundContributions = ({
   communityAddress,
   walletAddress,
 }: FundDistributionProps) => {
-  const { data: events } = useCommunityEvents(communityAddress, walletAddress);
+  const { data: events } = useEvents(communityAddress, walletAddress);
 
   return (
     <div className="flex flex-wrap lg:flex-nowrap justify-between space-x-3">
       <FundCard title="All Contributors">
-        <FundDistributionChart
-          data={(() => {
-            if (events && events.deposits) {
-              const dict = {};
-              for (const deposit of events.deposits) {
-                if (!dict[deposit.address]) dict[deposit.address] = 0;
-                dict[deposit.address] += deposit.value;
-              }
-
-              for (const withdrawal of events.withdrawals) {
-                if (!dict[withdrawal.address]) dict[withdrawal.address] = 0;
-                dict[withdrawal.address] -= withdrawal.value;
-              }
-
-              let dist: FundContribution[] = [];
-
-              for (const address in dict) {
-                dist.push({
-                  name: truncateEthAddress(address),
-                  value: dict[address],
-                });
-              }
-
-              return dist;
-            }
-            return [];
-          })()}
-        />
+        <FundDistributionChart data={transformEventsData(events)} />
       </FundCard>
       <FundCard title="Contribution Credit Scores">
         <FundCreditScores data={data} />

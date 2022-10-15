@@ -15,6 +15,8 @@ const communityAbi = [
 
 const balanceAbi = ["function balanceOf(address owner) view returns (uint256)"];
 
+export const COMMUNITY_FACTORY_ADDRESS: string = process.env.COMMUNITY_FACTORY;
+
 export async function getAllCommunities(
   communityFactory: string
 ): Promise<string[]> {
@@ -81,17 +83,15 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "GET") {
-    const communityFactory: string = process.env.COMMUNITY_FACTORY;
-    if (req.query.wallet === undefined || req.query.wallet === "") {
+    if (req.query.address === undefined || req.query.address === "") {
       return res
         .status(400)
         .send(createErrorResponse("Invalid wallet address"));
     }
     try {
-      const wallet = req.query.wallet.toString();
       const communities = await getCommunitiesForPerson(
-        communityFactory,
-        wallet
+        COMMUNITY_FACTORY_ADDRESS,
+        req.query.address.toString()
       );
 
       return res.status(200).send(communities);
@@ -100,5 +100,5 @@ export default async function handler(
       return res.status(400).send(error);
     }
   }
-  return res.status(200).send({});
+  return res.status(404).send({});
 }

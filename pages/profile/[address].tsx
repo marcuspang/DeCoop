@@ -1,8 +1,8 @@
-import { useAccount, useBalance } from "@web3modal/react";
-import axios from "axios";
+import { useBalance } from "@web3modal/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import FundCard from "../../components/Fund/FundCard";
+import useCreditScore from "../../hooks/useCreditScore";
 
 const ProfilePage = () => {
   const router = useRouter();
@@ -11,26 +11,13 @@ const ProfilePage = () => {
   const { data: balanceData, isLoading: balanceIsLoading } = useBalance({
     addressOrName: address,
   });
-  const [isLoading, setIsLoading] = useState(true);
-  const [creditScore, setCreditScore] = useState(0);
+  const { data, error, isLoading } = useCreditScore(address);
 
   useEffect(() => {
     if (router.query && router.query.address) {
       setAddress(router.query.address.toString());
     }
   }, [router.query]);
-
-  useEffect(() => {
-    setIsLoading(true);
-    if (address !== "") {
-      axios.post("/api/credit_score", { address }).then((res) => {
-        if (res.data.creditScore !== undefined) {
-          setCreditScore(res.data.creditScore);
-          setIsLoading(false);
-        }
-      });
-    }
-  }, [address]);
 
   return (
     <div className="w-full">
@@ -54,7 +41,7 @@ const ProfilePage = () => {
       </div>
       <FundCard
         title="Credit Score"
-        amount={creditScore}
+        amount={data?.creditScore.toFixed(8)}
         symbol=""
         isLoading={isLoading}
       ></FundCard>

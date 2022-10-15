@@ -2,7 +2,7 @@ import { useProvider } from "@web3modal/react";
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import useCommunity from "../../hooks/useCommunity";
-import useCommunityEvents from "../../hooks/useCommunityEvents";
+import useEvents from "../../hooks/useEvents";
 import { CommunityEvent } from "../../pages/api/events";
 import truncateEthAddress from "../../utils/truncateEthAddress";
 import FundCard from "./FundCard";
@@ -43,7 +43,7 @@ const FundStatistics = ({
 
   const { data: communityData, isLoading: isCommunityLoading } =
     useCommunity(communityAddress);
-  const { data: events, isLoading: isEventsLoading } = useCommunityEvents(
+  const { data: events, isLoading: isEventsLoading } = useEvents(
     communityAddress,
     walletAddress
   );

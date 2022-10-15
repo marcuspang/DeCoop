@@ -7,7 +7,9 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { FundTransactionChartRow } from "../../pages/fund/[address]";
 import FundCard from "./FundCard";
+import { FundTransactionRow } from "./FundTransactionTable";
 
 export const composedChartData = [
   {
@@ -52,8 +54,8 @@ const CustomTooltip = ({ active, payload, label }) => {
     return (
       <div className="bg-white p-4 rounded-lg shadow-lg">
         <p className="font-bold">Time: {label}</p>
-        <p>BTC: {payload[0].value}</p>
-        <p>ETH: {payload[1].value}</p>
+        <p>Deposit(s): {payload[0].value}</p>
+        <p>Withdrawal(s): {payload[1].value}</p>
       </div>
     );
   }
@@ -61,9 +63,13 @@ const CustomTooltip = ({ active, payload, label }) => {
   return null;
 };
 
-const FundTransactionChart = () => {
-  const [showBTC, setShowBTC] = useState(true);
-  const [showETH, setShowETH] = useState(true);
+interface FundTransactionChartProps {
+  data: FundTransactionChartRow[];
+}
+
+const FundTransactionChart = ({ data }: FundTransactionChartProps) => {
+  const [showDeposits, setShowDeposits] = useState(true);
+  const [showWithdrawals, setShowWithdrawals] = useState(true);
 
   return (
     <FundCard title="Transactions over time">
@@ -71,44 +77,54 @@ const FundTransactionChart = () => {
         <div className="flex flex-wrap space-x-4 justify-end">
           <div className="flex items-center mb-4">
             <input
-              id="btc-checkbox"
+              id="deposits-checkbox"
               type="checkbox"
-              checked={showBTC}
-              className="w-4 h-4 cursor-pointer text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-              onChange={() => setShowBTC((prev) => !prev)}
+              checked={showDeposits}
+              className="w-4 h-4 cursor-pointer text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600"
+              onChange={() => setShowDeposits((prev) => !prev)}
             />
             <label
-              htmlFor="btc-checkbox"
+              htmlFor="deposits-checkbox"
               className="ml-2 text-md font-medium text-gray-900 dark:text-gray-300"
             >
-              BTC
+              Deposits
             </label>
           </div>
           <div>
             <div className="flex items-center mb-4">
               <input
-                id="eth-checkbox"
+                id="withdrawals-checkbox"
                 type="checkbox"
-                checked={showETH}
-                className="w-4 h-4 cursor-pointer text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                onChange={() => setShowETH((prev) => !prev)}
+                checked={showWithdrawals}
+                className="w-4 h-4 cursor-pointer text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-1 dark:bg-gray-700 dark:border-gray-600"
+                onChange={() => setShowWithdrawals((prev) => !prev)}
               />
               <label
-                htmlFor="eth-checkbox"
+                htmlFor="withdrawals-checkbox"
                 className="ml-2 text-md font-medium text-gray-900 dark:text-gray-300"
               >
-                ETH
+                Withdrawals
               </label>
             </div>
           </div>
         </div>
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={composedChartData}>
-            <XAxis dataKey="name" />
-            <YAxis />
+          <LineChart data={data}>
+            <XAxis dataKey="date" />
+            <YAxis dataKey="value" />
             <Tooltip content={CustomTooltip} />
-            <Line dataKey="btc" hide={!showBTC} stroke="#413ea0" dot={null} />
-            <Line dataKey="eth" hide={!showETH} stroke="#ff7300" dot={null} />
+            <Line
+              dataKey="depositValue"
+              hide={!showDeposits}
+              stroke="#413ea0"
+              dot={null}
+            />
+            <Line
+              dataKey="withdrawValue"
+              hide={!showWithdrawals}
+              stroke="#ff7300"
+              dot={null}
+            />
           </LineChart>
         </ResponsiveContainer>
       </div>

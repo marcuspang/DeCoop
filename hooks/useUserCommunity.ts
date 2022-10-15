@@ -1,16 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 
-const fetchUserCommunity = (walletAddress: string) => {
-  return fetch("/api/communities?wallet=" + walletAddress).then(
+const fetchUserCommunity = (address: string) => {
+  return fetch("/api/communities?address=" + address).then(
     (res) => res.json() as Promise<string[]>
   );
 };
 
-const useUserCommunity = (walletAddress: string) => {
+const useUserCommunity = (address: string) => {
   return useQuery(
-    ["userCommunities", walletAddress],
-    () => fetchUserCommunity(walletAddress),
-    { enabled: walletAddress !== "" }
+    ["userCommunities", address],
+    () => fetchUserCommunity(address),
+    { enabled: address !== "" }
   );
 };
 
