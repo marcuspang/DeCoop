@@ -20,7 +20,7 @@ const TradePage = () => {
   }, [router.query]);
 
   return (
-    <div className="w-full">
+    <div className="w-full lg:px-0 px-4">
       <div className="flex justify-end pt-3">
         <FancyButton spanClassName="px-4 py-2 text-md">
           <Link href={"/fund/" + communityAddress} passHref>
@@ -38,7 +38,7 @@ const TradePage = () => {
       <div className="bg-white rounded-md shadow px-4 mt-3">
         <h1 className="pt-4 pb-5 font-bold text-2xl">
           {tabSelected === "deposit" ? "Depositing to " : "Withdrawing from "}{" "}
-          <span className="font-semibold">{communityAddress}</span>
+          <span className="font-semibold break-all">{communityAddress}</span>
         </h1>
         <TradeTabs tabSelected={tabSelected} setTabSelected={setTabSelected} />
         <TradeForm

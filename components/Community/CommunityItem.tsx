@@ -9,7 +9,7 @@ const CommunityItem = ({ address, baseURL }: CommunityItemProps) => {
   return (
     <li>
       <Link href={baseURL + address} passHref>
-        <a className="link">
+        <a className="link break-all">
           {address}
         </a>
       </Link>

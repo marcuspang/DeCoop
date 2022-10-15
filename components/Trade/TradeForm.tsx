@@ -1,7 +1,8 @@
-import { useAccount } from "@web3modal/react";
+import { useAccount, useNetwork } from "@web3modal/react";
 import error from "next/error";
 import { FormEventHandler, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
+import { chain } from "wagmi";
 import useCommunity from "../../hooks/useCommunity";
 import useDeposit from "../../hooks/useDeposit";
 import useWithdraw from "../../hooks/useWithdraw";
@@ -31,6 +32,7 @@ const TradeForm = ({ communityAddress, tabSelected }: TradeFormProps) => {
   const [isDepositing, setIsDepositing] = useState(false);
   const [isWithdrawing, setIsWithdrawing] = useState(false);
 
+  const { chain } = useNetwork();
   const { address: walletAddress } = useAccount();
   const { data } = useCommunity(communityAddress);
   const {
@@ -66,7 +68,9 @@ const TradeForm = ({ communityAddress, tabSelected }: TradeFormProps) => {
       const response = await deposit(+tokenAmountRef.current.value);
       if (response) {
         toast(
-          `Deposit executed! See your transaction here https://goerli.etherscan.io/tx/${response.hash}`
+          `Deposit executed! See your transaction here https://${
+            chain.network || "goerli"
+          }.etherscan.io/tx/${response.hash}`
         );
       }
       setIsDepositing(true);
@@ -74,7 +78,9 @@ const TradeForm = ({ communityAddress, tabSelected }: TradeFormProps) => {
       const response = await withdraw(+tokenAmountRef.current.value);
       if (response) {
         toast(
-          `Withdraw executed! See your transaction here https://goerli.etherscan.io/tx/${response.hash}`
+          `Withdraw executed! See your transaction here https://${
+            chain.network || "goerli"
+          }.etherscan.io/tx/${response.hash}`
         );
       }
       setIsWithdrawing(true);
@@ -116,7 +122,8 @@ const TradeForm = ({ communityAddress, tabSelected }: TradeFormProps) => {
           type="text"
           ref={tokenAddressRef}
           defaultValue={data?.tokenAddress}
-          className="block p-4 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          disabled
+          className="block p-4 w-full text-gray-500 bg-gray-50 rounded-lg border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         />
       </div>
 

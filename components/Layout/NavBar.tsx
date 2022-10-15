@@ -13,7 +13,7 @@ const NavBar = () => {
         <Link href={"/"} passHref>
           <a className="flex-none lg:flex-initial font-bold">DeCoop</a>
         </Link>
-        <Search search={search} setSearch={setSearch} />
+        {/* <Search search={search} setSearch={setSearch} /> */}
 
         <DesktopNavBar />
         <MobileNavBar />

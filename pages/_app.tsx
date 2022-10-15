@@ -45,7 +45,7 @@ function App({ Component, pageProps }) {
     } else {
       document.documentElement.classList.remove("dark");
     }
-    // hardcode to be light mode for now
+    // Hardcode to be light mode for now
     localStorage.theme = "light";
   }, []);
 
@@ -53,15 +53,15 @@ function App({ Component, pageProps }) {
     <QueryClientProvider client={queryClient}>
       <Layout>
         <Component {...pageProps} />
+        <Web3Modal config={modalConfig} />
+        <ToastContainer
+          autoClose={3000}
+          position="bottom-center"
+          pauseOnFocusLoss
+          hideProgressBar
+          closeOnClick={false}
+        />
       </Layout>
-      <Web3Modal config={modalConfig} />
-      <ToastContainer
-        autoClose={3000}
-        position="bottom-center"
-        pauseOnFocusLoss
-        hideProgressBar
-        closeOnClick={false}
-      />
     </QueryClientProvider>
   );
 }

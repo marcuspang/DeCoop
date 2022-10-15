@@ -1,4 +1,4 @@
-import { useProvider } from "@web3modal/react";
+import { useNetwork, useProvider } from "@web3modal/react";
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import useCommunity from "../../hooks/useCommunity";
@@ -40,6 +40,7 @@ const FundStatistics = ({
   const provider = useProvider();
   const [latestDepositTimestamp, setLatestDepositTimestamp] = useState(0);
   const [latestWithdrawalTimestamp, setLatestWithdrawalTimestamp] = useState(0);
+  const { chain } = useNetwork();
 
   const { data: communityData, isLoading: isCommunityLoading } =
     useCommunity(communityAddress);
@@ -67,7 +68,7 @@ const FundStatistics = ({
 
   if (isCommunityLoading || isEventsLoading) {
     return (
-      <div className="flex flex-wrap lg:flex-nowrap justify-between space-x-3">
+      <div className="flex flex-wrap lg:flex-nowrap justify-between ;lg:space-x-3 space-x-0">
         <FundCard title="Current Balance" isLoading={isCommunityLoading} />
         <FundCard title="Latest Deposit" isLoading={isEventsLoading} />
         <FundCard title="Latest Withdrawal" isLoading={isEventsLoading} />
@@ -77,7 +78,7 @@ const FundStatistics = ({
 
   if (!communityData || !events) {
     return (
-      <div className="flex flex-wrap lg:flex-nowrap justify-between space-x-3">
+      <div className="flex flex-wrap lg:flex-nowrap justify-between lg:space-x-3 space-x-0">
         <FundCard
           title="Current Balance"
           symbol={defaults.symbol}
@@ -104,7 +105,7 @@ const FundStatistics = ({
   ];
 
   return (
-    <div className="flex flex-wrap lg:flex-nowrap justify-between space-x-3">
+    <div className="flex flex-wrap lg:flex-nowrap justify-between lg:space-x-3 space-x-0">
       <FundCard
         title="Current Balance"
         symbol={tokenSymbol || defaults.symbol}
@@ -116,9 +117,9 @@ const FundStatistics = ({
         symbol={tokenSymbol || defaults.symbol}
         amount={latestDeposit?.value || defaults.latestDeposit}
         description={formatTransaction(latestDeposit, latestDepositTimestamp)}
-        descriptionLink={
-          "https://goerli.etherscan.io/address/" + latestDeposit.address
-        }
+        descriptionLink={`https://${
+          chain?.network || "goerli"
+        }.etherscan.io/address/${latestDeposit.address}`}
         isLoading={isEventsLoading}
       />
       <FundCard
