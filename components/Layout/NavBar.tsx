@@ -10,7 +10,7 @@ const NavBar = () => {
 
   return (
     <nav className="bg-white border-b-2">
-      <div className="flex items-center space-x-8 py-3 px-4 max-w-screen-xl mx-auto">
+      <div className="flex items-center space-x-8 py-3 px-4 max-w-screen-xl mx-auto hover:opacity-70 transition-opacity">
         <Link href={"/"} passHref>
           <a className="flex font-bold items-center space-x-2">
             <Image src={"/logo.png"} alt="DeCoop Logo" width={30} height={30} />
