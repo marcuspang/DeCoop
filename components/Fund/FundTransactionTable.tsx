@@ -17,31 +17,11 @@ interface FundTransactionTableProps {
 }
 
 const FundTransactionTable = ({ data }: FundTransactionTableProps) => {
-  const provider = useProvider();
   const [pageIndex, setPageIndex] = useState(0);
-  const [rows, setRows] = useState(data);
   // no. of transactions in each page
   const PAGE_SIZE = 10;
   // no. of pages to display at any point of time
   const PAGE_COUNT = Math.ceil(data.length / PAGE_SIZE);
-
-  useEffect(() => {
-    const updateRows = async () => {
-      if (provider && rows.length !== 0) {
-        // @ts-ignore
-        // FIXME: need to convert block number to date
-        setRows((prev) =>
-          Promise.all(
-            prev.map(async (row) => {
-              const block = await provider.getBlock(row.blockNumber);
-              return { ...row, date: new Date(block.timestamp * 1000) };
-            })
-          )
-        );
-      }
-    };
-    updateRows();
-  }, [data, provider]);
 
   return (
     <>

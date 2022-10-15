@@ -2,7 +2,7 @@ import {
   ArrowDownTrayIcon,
   ArrowsRightLeftIcon,
 } from "@heroicons/react/20/solid";
-import { useAccount } from "@web3modal/react";
+import { useAccount, useProvider } from "@web3modal/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -50,16 +50,50 @@ const transformEvents = (events: CommunityEvents) => {
 
 const ViewFundPage = () => {
   const router = useRouter();
+  const provider = useProvider();
   const { address } = useAccount();
   const [communityAddress, setCommunityAddress] = useState("");
-
   const { data } = useCommunityEvents(communityAddress, address);
+  
+  const [rows, setRows] = useState<FundTransactionRow[]>([]);
 
   useEffect(() => {
     if (router.query && router.query.address) {
       setCommunityAddress(router.query.address.toString());
     }
   }, [router.query]);
+
+  // Update the date of the transactions to the proper datetime value using block number
+  useEffect(() => {
+    const updateRows = async () => {
+      if (data && provider) {
+        let transactionRows: FundTransactionRow[] = [];
+        if (data.deposits && data.deposits.length !== 0) {
+          for (const event of data.deposits) {
+            const block = await provider.getBlock(event.blockNumber);
+            transactionRows.push({
+              ...event,
+              method: "Deposit",
+              date: new Date(block.timestamp * 1000),
+            });
+          }
+        }
+
+        if (data.withdrawals && data.withdrawals.length !== 0) {
+          for (const event of data.withdrawals) {
+            const block = await provider.getBlock(event.blockNumber);
+            transactionRows.push({
+              ...event,
+              method: "Withdrawal",
+              date: new Date(block.timestamp * 1000),
+            });
+          }
+        }
+        setRows(transactionRows);
+      }
+    };
+    updateRows();
+  }, [data, provider]);
 
   return (
     <div className="w-full px-4">
@@ -95,7 +129,7 @@ const ViewFundPage = () => {
           </button>
         </div>
       </FundCard>
-      <FundTransactionTable data={transformEvents(data)} />
+      <FundTransactionTable data={rows} />
     </div>
   );
 };
