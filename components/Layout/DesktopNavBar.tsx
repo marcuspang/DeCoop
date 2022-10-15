@@ -1,4 +1,3 @@
-import { useState } from "react";
 import NetworkButton from "../Wallet/NetworkButton";
 import { Wallet } from "../Wallet/Wallet";
 
