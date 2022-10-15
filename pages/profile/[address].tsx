@@ -20,7 +20,7 @@ const ProfilePage = () => {
   }, [router.query]);
 
   return (
-    <div className="w-full lg:px-0 px-4">
+    <div className="w-full lg:pl-0 px-4">
       <div className="flex flex-wrap lg:flex-nowrap justify-between lg:space-x-3 space-x-0">
         <FundCard
           amount={+balanceData?.formatted.slice(0, 6) || 0}

@@ -76,7 +76,7 @@ const ViewFundPage = () => {
   }, [data, provider]);
 
   return (
-    <div className="w-full lg:px-0 px-4">
+    <div className="w-full lg:pl-0 px-4">
       <div className="flex justify-end pt-3">
         <FancyButton spanClassName="px-4 py-2 text-md">
           <Link href={"/trade/" + communityAddress} passHref>

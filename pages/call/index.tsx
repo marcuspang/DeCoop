@@ -30,7 +30,7 @@ function Page() {
   }, [router.query, address]);
 
   return (
-    <div className="w-full lg:px-0 px-4">
+    <div className="w-full lg:pl-0 px-4">
       {address == "" ? (
         <div> Please connect your wallet </div>
       ) : (

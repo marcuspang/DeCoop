@@ -11,7 +11,7 @@ const TradeMainPage = () => {
 
   if (status !== "connected") {
     return (
-      <div className="w-full lg:px-0 px-4">
+      <div className="w-full lg:pl-0 px-4">
         <Card title="Your Funds" className="mt-0">
           <div>
             <p>Please sign in with your wallet to see your funds.</p>
@@ -26,7 +26,7 @@ const TradeMainPage = () => {
 
   if (isLoading) {
     return (
-      <div className="w-full lg:px-0 px-4">
+      <div className="w-full lg:pl-0 px-4">
         <Card title="Your Funds">
           <Spinner />
         </Card>
@@ -35,7 +35,7 @@ const TradeMainPage = () => {
   }
 
   return (
-    <div className="w-full lg:px-0 px-4">
+    <div className="w-full lg:pl-0 px-4">
       <FundListCard
         defaultUrl="/fund/default"
         title="Click on a fund to deposit/withdraw from"
