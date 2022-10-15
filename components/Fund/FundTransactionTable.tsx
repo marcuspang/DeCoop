@@ -2,15 +2,14 @@ import { ArrowTopRightOnSquareIcon } from "@heroicons/react/20/solid";
 import { useProvider } from "@web3modal/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { CommunityEvent } from "../../pages/api/events";
+import truncateEthAddress from "../../utils/truncateEthAddress";
 import Pagination from "../Layout/Pagination";
 import Spinner from "../Layout/Spinner";
 
-export interface FundTransactionRow {
-  address: string;
-  blockNumber: number;
+export interface FundTransactionRow extends CommunityEvent {
   date: Date;
   method: "Deposit" | "Withdrawal";
-  amount: number;
 }
 
 interface FundTransactionTableProps {
@@ -22,7 +21,7 @@ const FundTransactionTable = ({ data }: FundTransactionTableProps) => {
   const [pageIndex, setPageIndex] = useState(0);
   const [rows, setRows] = useState(data);
   // no. of transactions in each page
-  const PAGE_SIZE = 3;
+  const PAGE_SIZE = 10;
   // no. of pages to display at any point of time
   const PAGE_COUNT = Math.ceil(data.length / PAGE_SIZE);
 
@@ -62,6 +61,7 @@ const FundTransactionTable = ({ data }: FundTransactionTableProps) => {
               <th scope="col" className="py-3 px-6">
                 Amount
               </th>
+              <th scope="col">View Tx</th>
             </tr>
           </thead>
           <tbody>
@@ -80,12 +80,12 @@ const FundTransactionTable = ({ data }: FundTransactionTableProps) => {
                       <Link
                         href={
                           "https://goerli.etherscan.io/address/" +
-                          transaction.address
+                          transaction.from
                         }
                         passHref
                       >
                         <a className="link" target={"_blank"} rel="noopener">
-                          {transaction.address}
+                          {truncateEthAddress(transaction.from)}
                           <ArrowTopRightOnSquareIcon
                             height={16}
                             width={16}
@@ -106,7 +106,24 @@ const FundTransactionTable = ({ data }: FundTransactionTableProps) => {
                     >
                       {transaction.method}
                     </td>
-                    <td className="py-4 px-6">{transaction.amount}</td>
+                    <td className="py-4 px-6">{transaction.value}</td>
+                    <td className="text-left">
+                      <Link
+                        href={
+                          "https://goerli.etherscan.io/tx/" +
+                          transaction.address
+                        }
+                        passHref
+                      >
+                        <a className="link" target={"_blank"} rel="noopener">
+                          <ArrowTopRightOnSquareIcon
+                            height={16}
+                            width={16}
+                            className="inline-block ml-1 mb-1"
+                          />
+                        </a>
+                      </Link>
+                    </td>
                   </tr>
                 ))
             ) : (

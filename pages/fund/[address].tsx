@@ -27,11 +27,9 @@ const transformEvents = (events: CommunityEvents) => {
     if (events.deposits && events.deposits.length !== 0) {
       for (const event of events.deposits) {
         rows.push({
-          address: event.address,
-          blockNumber: event.blockNumber,
+          ...event,
           method: "Deposit",
           date: null,
-          amount: event.value,
         });
       }
     }
@@ -39,11 +37,9 @@ const transformEvents = (events: CommunityEvents) => {
     if (events.withdrawals && events.withdrawals.length !== 0) {
       for (const event of events.withdrawals) {
         rows.push({
-          address: event.address,
-          blockNumber: event.blockNumber,
+          ...event,
           method: "Withdrawal",
           date: null,
-          amount: event.value,
         });
       }
     }

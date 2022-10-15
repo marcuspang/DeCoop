@@ -4,8 +4,10 @@ import type { ConfigOptions } from "@web3modal/react";
 import { Web3Modal } from "@web3modal/react";
 import { useEffect } from "react";
 import Layout from "../components/Layout/Layout";
+import { ToastContainer } from "react-toastify";
 
 import "../styles/globals.css";
+import "react-toastify/dist/ReactToastify.css";
 
 const modalConfig: ConfigOptions = {
   projectId: process.env.NEXT_PUBLIC_PROJECT_ID,
@@ -53,6 +55,13 @@ function App({ Component, pageProps }) {
         <Component {...pageProps} />
       </Layout>
       <Web3Modal config={modalConfig} />
+      <ToastContainer
+        autoClose={3000}
+        position="bottom-center"
+        pauseOnFocusLoss
+        hideProgressBar
+        closeOnClick={false}
+      />
     </QueryClientProvider>
   );
 }

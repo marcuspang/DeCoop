@@ -39,10 +39,13 @@ export default async function handler(
     if (req.query.address === undefined || req.query.address === "") {
       return res.status(400).send("Invalid address");
     }
-    const address = req.query.address.toString();
-    const community = await getCommunity(address);
-
-    return res.status(200).send(community);
+    try {
+      const address = req.query.address.toString();
+      const community = await getCommunity(address);
+      return res.status(200).send(community);
+    } catch (error) {
+      return res.status(400).send(error);
+    }
   }
   return res.status(200).send({});
 }

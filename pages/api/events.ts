@@ -32,7 +32,7 @@ export async function getEvents(
   );
   const deposits = depositEvents.map((deposit) => ({
     blockNumber: deposit.blockNumber,
-    address: deposit.address,
+    address: deposit.transactionHash,
     from: deposit.args[0] as string,
     value: deposit.args[1].toString() / 100000000,
   }));
@@ -42,7 +42,7 @@ export async function getEvents(
   );
   const withdrawals = withdrawalEvents.map((withdrawal) => ({
     blockNumber: withdrawal.blockNumber,
-    address: withdrawal.address,
+    address: withdrawal.transactionHash,
     from: withdrawal.args[0] as string,
     value: withdrawal.args[1].toString() / 100000000,
   }));

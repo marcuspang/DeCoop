@@ -70,26 +70,6 @@ export async function getCommunitiesForPerson(
     const hasJoinedCommunity = (await soulboundContract.balanceOf(address)) > 0;
     if (hasJoinedCommunity) {
       communities.push(community);
-      // const erc20 = await communityContract.communityToken();
-
-      // const erc20Contract = new ethers.Contract(
-      //   erc20,
-      //   balanceAbi,
-      //   new ethers.providers.InfuraProvider(
-      //     "goerli",
-      //     process.env.INFURA_API_KEY
-      //   )
-      // );
-
-      // const name = await communityContract.name();
-
-      // communities.push({
-      //   community,
-      //   name,
-      //   erc: erc20,
-      //   fundBalance: +(await erc20Contract.balanceOf(address)) / 100000000,
-      //   ercName: name + "-T",
-      // });
     }
   }
 

@@ -3,7 +3,7 @@ import { Community } from "../pages/api/communities";
 
 const fetchCommunity = (address: string) => {
   if (address === "default") {
-    return () => Promise.resolve(null);
+    return () => Promise.resolve(null as Community);
   }
   return () =>
     fetch("/api/community?address=" + address).then(

@@ -34,7 +34,12 @@ const ViewFundsPage = () => {
 
   return (
     <div className="w-full">
-      <FundListCard funds={data} />
+      <FundListCard
+        title="Your Funds"
+        funds={data}
+        defaultUrl={"/fund/default"}
+        baseUrl="/fund/"
+      />
     </div>
   );
 };
