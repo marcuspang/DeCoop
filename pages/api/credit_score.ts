@@ -32,13 +32,16 @@ export default async function handler(
         community.address,
         address
       );
-
-      depositSum += deposits
-        .map((deposit) => deposit.value)
-        .reduce((x, y) => x + y);
-      withdrawSum += withdrawals
-        .map((withdrawal) => withdrawal.value)
-        .reduce((x, y) => x + y);
+      if (deposits.length !== 0) {
+        depositSum += deposits
+          .map((deposit) => deposit.value)
+          .reduce((x, y) => x + y);
+      }
+      if (withdrawals.length !== 0) {
+        withdrawSum += withdrawals
+          .map((withdrawal) => withdrawal.value)
+          .reduce((x, y) => x + y);
+      }
     }
 
     const creditScore = Math.min(depositSum, withdrawSum) / 100000000;
