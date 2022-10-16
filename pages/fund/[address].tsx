@@ -14,6 +14,7 @@ import FundTransactionTable, {
   FundTransactionRow,
 } from "../../components/Fund/FundTransactionTable";
 import FancyButton from "../../components/Layout/FancyButton";
+import useCommunity from "../../hooks/useCommunity";
 import useEvents from "../../hooks/useEvents";
 
 export interface FundContribution {
@@ -33,6 +34,8 @@ const ViewFundPage = () => {
   const provider = useProvider();
   const { address } = useAccount();
   const [communityAddress, setCommunityAddress] = useState("");
+
+  const { data: communityData } = useCommunity(communityAddress);
   const { data } = useEvents(communityAddress, address);
 
   const [transactions, setTransactions] = useState<FundTransactionRow[]>([]);
@@ -77,7 +80,13 @@ const ViewFundPage = () => {
 
   return (
     <div className="w-full lg:pl-0 px-4">
-      <div className="flex justify-end pt-3">
+      <div className="flex justify-between pt-3">
+        <h1 className="font-bold text-4xl">
+          Community Fund:{" "}
+          <span className="font-semibold text-gray-700">
+            {communityData?.name || "None found"}
+          </span>
+        </h1>
         <FancyButton spanClassName="px-4 py-2 text-md">
           <Link href={"/trade/" + communityAddress} passHref>
             <a>

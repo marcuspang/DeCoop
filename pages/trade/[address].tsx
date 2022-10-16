@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import FancyButton from "../../components/Layout/FancyButton";
 import TradeForm from "../../components/Trade/TradeForm";
 import TradeTabs from "../../components/Trade/TradeTabs";
+import useCommunity from "../../hooks/useCommunity";
 
 const TradePage = () => {
   const router = useRouter();
@@ -12,6 +13,9 @@ const TradePage = () => {
   const [tabSelected, setTabSelected] = useState<"withdraw" | "deposit">(
     "deposit"
   );
+
+  const { data: communityData, isLoading: isCommunityLoading } =
+    useCommunity(communityAddress);
 
   useEffect(() => {
     if (router.query && router.query.address) {
@@ -21,7 +25,13 @@ const TradePage = () => {
 
   return (
     <div className="w-full lg:pl-0 px-4">
-      <div className="flex justify-end pt-3">
+      <div className="flex justify-between pt-3">
+        <h1 className="font-bold text-4xl">
+          Community Fund:{" "}
+          <span className="font-semibold text-gray-700">
+            {communityData?.name || "None found"}
+          </span>
+        </h1>
         <FancyButton spanClassName="px-4 py-2 text-md">
           <Link href={"/fund/" + communityAddress} passHref>
             <a>
@@ -35,11 +45,7 @@ const TradePage = () => {
           </Link>
         </FancyButton>
       </div>
-      <div className="bg-white rounded-md shadow px-4 mt-3">
-        <h1 className="pt-4 pb-5 font-bold text-2xl">
-          {tabSelected === "deposit" ? "Depositing to " : "Withdrawing from "}{" "}
-          <span className="font-semibold break-all">{communityAddress}</span>
-        </h1>
+      <div className="bg-white rounded-md shadow p-4 mt-3">
         <TradeTabs tabSelected={tabSelected} setTabSelected={setTabSelected} />
         <TradeForm
           tabSelected={tabSelected}

@@ -23,7 +23,7 @@ export async function getCommunity(community: string): Promise<Community> {
   const name = await communityContract.name();
 
   return {
-    community,
+    address: community,
     name,
     tokenAddress: await communityContract.communityToken(),
     tokenBalance: await erc20Contract.balanceOf(community),

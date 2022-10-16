@@ -55,10 +55,11 @@ function App({ Component, pageProps }) {
         <Component {...pageProps} />
         <Web3Modal config={modalConfig} />
         <ToastContainer
-          autoClose={3000}
+          autoClose={5000}
           position="bottom-center"
           pauseOnFocusLoss
           hideProgressBar
+          draggable={false}
           closeOnClick={false}
         />
       </Layout>

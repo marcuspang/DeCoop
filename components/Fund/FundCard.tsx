@@ -39,7 +39,7 @@ const FundCard = ({
       {descriptionLink && (
         <Link href={descriptionLink} passHref>
           {description && (
-            <a className="link block" target={"_blank"} rel="noopener">
+            <a className="link block" target={"_blank"} rel="noreferrer">
               {description}
             </a>
           )}

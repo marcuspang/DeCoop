@@ -42,7 +42,7 @@ const FundStatistics = ({
   const [latestWithdrawalTimestamp, setLatestWithdrawalTimestamp] = useState(0);
   const { chain } = useNetwork();
 
-  const { data: communityData, isLoading: isCommunityLoading } =
+  const { data: community, isLoading: isCommunityLoading } =
     useCommunity(communityAddress);
   const { data: events, isLoading: isEventsLoading } = useEvents(
     communityAddress,
@@ -68,7 +68,7 @@ const FundStatistics = ({
 
   if (isCommunityLoading || isEventsLoading) {
     return (
-      <div className="flex flex-wrap lg:flex-nowrap justify-between ;lg:space-x-3 space-x-0">
+      <div className="flex flex-wrap lg:flex-nowrap justify-between lg:space-x-3 space-x-0">
         <FundCard title="Current Balance" isLoading={isCommunityLoading} />
         <FundCard title="Latest Deposit" isLoading={isEventsLoading} />
         <FundCard title="Latest Withdrawal" isLoading={isEventsLoading} />
@@ -76,7 +76,7 @@ const FundStatistics = ({
     );
   }
 
-  if (!communityData || !events) {
+  if (!community && !events) {
     return (
       <div className="flex flex-wrap lg:flex-nowrap justify-between lg:space-x-3 space-x-0">
         <FundCard
@@ -98,7 +98,7 @@ const FundStatistics = ({
     );
   }
 
-  const { tokenSymbol, tokenBalance } = communityData;
+  const { tokenSymbol, tokenBalance } = community;
   const [latestDeposit, latestWithdrawal] = [
     events.deposits[events.deposits.length - 1] || null,
     events.withdrawals[events.withdrawals.length - 1] || null,
@@ -130,6 +130,9 @@ const FundStatistics = ({
           latestWithdrawal,
           latestWithdrawalTimestamp
         )}
+        descriptionLink={`https://${
+          chain?.network || "goerli"
+        }.etherscan.io/address/${latestWithdrawal.address}`}
         isLoading={isEventsLoading}
       />
     </div>

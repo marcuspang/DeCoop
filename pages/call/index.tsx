@@ -1,46 +1,54 @@
+import { useAccount, useNetwork, useSendTransaction } from "@web3modal/react";
 import { useRouter } from "next/router";
-import { useAccount, useSendTransaction } from "@web3modal/react";
 import { useEffect } from "react";
-import error from "next/error";
 
-function Page() {
-  const router = useRouter();
+const ExternalCallPage = () => {
+  const {
+    query: { to, calldata },
+  } = useRouter();
   const { address } = useAccount();
+  const { chain } = useNetwork();
 
   const { sendTransaction, error } = useSendTransaction({
-    chainId: 5,
+    chainId: chain?.id || 5,
     request: {
       from: address,
-      to: router.query["to"] as string,
-      data: router.query["calldata"] as string,
+      to: to?.toString() || "",
+      data: calldata?.toString() || "",
     },
   });
 
   useEffect(() => {
-    if (router.query.to && router.query.calldata) {
+    if (to && calldata && chain) {
       sendTransaction({
-        chainId: 5,
+        chainId: chain.id,
         request: {
           from: address,
-          to: router.query["to"] as string,
-          data: router.query["calldata"] as string,
+          to: to.toString(),
+          data: calldata.toString(),
         },
-      }).then((res) => console.log({ res, error }));
+      }).then((res) => {
+        console.log({ res, error });
+      });
     }
-  }, [router.query, address]);
+  }, [to, calldata, address]);
+
+  if (!address) {
+    return (
+      <div className="w-full lg:pl-0 px-4">
+        <h1 className="font-bold text-2xl pt-4">Please connect your wallet</h1>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full lg:pl-0 px-4">
-      {address == "" ? (
-        <div> Please connect your wallet </div>
-      ) : (
-        <div>
-          Executing transaction to {router.query["to"]} with calldata
-          {" " + router.query["calldata"] || ""}...
-        </div>
-      )}
+      <h1 className="font-bold text-2xl pt-4">
+        Executing transaction to <code>{to?.toString()}</code> with calldata{" "}
+        <code>{calldata?.toString() || ""}</code>...
+      </h1>
     </div>
   );
-}
+};
 
-export default Page;
+export default ExternalCallPage;

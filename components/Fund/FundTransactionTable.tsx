@@ -100,7 +100,7 @@ const FundTransactionTable = ({ data }: FundTransactionTableProps) => {
                       }.etherscan.io/tx/${transaction.address}`}
                       passHref
                     >
-                      <a className="link" target={"_blank"} rel="noopener">
+                      <a className="link" target={"_blank"} rel="noreferrer">
                         <ArrowTopRightOnSquareIcon
                           height={16}
                           width={16}

@@ -1,10 +1,11 @@
 import Link from "next/link";
+import { Community } from "../../pages/api/communities";
 import CommunityItem from "../Community/CommunityItem";
 import Card from "../Layout/Card";
 
 interface FundListCardProps {
-  funds: string[];
-  title: string;
+  funds: Pick<Community, "address" | "name">[];
+  title?: string;
   defaultUrl: string;
   baseUrl: string;
 }
@@ -33,8 +34,9 @@ const FundListCard = ({
       <ul className="list-disc list-inside">
         {funds.map((community) => (
           <CommunityItem
-            key={community}
-            address={community}
+            key={community.address}
+            address={community.address}
+            name={community.name}
             baseURL={baseUrl}
           />
         ))}

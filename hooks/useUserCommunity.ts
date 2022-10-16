@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
+import { Community } from "../pages/api/communities";
 
 const fetchUserCommunity = (address: string) => {
   return fetch("/api/communities?address=" + address).then(
-    (res) => res.json() as Promise<string[]>
+    (res) => res.json() as Promise<Pick<Community, "address" | "name">[]>
   );
 };
 

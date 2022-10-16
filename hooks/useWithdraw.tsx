@@ -5,6 +5,7 @@ import {
   useAccount,
 } from "@web3modal/react";
 import { toast } from "react-toastify";
+import ToastMessage from "../components/Layout/ToastMessage";
 import useCommunity from "./useCommunity";
 
 const abi = ["function withdraw(uint256 amount) external"];
@@ -26,14 +27,14 @@ const useWithdraw = (communityAddress: string) => {
     hash: writeData?.hash,
   });
 
-  // amount in 10 ** 8
+  // amount in 8 decimals
   const withdraw = (amount: number) => {
     if (status === "disconnected") {
-      toast("Please sign in to your wallet");
+      toast(<ToastMessage title="Please sign in to your wallet" />);
       return;
     }
     return write({
-      addressOrName: data.community,
+      addressOrName: data.address,
       contractInterface: abi,
       functionName: "withdraw",
       args: [amount * 10 ** 8],

@@ -1,12 +1,11 @@
 import { useAccount, useNetwork } from "@web3modal/react";
-import error from "next/error";
 import { FormEventHandler, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
-import { chain } from "wagmi";
 import useCommunity from "../../hooks/useCommunity";
 import useDeposit from "../../hooks/useDeposit";
 import useWithdraw from "../../hooks/useWithdraw";
 import FancyButton from "../Layout/FancyButton";
+import ToastMessage from "../Layout/ToastMessage";
 
 const abi = [
   // Read-Only Functions
@@ -50,14 +49,14 @@ const TradeForm = ({ communityAddress, tabSelected }: TradeFormProps) => {
 
   useEffect(() => {
     if (depositReceipt && !depositIsWaiting && isDepositing) {
-      toast("Successfully deposited");
+      toast(<ToastMessage title="Successfully deposited" />);
       setIsDepositing(false);
     }
   }, [depositReceipt, depositIsWaiting, isDepositing]);
 
   useEffect(() => {
     if (withdrawReceipt && !withdrawIsWaiting && isWithdrawing) {
-      toast("Successfully withdrawn");
+      toast(<ToastMessage title="Successfully withdrawn" />);
       setIsWithdrawing(false);
     }
   }, [isWithdrawing, withdrawIsWaiting, withdrawReceipt]);
@@ -68,22 +67,46 @@ const TradeForm = ({ communityAddress, tabSelected }: TradeFormProps) => {
       const response = await deposit(+tokenAmountRef.current.value);
       if (response) {
         toast(
-          `Deposit executed! See your transaction here https://${
-            chain.network || "goerli"
-          }.etherscan.io/tx/${response.hash}`
+          <ToastMessage title="Deposit executed!">
+            <div>
+              See your transaction{" "}
+              <a
+                href={`https://${chain.network || "goerli"}.etherscan.io/tx/${
+                  response.hash
+                }`}
+                className="link"
+                target={"_blank"}
+                rel="noreferrer"
+              >
+                here
+              </a>
+            </div>
+          </ToastMessage>
         );
+        setIsDepositing(true);
       }
-      setIsDepositing(true);
     } else {
       const response = await withdraw(+tokenAmountRef.current.value);
       if (response) {
         toast(
-          `Withdraw executed! See your transaction here https://${
-            chain.network || "goerli"
-          }.etherscan.io/tx/${response.hash}`
+          <ToastMessage title="Withdrawal executed!">
+            <div>
+              See your transaction{" "}
+              <a
+                href={`https://${chain.network || "goerli"}.etherscan.io/tx/${
+                  response.hash
+                }`}
+                className="link"
+                target={"_blank"}
+                rel="noreferrer"
+              >
+                here
+              </a>
+            </div>
+          </ToastMessage>
         );
+        setIsWithdrawing(true);
       }
-      setIsWithdrawing(true);
     }
 
     if (depositError || withdrawError) {
@@ -141,8 +164,8 @@ const TradeForm = ({ communityAddress, tabSelected }: TradeFormProps) => {
           className="block p-4 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         />
       </div>
-      <div className="w-full text-center pb-4">
-        <FancyButton>
+      <div className="w-full text-center">
+        <FancyButton submit>
           {tabSelected.charAt(0).toUpperCase() + tabSelected.slice(1)}
         </FancyButton>
       </div>

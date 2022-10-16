@@ -47,7 +47,8 @@ const ViewFundsPage = () => {
 
   return (
     <div className="w-full lg:pl-0 px-4">
-      <div className="flex justify-end pt-3">
+      <div className="flex justify-between pt-3">
+        <h1 className="font-bold text-4xl">Your Commmunity Funds</h1>
         <FancyButton spanClassName="px-4 py-2 text-md">
           <Link href={"/fund/new"} passHref>
             <a>
@@ -58,7 +59,6 @@ const ViewFundsPage = () => {
         </FancyButton>
       </div>
       <FundListCard
-        title="Your Funds"
         funds={data}
         defaultUrl={"/fund/default"}
         baseUrl="/fund/"

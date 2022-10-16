@@ -5,6 +5,7 @@ import {
   useWaitForTransaction,
 } from "@web3modal/react";
 import { toast } from "react-toastify";
+import ToastMessage from "../components/Layout/ToastMessage";
 import useCommunity from "./useCommunity";
 
 const abi = [
@@ -40,7 +41,7 @@ const useDeposit = (communityAddress: string) => {
   // amount in 10 ** 8
   const deposit = (amount: number) => {
     if (status === "disconnected") {
-      toast("Please sign in to your wallet");
+      toast(<ToastMessage title="Please sign in to your wallet" />);
       return;
     }
     return write({

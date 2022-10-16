@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 const pages = (address?: string) => [
   {
     name: "View Funds",
-    href: "/fund/",
+    href: "/fund",
     requiresLogIn: true,
     desktopIcon: <ChartPieIcon width={28} height={28} />,
     mobileIcon: <ChartPieIcon width={20} height={20} />,
@@ -32,7 +32,7 @@ const pages = (address?: string) => [
   },
   {
     name: "Repay",
-    href: "/",
+    href: "/repay",
     requiresLogIn: false,
     desktopIcon: <CheckBadgeIcon width={28} height={28} />,
     mobileIcon: <CheckBadgeIcon width={20} height={20} />,

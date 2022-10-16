@@ -27,6 +27,7 @@ const TradeMainPage = () => {
   if (isLoading) {
     return (
       <div className="w-full lg:pl-0 px-4">
+        <h1 className="font-bold text-4xl pt-3">Your Community Funds</h1>
         <Card title="Your Funds">
           <Spinner />
         </Card>
@@ -36,9 +37,10 @@ const TradeMainPage = () => {
 
   return (
     <div className="w-full lg:pl-0 px-4">
+      <h1 className="font-bold text-4xl pt-3">Your Community Funds</h1>
       <FundListCard
         defaultUrl="/fund/default"
-        title="Click on a fund to deposit/withdraw from"
+        title="Click on a community fund to deposit/withdraw tokens"
         baseUrl="/trade/"
         funds={data}
       />

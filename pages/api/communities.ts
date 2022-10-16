@@ -38,7 +38,7 @@ export async function getAllCommunities(
 
 export interface Community {
   // addresses
-  community: string;
+  address: string;
   tokenAddress: string;
   // other data
   name: string;
@@ -52,7 +52,7 @@ export async function getCommunitiesForPerson(
 ) {
   let allCommunities = await getAllCommunities(communityFactory);
 
-  let communities: string[] = [];
+  let communities: Pick<Community, "address" | "name">[] = [];
 
   for (const community of allCommunities) {
     const communityContract = new ethers.Contract(
@@ -71,7 +71,10 @@ export async function getCommunitiesForPerson(
 
     const hasJoinedCommunity = (await soulboundContract.balanceOf(address)) > 0;
     if (hasJoinedCommunity) {
-      communities.push(community);
+      communities.push({
+        address: community,
+        name: (await communityContract.name()) as string,
+      });
     }
   }
 
