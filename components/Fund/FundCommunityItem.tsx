@@ -1,12 +1,16 @@
 import Link from "next/link";
 
-interface CommunityItemProps {
+interface FundCommunityItemProps {
   address: string;
   name: string;
   baseURL: string;
 }
 
-const CommunityItem = ({ address, name, baseURL }: CommunityItemProps) => {
+const FundCommunityItem = ({
+  address,
+  name,
+  baseURL,
+}: FundCommunityItemProps) => {
   return (
     <li className="text-lg">
       <span className="font-bold">{name} </span>
@@ -17,4 +21,4 @@ const CommunityItem = ({ address, name, baseURL }: CommunityItemProps) => {
   );
 };
 
-export default CommunityItem;
+export default FundCommunityItem;

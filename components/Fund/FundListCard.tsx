@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Community } from "../../pages/api/communities";
-import CommunityItem from "../Community/CommunityItem";
+import FundCommunityItem from "./FundCommunityItem";
 import Card from "../Layout/Card";
 
 interface FundListCardProps {
@@ -33,7 +33,7 @@ const FundListCard = ({
     <Card title={title} className="mt-0">
       <ul className="list-disc list-inside">
         {funds.map((community) => (
-          <CommunityItem
+          <FundCommunityItem
             key={community.address}
             address={community.address}
             name={community.name}
