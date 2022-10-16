@@ -1,6 +1,6 @@
-import { useNetwork, useSwitchNetwork } from "@web3modal/react";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import { useNetwork, useSwitchNetwork } from "@web3modal/react";
 import { Fragment } from "react";
 
 interface NetworkButtonProps {

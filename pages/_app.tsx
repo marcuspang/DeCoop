@@ -3,11 +3,11 @@ import { chains, providers } from "@web3modal/ethereum";
 import type { ConfigOptions } from "@web3modal/react";
 import { Web3Modal } from "@web3modal/react";
 import { useEffect } from "react";
-import Layout from "../components/Layout/Layout";
 import { ToastContainer } from "react-toastify";
+import Layout from "../components/Layout/Layout";
 
-import "../styles/globals.css";
 import "react-toastify/dist/ReactToastify.css";
+import "../styles/globals.css";
 
 const modalConfig: ConfigOptions = {
   projectId: process.env.NEXT_PUBLIC_PROJECT_ID,

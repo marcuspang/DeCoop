@@ -1,5 +1,5 @@
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/20/solid";
-import { useNetwork, useProvider } from "@web3modal/react";
+import { useNetwork } from "@web3modal/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -7,7 +7,6 @@ import { dummyTransactions } from "../../data/transactions";
 import { CommunityEvent } from "../../pages/api/events";
 import truncateEthAddress from "../../utils/truncateEthAddress";
 import Pagination from "../Layout/Pagination";
-import Spinner from "../Layout/Spinner";
 
 export interface FundTransactionRow extends CommunityEvent {
   date: Date;

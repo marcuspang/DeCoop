@@ -1,8 +1,6 @@
-import useCommunity from "../../hooks/useCommunity";
 import useEvents from "../../hooks/useEvents";
 import { CommunityEvents } from "../../pages/api/events";
 import { FundContribution } from "../../pages/fund/[address]";
-import truncateEthAddress from "../../utils/truncateEthAddress";
 import FundCard from "./FundCard";
 import FundCreditScores from "./FundCreditScores";
 import FundDistributionChart from "./FundDistributionChart";

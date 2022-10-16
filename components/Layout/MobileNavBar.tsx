@@ -1,9 +1,9 @@
+import { WalletIcon } from "@heroicons/react/24/outline";
+import { ConnectButton, useAccount, useDisconnect } from "@web3modal/react";
 import Link from "next/link";
 import { useState } from "react";
-import { ConnectButton, useAccount, useDisconnect } from "@web3modal/react";
 import NetworkButton from "../Wallet/NetworkButton";
 import { links } from "../Wallet/Wallet";
-import { WalletIcon } from "@heroicons/react/24/outline";
 
 const MobileNavBar = () => {
   const [menuState, setMenuState] = useState(false);

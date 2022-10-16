@@ -1,9 +1,8 @@
-import { FormEventHandler, useEffect, useRef, useState } from "react";
 import { useAccount, useNetwork } from "@web3modal/react";
-import FancyButton from "../Layout/FancyButton";
-import useCreateCommunity from "../../hooks/useCreateCommunity";
+import { FormEventHandler, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
-import Link from "next/link";
+import useCreateCommunity from "../../hooks/useCreateCommunity";
+import FancyButton from "../Layout/FancyButton";
 import ToastMessage from "../Layout/ToastMessage";
 
 const NewFundForm = () => {

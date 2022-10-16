@@ -1,9 +1,7 @@
+import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 import DesktopNavBar from "./DesktopNavBar";
 import MobileNavBar from "./MobileNavBar";
-import Search from "../Wallet/Search";
-import Image from "next/image";
 
 const NavBar = () => {
   // const [search, setSearch] = useState("");

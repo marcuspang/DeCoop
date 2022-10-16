@@ -1,5 +1,4 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { useAccount, useBalance, useNetwork, useToken } from "@web3modal/react";
 import { Fragment, useRef, useState } from "react";
 
 export default function SelectToken({ updateSelectedToken }) {

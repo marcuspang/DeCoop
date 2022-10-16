@@ -28,7 +28,10 @@ export default async function handler(
     let withdrawSum = 0;
 
     for (const community of communities) {
-      const { deposits, withdrawals } = await getEvents(community.address, address);
+      const { deposits, withdrawals } = await getEvents(
+        community.address,
+        address
+      );
 
       depositSum += deposits
         .map((deposit) => deposit.value)

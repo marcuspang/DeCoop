@@ -1,12 +1,11 @@
-import { useAccount, useNetwork } from "@web3modal/react";
+import { PlusIcon } from "@heroicons/react/24/outline";
+import { useAccount } from "@web3modal/react";
 import Link from "next/link";
-import Card from "../../components/Layout/Card";
 import FundListCard from "../../components/Fund/FundListCard";
+import Card from "../../components/Layout/Card";
+import FancyButton from "../../components/Layout/FancyButton";
 import Spinner from "../../components/Layout/Spinner";
 import useUserCommunity from "../../hooks/useUserCommunity";
-import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
-import FancyButton from "../../components/Layout/FancyButton";
-import { PlusIcon } from "@heroicons/react/24/outline";
 
 const ViewFundsPage = () => {
   const { address, status } = useAccount();
