@@ -7,8 +7,8 @@ const DesktopNavBar = () => {
       <div
         className={`bg-white flex absolute z-20 top-16 left-0 border-b-2 lg:static lg:flex lg:border-none`}
       >
-        <NetworkButton className="" />
-        <Wallet className="" />
+        <NetworkButton />
+        <Wallet />
       </div>
       <div className="items-center justify-end space-x-2 sm:space-x-6">
         <button className="outline-none text-gray-400 block lg:hidden">

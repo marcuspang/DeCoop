@@ -1,6 +1,7 @@
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { useAccount } from "@web3modal/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import FundListCard from "../../components/Fund/FundListCard";
 import Card from "../../components/Layout/Card";
 import FancyButton from "../../components/Layout/FancyButton";
@@ -28,6 +29,7 @@ const ViewFundsPage = () => {
     return (
       <div className="w-full lg:pl-0 px-4">
         <div className="flex justify-end pt-3">
+          <h1 className="font-bold text-4xl">Your Commmunity Funds</h1>
           <FancyButton spanClassName="px-4 py-2 text-md">
             <Link href={"/fund/new"} passHref>
               <a>

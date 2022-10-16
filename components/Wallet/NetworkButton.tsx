@@ -4,7 +4,7 @@ import { useNetwork, useSwitchNetwork } from "@web3modal/react";
 import { Fragment } from "react";
 
 interface NetworkButtonProps {
-  className: string;
+  className?: string;
 }
 
 const NetworkButton = ({ className }: NetworkButtonProps) => {

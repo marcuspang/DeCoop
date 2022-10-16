@@ -3,10 +3,13 @@ import { WalletIcon } from "@heroicons/react/24/outline";
 import { ConnectButton, useAccount, useDisconnect } from "@web3modal/react";
 import Link from "next/link";
 import { Fragment } from "react";
+import links from "../../data/links";
 
-export const links = [{ name: "Settings", link: "/" }];
+interface WalletProps {
+  className?: string;
+}
 
-export const Wallet = ({ className }: { className: string }) => {
+export const Wallet = ({ className }: WalletProps) => {
   const { status, address } = useAccount();
   const disconnect = useDisconnect();
 

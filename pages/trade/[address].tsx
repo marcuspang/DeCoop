@@ -14,8 +14,7 @@ const TradePage = () => {
     "deposit"
   );
 
-  const { data: communityData, isLoading: isCommunityLoading } =
-    useCommunity(communityAddress);
+  const { data: communityData } = useCommunity(communityAddress);
 
   useEffect(() => {
     if (router.query && router.query.address) {
