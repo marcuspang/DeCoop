@@ -2,6 +2,7 @@ import { FundTransactionRow } from "../components/Fund/FundTransactionTable";
 
 const TODAY = new Date();
 const YESTERDAY = new Date(TODAY.getTime() - 24 * 60 * 60 * 1000);
+const DAY_BEFORE = new Date(YESTERDAY.getTime() - 24 * 60 * 60 * 1000);
 
 export const dummyTransactions: FundTransactionRow[] = [
   {
@@ -54,7 +55,7 @@ export const dummyTransactions: FundTransactionRow[] = [
   },
   {
     address: "0xE269cf4647c3BE31E4e99ADeD398aA164BdFa0aC",
-    date: YESTERDAY,
+    date: DAY_BEFORE,
     method: "Deposit",
     value: 10,
     blockNumber: 7773376,

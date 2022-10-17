@@ -15,7 +15,7 @@ interface FundStatisticsProps {
 const defaults = {
   communityName: "default",
   symbol: "TOKEN",
-  latestDeposit: "-",
+  latestDeposit: "1",
   latestWithdrawal: "-",
   balance: 0,
 };
@@ -76,7 +76,7 @@ const FundStatistics = ({
     );
   }
 
-  if (!community && !events) {
+  if (!community || !events) {
     return (
       <div className="flex flex-wrap lg:flex-nowrap justify-between lg:space-x-3 space-x-0">
         <FundCard
@@ -97,6 +97,8 @@ const FundStatistics = ({
       </div>
     );
   }
+
+  console.log(community);
 
   const { tokenSymbol, tokenBalance } = community;
   const [latestDeposit, latestWithdrawal] = [

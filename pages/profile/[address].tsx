@@ -42,7 +42,7 @@ const ProfilePage = () => {
       </div>
       <FundCard
         title="Credit Score"
-        amount={data?.creditScore.toFixed(8)}
+        amount={data?.creditScore.toFixed(12)}
         symbol=""
         isLoading={isLoading}
       ></FundCard>
