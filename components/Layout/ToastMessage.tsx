@@ -7,11 +7,12 @@ interface ToastMessageProps {
 
 const ToastMessage = ({ title, children }: ToastMessageProps) => {
   return (
-    <div>
-      <h3 className="font-bold text-xl text-gray-900">{title}</h3>
+    <div className="font-sans leading-snug">
+      <h3 className="font-bold text-xl text-gray-900 leading-6 mb-2">{title}</h3>
       {children}
     </div>
   );
 };
 
 export default ToastMessage;
+7;

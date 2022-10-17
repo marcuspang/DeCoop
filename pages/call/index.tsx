@@ -11,6 +11,7 @@ import ToastMessage from "../../components/Layout/ToastMessage";
 
 const ExternalCallPage = () => {
   const [isExecuting, setIsExecuting] = useState(false);
+  const [hasPrintedError, setHasPrintedError] = useState(false);
 
   const {
     query: { to, calldata },
@@ -69,12 +70,17 @@ const ExternalCallPage = () => {
   }, [isExecuting, isWaiting, receipt]);
 
   useEffect(() => {
-    if (error) {
+    if (error && !hasPrintedError) {
       toast(
-        <ToastMessage title="An error occured">
-          <p>{error.message}</p>
+        <ToastMessage title="An error occured (see console for more details)">
+          <p className="break-all">
+            {error.message.substring(0, 300) +
+              (error.message.length > 300 ? "..." : "")}
+          </p>
         </ToastMessage>
       );
+      setHasPrintedError(true);
+      console.log(error);
     }
   }, [error]);
 
@@ -88,7 +94,7 @@ const ExternalCallPage = () => {
 
   return (
     <div className="w-full lg:pl-0 px-4">
-      <h1 className="font-bold text-2xl pt-4">
+      <h1 className="font-bold text-2xl pt-4 break-all">
         Executing transaction to <code>{to?.toString()}</code> with calldata{" "}
         <code>{calldata?.toString() || ""}</code>...
       </h1>
