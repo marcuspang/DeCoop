@@ -17,12 +17,9 @@ interface FundTransactionTableProps {
   data: FundTransactionRow[];
 }
 
-const FundTransactionTable = ({ data }: FundTransactionTableProps) => {
-  // no. of transactions in each page
-  const PAGE_SIZE = 10;
-  // no. of pages to display at any point of time
-  const PAGE_COUNT = Math.ceil(data.length / PAGE_SIZE);
+const PAGE_SIZE = 5; // no. of transactions in each page
 
+const FundTransactionTable = ({ data }: FundTransactionTableProps) => {
   const router = useRouter();
   const { chain } = useNetwork();
   const [pageIndex, setPageIndex] = useState(0);
@@ -115,7 +112,7 @@ const FundTransactionTable = ({ data }: FundTransactionTableProps) => {
       </div>
       <Pagination
         data={rows}
-        pageCount={PAGE_COUNT}
+        pageCount={Math.ceil(rows.length / PAGE_SIZE)}
         pageIndex={pageIndex}
         setPageIndex={setPageIndex}
         pageSize={PAGE_SIZE}

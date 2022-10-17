@@ -98,8 +98,6 @@ const FundStatistics = ({
     );
   }
 
-  console.log(community);
-
   const { tokenSymbol, tokenBalance } = community;
   const [latestDeposit, latestWithdrawal] = [
     events.deposits[events.deposits.length - 1] || null,
@@ -121,7 +119,7 @@ const FundStatistics = ({
         description={formatTransaction(latestDeposit, latestDepositTimestamp)}
         descriptionLink={`https://${
           chain?.network || "goerli"
-        }.etherscan.io/address/${latestDeposit.address}`}
+        }.etherscan.io/tx/${latestDeposit.address}`}
         isLoading={isEventsLoading}
       />
       <FundCard
@@ -134,7 +132,7 @@ const FundStatistics = ({
         )}
         descriptionLink={`https://${
           chain?.network || "goerli"
-        }.etherscan.io/address/${latestWithdrawal.address}`}
+        }.etherscan.io/tx/${latestWithdrawal.address}`}
         isLoading={isEventsLoading}
       />
     </div>
