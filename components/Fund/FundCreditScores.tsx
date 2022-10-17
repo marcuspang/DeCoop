@@ -20,16 +20,16 @@ const FundCreditScores = ({ data }: FundCreditScoresProps) => {
   return (
     <ul className="list-inside list-disc text-lg">
       {data.map((person) => {
-        const score = creditScores[person.name];
+        const score = creditScores[person.address];
         return (
           <li
-            key={person.name}
+            key={person.address}
             className={`pl-2 font-bold ${
               score > 50 ? `text-green-700` : `text-red-700`
             }`}
           >
             <span className="text-black-800">
-              {person.name}: {score}
+              {person.address}: {score}
             </span>
           </li>
         );

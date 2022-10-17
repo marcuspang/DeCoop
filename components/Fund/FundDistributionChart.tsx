@@ -1,4 +1,15 @@
-import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
+import {
+  Cell,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
+  TooltipProps,
+} from "recharts";
+import {
+  ValueType,
+  NameType,
+} from "recharts/types/component/DefaultTooltipContent";
 import colors from "tailwindcss/colors";
 import { FundContribution } from "../../pages/fund/[address]";
 import truncateEthAddress from "../../utils/truncateEthAddress";
@@ -26,14 +37,20 @@ const renderCustomizedLabel = ({ cx, cy, percent, name, x, y }) => {
   );
 };
 
-const CustomTooltip = ({ active, payload }) => {
+const CustomTooltip = ({
+  active,
+  payload,
+  tokenSymbol,
+}: TooltipProps<ValueType, NameType> & { tokenSymbol: string }) => {
   if (active && payload && payload.length) {
     return (
       <div className="bg-white p-4 rounded-lg shadow-lg">
         <span className="font-bold">
-          {truncateEthAddress(payload[0].name)}:{" "}
+          {truncateEthAddress(payload[0].payload.address)}:{" "}
         </span>
-        <span>{payload[0].value.toFixed(8)}</span>
+        <span>
+          {(payload[0].value as number).toFixed(8)} {tokenSymbol}
+        </span>
       </div>
     );
   }
@@ -42,9 +59,13 @@ const CustomTooltip = ({ active, payload }) => {
 
 interface FundDistributionChartProps {
   data: FundContribution[];
+  tokenSymbol: string;
 }
 
-const FundDistributionChart = ({ data }: FundDistributionChartProps) => {
+const FundDistributionChart = ({
+  data,
+  tokenSymbol,
+}: FundDistributionChartProps) => {
   return (
     <div className="py-4 mb-4 h-[300px]">
       <ResponsiveContainer width="100%" height="100%">
@@ -58,14 +79,18 @@ const FundDistributionChart = ({ data }: FundDistributionChartProps) => {
             labelLine={false}
             fill={colors.blue[600]}
           >
-            {data.map((entry, index) => (
+            {data.map((_, index) => (
               <Cell
                 key={`cell-${index}`}
                 fill={COLORS[(COLORS.length - index - 1) % COLORS.length]}
               />
             ))}
           </Pie>
-          <Tooltip content={CustomTooltip} />
+          <Tooltip
+            content={(props) => (
+              <CustomTooltip {...props} tokenSymbol={tokenSymbol} />
+            )}
+          />
         </PieChart>
       </ResponsiveContainer>
     </div>

@@ -34,7 +34,7 @@ const FundCard = ({
   return (
     <Card title={title} className={className}>
       <span className="font-bold text-3xl">
-        {amount} {amount ? symbol : ""}
+        {amount} {amount !== undefined ? symbol : ""}
       </span>
       {descriptionLink && (
         <Link href={descriptionLink} passHref>

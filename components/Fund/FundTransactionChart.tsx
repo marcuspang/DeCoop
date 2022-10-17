@@ -1,5 +1,4 @@
-import router from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Line,
   LineChart,
@@ -8,48 +7,9 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { dummyTransactions } from "../../data/transactions";
 import { FundTransactionChartRow } from "../../pages/fund/[address]";
 import FundCard from "./FundCard";
 import { FundTransactionRow } from "./FundTransactionTable";
-
-export const composedChartData = [
-  {
-    name: "-7d",
-    btc: 2155,
-    eth: 2400,
-  },
-  {
-    name: "-6d",
-    btc: 2800,
-    eth: 2512,
-  },
-  {
-    name: "-5d",
-    btc: 2500,
-    eth: 2000,
-  },
-  {
-    name: "-4d",
-    btc: 2980,
-    eth: 3208,
-  },
-  {
-    name: "-3d",
-    btc: 2600,
-    eth: 3000,
-  },
-  {
-    name: "-2d",
-    btc: 4090,
-    eth: 3800,
-  },
-  {
-    name: "-1d",
-    btc: 5090,
-    eth: 4600,
-  },
-];
 
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
@@ -98,15 +58,6 @@ const transformTransactionsData = (
 const FundTransactionChart = ({ data }: FundTransactionChartProps) => {
   const [showDeposits, setShowDeposits] = useState(true);
   const [showWithdrawals, setShowWithdrawals] = useState(true);
-  const [rows, setRows] = useState<FundTransactionChartRow[]>([]);
-
-  useEffect(() => {
-    if (data && router.query && router.query.address !== "default") {
-      setRows(transformTransactionsData(data));
-    } else if (router.query.address === "default") {
-      setRows(transformTransactionsData(dummyTransactions));
-    }
-  }, [data]);
 
   return (
     <FundCard title="Transactions over time">
@@ -146,7 +97,7 @@ const FundTransactionChart = ({ data }: FundTransactionChartProps) => {
           </div>
         </div>
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={rows}>
+          <LineChart data={transformTransactionsData(data)}>
             <XAxis dataKey="date" />
             <YAxis dataKey="value" />
             <Tooltip content={CustomTooltip} />

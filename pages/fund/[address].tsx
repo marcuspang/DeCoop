@@ -3,6 +3,7 @@ import {
   ArrowsRightLeftIcon,
 } from "@heroicons/react/20/solid";
 import { useAccount, useProvider } from "@web3modal/react";
+import { isAddress } from "ethers/lib/utils";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -14,11 +15,12 @@ import FundTransactionTable, {
   FundTransactionRow,
 } from "../../components/Fund/FundTransactionTable";
 import FancyButton from "../../components/Layout/FancyButton";
+import { dummyTransactions } from "../../data/transactions";
 import useCommunity from "../../hooks/useCommunity";
 import useEvents from "../../hooks/useEvents";
 
 export interface FundContribution {
-  name: string;
+  address: string;
   value: number;
 }
 
@@ -49,30 +51,34 @@ const ViewFundPage = () => {
   // Update the date of the transactions to the proper datetime value using block number
   useEffect(() => {
     const updateRows = async () => {
-      if (data && provider) {
-        let newTransactions: FundTransactionRow[] = [];
-        if (data.deposits && data.deposits.length !== 0) {
-          for (const event of data.deposits) {
-            const block = await provider.getBlock(event.blockNumber);
-            newTransactions.push({
-              ...event,
-              method: "Deposit",
-              date: new Date(block.timestamp * 1000),
-            });
+      if (isAddress(communityAddress)) {
+        if (data && provider) {
+          let newTransactions: FundTransactionRow[] = [];
+          if (data.deposits && data.deposits.length !== 0) {
+            for (const event of data.deposits) {
+              const block = await provider.getBlock(event.blockNumber);
+              newTransactions.push({
+                ...event,
+                method: "Deposit",
+                date: new Date(block.timestamp * 1000),
+              });
+            }
           }
-        }
 
-        if (data.withdrawals && data.withdrawals.length !== 0) {
-          for (const event of data.withdrawals) {
-            const block = await provider.getBlock(event.blockNumber);
-            newTransactions.push({
-              ...event,
-              method: "Withdrawal",
-              date: new Date(block.timestamp * 1000),
-            });
+          if (data.withdrawals && data.withdrawals.length !== 0) {
+            for (const event of data.withdrawals) {
+              const block = await provider.getBlock(event.blockNumber);
+              newTransactions.push({
+                ...event,
+                method: "Withdrawal",
+                date: new Date(block.timestamp * 1000),
+              });
+            }
           }
+          setTransactions(newTransactions);
         }
-        setTransactions(newTransactions);
+      } else {
+        setTransactions(dummyTransactions);
       }
     };
     updateRows();
