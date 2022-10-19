@@ -34,21 +34,6 @@ const modalConfig: ConfigOptions = {
 const queryClient = new QueryClient();
 
 function App({ Component, pageProps }) {
-  useEffect(() => {
-    // On page load or when changing themes, best to add inline in `head` to avoid FOUC
-    if (
-      localStorage.theme === "dark" ||
-      (!("theme" in localStorage) &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches)
-    ) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-    // Hardcode to be light mode for now
-    localStorage.theme = "light";
-  }, []);
-
   return (
     <QueryClientProvider client={queryClient}>
       <Layout>

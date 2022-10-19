@@ -1,5 +1,6 @@
 import NetworkButton from "../Wallet/NetworkButton";
 import { Wallet } from "../Wallet/Wallet";
+import ColourModeButton from "./ColourModeButton";
 
 const DesktopNavBar = () => {
   return (
@@ -7,6 +8,7 @@ const DesktopNavBar = () => {
       <div
         className={`bg-white flex absolute z-20 top-16 left-0 border-b-2 lg:static lg:flex lg:border-none`}
       >
+        <ColourModeButton />
         <NetworkButton />
         <Wallet />
       </div>
