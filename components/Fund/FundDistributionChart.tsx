@@ -27,7 +27,7 @@ const renderCustomizedLabel = ({ cx, cy, percent, name, x, y }) => {
       x={x}
       y={y}
       alignmentBaseline="middle"
-      className="recharts-text recharts-pie-label-text"
+      className="recharts-text recharts-pie-label-text font-bold"
       textAnchor={x > cx ? "start" : "end"}
     >
       <tspan x={x} dy="0em">
@@ -44,7 +44,7 @@ const CustomTooltip = ({
 }: TooltipProps<ValueType, NameType> & { tokenSymbol: string }) => {
   if (active && payload && payload.length) {
     return (
-      <div className="bg-white p-4 rounded-lg shadow-lg">
+      <div className="background p-4 rounded-lg shadow-lg">
         <span className="font-bold">
           {truncateEthAddress(payload[0].payload.address)}:{" "}
         </span>

@@ -10,7 +10,7 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
   return (
-    <div className="bg-slate-50">
+    <div className="background">
       <Head>
         <title>DeCoop</title>
         <meta name="description" content="DeCoop 2022" />

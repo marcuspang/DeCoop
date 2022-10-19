@@ -25,12 +25,12 @@ const FundCreditScores = ({ data }: FundCreditScoresProps) => {
           <li
             key={person.address}
             className={`pl-2 font-bold ${
-              score > 50 ? `text-green-700` : `text-red-700`
+              score > 50
+                ? `text-green-700 dark:text-green-400`
+                : `text-red-700 dark:text-red-400`
             }`}
           >
-            <span className="text-black-800">
-              {person.address}: {score}
-            </span>
+            {person.address}: {score}
           </li>
         );
       })}

@@ -6,10 +6,10 @@ const DesktopNavBar = () => {
   return (
     <div className="flex-1 items-center justify-end hidden lg:flex">
       <div
-        className={`bg-white flex absolute z-20 top-16 left-0 border-b-2 lg:static lg:flex lg:border-none`}
+        className={`flex absolute z-20 top-16 left-0 border-b-2 lg:static lg:flex lg:border-none space-x-2`}
       >
-        <ColourModeButton />
         <NetworkButton />
+        <ColourModeButton />
         <Wallet />
       </div>
       <div className="items-center justify-end space-x-2 sm:space-x-6">

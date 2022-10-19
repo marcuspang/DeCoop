@@ -2,6 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    h1, h2, h3, p, span, button, li {
+        @apply text-darkBlue dark:text-slate-100
+    }
+}
+
+.text {
+    @apply text-darkBlue dark:text-slate-100
+}
+
 .link {
     @apply text-blue-600 dark:text-blue-500 hover:underline
+}
+
+.caption-text {
+    @apply text-slate-500 dark:text-slate-400
+}
+
+.element-background {
+    @apply bg-white dark:bg-darkBlue hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors
+}
+
+.background {
+    @apply dark:bg-darkerBlue bg-slate-50
+}
+
+.header-background {
+    @apply dark:bg-slate-900 bg-white
+}
+
+.border-color {
+    @apply dark:border-slate-600 border-slate-200
 }

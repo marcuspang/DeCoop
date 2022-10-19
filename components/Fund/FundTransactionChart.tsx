@@ -7,6 +7,8 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import colors from "tailwindcss/colors";
+import useColourMode from "../../hooks/useColourMode";
 import { FundTransactionChartRow } from "../../pages/fund/[address]";
 import FundCard from "./FundCard";
 import { FundTransactionRow } from "./FundTransactionTable";
@@ -14,7 +16,7 @@ import { FundTransactionRow } from "./FundTransactionTable";
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     return (
-      <div className="bg-white p-4 rounded-lg shadow-lg">
+      <div className="background p-4 rounded-lg shadow-lg">
         <p className="font-bold">Time: {label}</p>
         <p>Deposit(s): {payload[0].value}</p>
         <p>Withdrawal(s): {payload[1].value}</p>
@@ -58,6 +60,7 @@ const transformTransactionsData = (
 const FundTransactionChart = ({ data }: FundTransactionChartProps) => {
   const [showDeposits, setShowDeposits] = useState(true);
   const [showWithdrawals, setShowWithdrawals] = useState(true);
+  const { isLightMode } = useColourMode();
 
   return (
     <FundCard title="Transactions over time">
@@ -98,18 +101,24 @@ const FundTransactionChart = ({ data }: FundTransactionChartProps) => {
         </div>
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={transformTransactionsData(data)}>
-            <XAxis dataKey="date" />
-            <YAxis dataKey="value" />
+            <XAxis
+              dataKey="date"
+              stroke={isLightMode ? colors.slate[900] : colors.slate[400]}
+            />
+            <YAxis
+              dataKey="value"
+              stroke={isLightMode ? colors.slate[900] : colors.slate[400]}
+            />
             <Tooltip content={CustomTooltip} />
             <Line
               dataKey="depositValue"
               hide={!showDeposits}
-              stroke="#413ea0"
+              stroke={isLightMode ? colors.green[900] : colors.green[400]}
             />
             <Line
               dataKey="withdrawValue"
               hide={!showWithdrawals}
-              stroke="#ff7300"
+              stroke={isLightMode ? colors.red[900] : colors.red[400]}
             />
           </LineChart>
         </ResponsiveContainer>

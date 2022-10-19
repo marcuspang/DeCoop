@@ -4,11 +4,11 @@ import FancyButton from "../components/Layout/FancyButton";
 export default function Home() {
   return (
     <div className="w-full text-center py-20 px-4">
-      <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+      <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-tight md:text-5xl lg:text-6xl">
         Creating Economies, <br />
         Building Communities
       </h1>
-      <p className="mb-8 mt-4 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">
+      <p className="mb-8 mt-4 text-lg font-normal lg:text-xl sm:px-16 xl:px-48 caption-text">
         At DeCoop, we focus on bringing communities together through cooperative
         finance.
       </p>

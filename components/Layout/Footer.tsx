@@ -1,7 +1,7 @@
 const Footer = () => {
   return (
-    <footer className="border-t-2 mt-6">
-      <div className="p-2 px-4 flex items-center justify-between  dark:bg-gray-800 max-w-screen-xl mx-auto">
+    <footer className="header-background border-t-2 border-color mt-6">
+      <div className="p-2 px-4 flex items-center justify-between  max-w-screen-xl mx-auto">
         <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
           © 2022 DeCoop. All Rights Reserved.
         </span>
@@ -9,7 +9,7 @@ const Footer = () => {
           <a
             href="https://t.me/decoop_bot"
             target={"_blank"}
-            className="hover:text-black transition-colors"
+            className="hover:text-black dark:hover:text-slate-400 transition-colors"
             rel="noreferrer"
             aria-label="Telegram Bot"
           >
@@ -26,7 +26,7 @@ const Footer = () => {
           <a
             href="https://github.com/marcuspang/crypto-2022-hackathon"
             target={"_blank"}
-            className="hover:text-black transition-colors"
+            className="hover:text-black dark:hover:text-slate-400 transition-colors"
             rel="noreferrer"
             aria-label="Source Code"
           >

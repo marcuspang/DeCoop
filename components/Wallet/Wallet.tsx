@@ -25,17 +25,13 @@ export const Wallet = ({ className }: WalletProps) => {
     <Menu as="div" className={`relative ${className}`}>
       <div className="hidden lg:block">
         <Menu.Button
-          className="w-10 h-10 outline-none"
+          className="dark:text-white element-background focus:outline-none focus:ring-2 focus:ring-darkBlue dark:focus:ring-gray-600 rounded-lg p-2"
           aria-haspopup="true"
           aria-expanded="true"
           id="menu-button"
           type="button"
         >
-          <WalletIcon
-            width={30}
-            height={30}
-            className="hover:text-gray-500 mx-auto transition-colors"
-          />
+          <WalletIcon width={26} height={26} className="mx-auto" />
         </Menu.Button>
       </div>
       <Transition
@@ -47,9 +43,9 @@ export const Wallet = ({ className }: WalletProps) => {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="bg-white top-12 right-0 mt-5 space-y-5 lg:absolute lg:border lg:rounded-md lg:text-sm lg:w-52 lg:shadow-md lg:space-y-0 lg:mt-0">
+        <Menu.Items className="bg-white dark:bg-darkBlue top-12 right-0 mt-5 space-y-5 lg:absolute lg:border lg:rounded-md lg:text-sm lg:w-52 lg:shadow-md lg:space-y-0 lg:mt-0 border-color">
           <Menu.Item>
-            <div className="hidden lg:block text-gray-600 lg:p-2.5 border-b-2">
+            <div className="hidden lg:block lg:p-2.5 border-b-2 border-color">
               <p className="font-bold">Address:</p>
               <span className="break-words">{address}</span>
             </div>
@@ -58,7 +54,7 @@ export const Wallet = ({ className }: WalletProps) => {
             <Menu.Item key={link.name}>
               <div>
                 <Link href={link.link} passHref>
-                  <a className="block text-gray-600 lg:hover:bg-gray-50 lg:p-2.5">
+                  <a className="block element-background lg:p-2.5 text">
                     {link.name}
                   </a>
                 </Link>
@@ -68,7 +64,7 @@ export const Wallet = ({ className }: WalletProps) => {
           <Menu.Item>
             <div>
               <button
-                className="block text-gray-600 lg:hover:bg-gray-50 lg:p-2.5 w-full text-left"
+                className="block element-background lg:p-2.5 w-full text-left"
                 onClick={() => disconnect()}
               >
                 Log out

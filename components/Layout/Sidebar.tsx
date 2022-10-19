@@ -48,15 +48,15 @@ const Sidebar = () => {
       className={`inline-flex mr-4 ${router.pathname === "/" ? "hidden" : ""}`}
       aria-label="Sidebar"
     >
-      <div className="w-64 hidden lg:inline-block overflow-y-auto py-4 px-3 ml-4 mt-3 bg-white rounded-xl dark:bg-gray-800 shadow">
+      <div className="w-64 hidden lg:inline-block overflow-y-auto py-4 px-3 ml-4 mt-3 rounded-xl header-background shadow">
         <ul className="space-y-2">
           {pages(address).map((link) => (
             <li key={link.name}>
               <Link href={link.href} passHref>
                 <a
-                  className={`flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors ${
+                  className={`flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white element-background transition-colors ${
                     router.asPath.startsWith(link.href)
-                      ? "bg-gray-100 dark:bg-gray-700"
+                      ? "bg-gray-100 dark:bg-slate-600"
                       : ""
                   }
                   ${

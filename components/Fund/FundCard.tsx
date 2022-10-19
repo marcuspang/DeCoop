@@ -32,7 +32,7 @@ const FundCard = ({
     );
   }
   return (
-    <Card title={title} className={className}>
+    <Card title={title} className={`${className}`}>
       <span className="font-bold text-3xl">
         {amount} {amount !== undefined ? symbol : ""}
       </span>
