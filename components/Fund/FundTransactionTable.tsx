@@ -40,8 +40,8 @@ const FundTransactionTable = ({ data }: FundTransactionTableProps) => {
           !data ? "sm:rounded-md" : "sm:rounded-b-md"
         }`}
       >
-        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+        <table className="w-full text-sm text-left text-gray-500 dark:text-slate-300">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-slate-800 dark:text-slate-300">
             <tr>
               <th scope="col" className="py-3 px-6">
                 Account
@@ -63,7 +63,7 @@ const FundTransactionTable = ({ data }: FundTransactionTableProps) => {
               .slice(pageIndex * PAGE_SIZE, (pageIndex + 1) * PAGE_SIZE)
               .map((transaction, index) => (
                 <tr
-                  className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                  className="border-b element-background dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700"
                   key={index}
                 >
                   <td

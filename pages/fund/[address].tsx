@@ -118,7 +118,7 @@ const ViewFundPage = () => {
       <FundCard className={`${!data ? "rounded-b" : "rounded-b-none"}`}>
         <div className="flex justify-between items-center">
           <h3 className="font-bold text-xl">All Transactions</h3>
-          <button className="rounded border-2 p-2 border-gray-300 transition-all hover:bg-gray-100 hover:border-gray-400 focus:border-blue-600">
+          <button className="rounded-md border-2 p-2 px-4 border-color transition-all element-background">
             Download Full Report{" "}
             <ArrowDownTrayIcon className="inline mb-1" width={16} height={16} />
           </button>

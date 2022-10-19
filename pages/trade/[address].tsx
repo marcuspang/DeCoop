@@ -44,7 +44,7 @@ const TradePage = () => {
           </Link>
         </FancyButton>
       </div>
-      <div className="bg-white rounded-md shadow p-4 mt-3">
+      <div className="header-background rounded-md shadow p-4 mt-3">
         <TradeTabs tabSelected={tabSelected} setTabSelected={setTabSelected} />
         <TradeForm
           tabSelected={tabSelected}

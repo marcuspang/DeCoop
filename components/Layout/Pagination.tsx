@@ -34,11 +34,7 @@ const Pagination = ({
       <ul className="inline-flex items-center -space-x-px">
         <li>
           <button
-            className={`block py-2 px-3 ml-0 leading-tight text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${
-              pageIndex === 0
-                ? "bg-gray-100 hover:bg-gray-100 hover:text-gray-500"
-                : ""
-            }`}
+            className={"pagination-item rounded-l-lg"}
             disabled={pageIndex === 0}
             onClick={() => setPageIndex((prev) => prev - 1)}
           >
@@ -68,11 +64,7 @@ const Pagination = ({
               <li key={index}>
                 <button
                   onClick={() => setPageIndex(index)}
-                  className={`py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${
-                    pageIndex === index
-                      ? "bg-gray-100 hover:bg-gray-100 hover:text-gray-500"
-                      : ""
-                  }`}
+                  className={`pagination-item`}
                   disabled={pageIndex === index}
                 >
                   {index + 1}
@@ -83,11 +75,7 @@ const Pagination = ({
         })}
         <li>
           <button
-            className={`block py-2 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${
-              pageIndex === pageCount - 1
-                ? "bg-gray-100 hover:bg-gray-100 hover:text-gray-500"
-                : ""
-            }`}
+            className={`pagination-item rounded-r-lg`}
             disabled={pageIndex === pageCount - 1}
             onClick={() => setPageIndex((prev) => prev + 1)}
           >

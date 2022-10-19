@@ -48,7 +48,7 @@ const Sidebar = () => {
       className={`inline-flex mr-4 ${router.pathname === "/" ? "hidden" : ""}`}
       aria-label="Sidebar"
     >
-      <div className="w-64 hidden lg:inline-block overflow-y-auto py-4 px-3 ml-4 mt-3 rounded-xl header-background shadow">
+      <div className="w-64 hidden min-h-screen lg:inline-block overflow-y-auto py-4 px-3 ml-4 mt-3 rounded-xl header-background shadow">
         <ul className="space-y-2">
           {pages(address).map((link) => (
             <li key={link.name}>
