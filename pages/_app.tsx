@@ -8,6 +8,8 @@ import Layout from "../components/Layout/Layout";
 
 import "react-toastify/dist/ReactToastify.css";
 import "../styles/globals.css";
+import useColourMode from "../hooks/useColourMode";
+import colors from "tailwindcss/colors";
 
 const modalConfig: ConfigOptions = {
   projectId: process.env.NEXT_PUBLIC_PROJECT_ID,
@@ -34,6 +36,8 @@ const modalConfig: ConfigOptions = {
 const queryClient = new QueryClient();
 
 function App({ Component, pageProps }) {
+  const { isLightMode } = useColourMode();
+
   return (
     <QueryClientProvider client={queryClient}>
       <Layout>
@@ -44,6 +48,11 @@ function App({ Component, pageProps }) {
           position="bottom-center"
           pauseOnFocusLoss
           hideProgressBar
+          toastStyle={{
+            backgroundColor: isLightMode
+              ? colors.slate[100]
+              : colors.slate[800],
+          }}
           draggable={false}
           closeOnClick={false}
         />
