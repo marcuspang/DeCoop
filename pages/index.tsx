@@ -3,7 +3,7 @@ import FancyButton from "../components/Layout/FancyButton";
 
 export default function Home() {
   return (
-    <div className="w-full text-center py-20 px-4">
+    <div className="w-full text-center py-20 px-4 min-h-screen">
       <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-tight md:text-5xl lg:text-6xl">
         Creating Economies, <br />
         Building Communities

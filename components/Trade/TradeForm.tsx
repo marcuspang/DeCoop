@@ -104,10 +104,7 @@ const TradeForm = ({ communityAddress, tabSelected }: TradeFormProps) => {
   return (
     <form onSubmit={handleSubmit}>
       <div className="mb-6">
-        <label
-          htmlFor="amount"
-          className="block mb-2 text-lg font-semibold text-gray-900 dark:text-gray-300"
-        >
+        <label htmlFor="amount" className="label">
           Amount (in {data?.tokenSymbol})
         </label>
         <input
@@ -118,14 +115,11 @@ const TradeForm = ({ communityAddress, tabSelected }: TradeFormProps) => {
           minLength={1}
           pattern="^[0-9]*[.,]?[0-9]*$"
           ref={tokenAmountRef}
-          className="block p-4 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          className="input"
         />
       </div>
       <div className="mb-6">
-        <label
-          htmlFor="amount"
-          className="block mb-2 text-lg font-semibold text-gray-900 dark:text-gray-300"
-        >
+        <label htmlFor="amount" className="label">
           Community Fund Address
         </label>
         <input
@@ -133,22 +127,19 @@ const TradeForm = ({ communityAddress, tabSelected }: TradeFormProps) => {
           ref={tokenAddressRef}
           defaultValue={data?.tokenAddress}
           disabled
-          className="block p-4 w-full text-gray-500 bg-gray-50 rounded-lg border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          className="input"
         />
       </div>
 
       <div className="mb-6">
-        <label
-          htmlFor="wallet"
-          className="block mb-2 text-lg font-semibold text-gray-900 dark:text-gray-300"
-        >
+        <label htmlFor="wallet" className="label">
           Selected Wallet
         </label>
         <input
           type="text"
           id="wallet"
           defaultValue={walletAddress}
-          className="block p-4 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          className="input"
         />
       </div>
       <div className="w-full text-center">

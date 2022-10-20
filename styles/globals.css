@@ -39,3 +39,19 @@
 .pagination-item {
     @apply block py-2 px-3 ml-0 leading-tight border border-color hover:text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-gray-400 dark:hover:text-white dark:hover:bg-slate-600 disabled:dark:bg-slate-900 disabled:dark:hover:bg-slate-900 disabled:bg-slate-100 disabled:text-gray-400 disabled:dark:hover:text-gray-400 transition-colors
 }
+
+.trade-tabs {
+    @apply inline-block p-4 w-full font-semibold text-lg bg-white hover:text-slate-700 hover:bg-slate-50 focus:ring-2 focus:ring-slate-800 dark:focus:ring-slate-200 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-darkerBlue transition-colors
+}
+
+.trade-tabs.active {
+    @apply text-slate-900 bg-slate-100 focus:outline-none dark:bg-slate-700 dark:text-white
+}
+
+.input {
+    @apply block p-4 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
+}
+
+.label {
+    @apply block mb-2 text-lg font-semibold text-gray-900 dark:text-slate-200
+}

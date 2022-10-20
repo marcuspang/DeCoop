@@ -11,6 +11,7 @@ module.exports = {
         sans: ["Inter"],
       },
       colors: {
+        cryptoGreen: "#22C55E",
         darkBlue: "#07152A",
         darkerBlue: "#051111",
       },

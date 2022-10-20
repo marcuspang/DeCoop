@@ -119,7 +119,7 @@ const FundStatistics = ({
         description={formatTransaction(latestDeposit, latestDepositTimestamp)}
         descriptionLink={`https://${
           chain?.network || "goerli"
-        }.etherscan.io/tx/${latestDeposit.address}`}
+        }.etherscan.io/tx/${latestDeposit?.address}`}
         isLoading={isEventsLoading}
       />
       <FundCard
@@ -132,7 +132,7 @@ const FundStatistics = ({
         )}
         descriptionLink={`https://${
           chain?.network || "goerli"
-        }.etherscan.io/tx/${latestWithdrawal.address}`}
+        }.etherscan.io/tx/${latestWithdrawal?.address}`}
         isLoading={isEventsLoading}
       />
     </div>
