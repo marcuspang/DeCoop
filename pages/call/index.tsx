@@ -3,6 +3,7 @@ import {
   useNetwork,
   useSendTransaction,
   useWaitForTransaction,
+  useFeeData,
 } from "@web3modal/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -18,6 +19,7 @@ const ExternalCallPage = () => {
   } = useRouter();
   const { address } = useAccount();
   const { chain } = useNetwork();
+  const feeData  = useFeeData();
   const { sendTransaction, error, data } = useSendTransaction({
     chainId: chain?.id || 5,
     request: {
@@ -31,13 +33,14 @@ const ExternalCallPage = () => {
   });
 
   useEffect(() => {
-    if (to && calldata && chain) {
+    if (to && calldata && chain && !feeData.isLoading) {
       sendTransaction({
         chainId: chain.id,
         request: {
           from: address,
           to: to.toString(),
           data: calldata.toString(),
+          gasPrice: feeData.data.gasPrice, 
         },
       }).then((res) => {
         if (res) {
@@ -60,7 +63,7 @@ const ExternalCallPage = () => {
         }
       });
     }
-  }, [to, calldata, address]);
+  }, [to, calldata, address, feeData.isLoading]);
 
   useEffect(() => {
     if (receipt && !isWaiting && isExecuting) {
