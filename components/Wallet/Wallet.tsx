@@ -64,7 +64,7 @@ export const Wallet = ({ className }: WalletProps) => {
           <Menu.Item>
             <div>
               <button
-                className="block element-background lg:p-2.5 w-full text-left"
+                className="block element-background lg:p-2.5 w-full text-left rounded-b-sm"
                 onClick={() => disconnect()}
               >
                 Log out

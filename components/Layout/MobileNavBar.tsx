@@ -4,90 +4,59 @@ import Link from "next/link";
 import { useState } from "react";
 import links from "../../data/links";
 import NetworkButton from "../Wallet/NetworkButton";
+import ColourModeButton from "./ColourModeButton";
+import NavMenuButton from "./NavMenuButton";
 
 const MobileNavBar = () => {
-  const [menuState, setMenuState] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const { status, address } = useAccount();
   const disconnect = useDisconnect();
 
   return (
     <div className="flex-1 flex items-center justify-end lg:hidden">
       <div
-        className={`bg-white absolute z-20 top-[4.125rem] bottom-0 left-0 border-b-2 border-t-2 lg:static lg:block lg:border-none w-full p-4  h-screen ${
-          menuState ? "" : "hidden"
+        className={`background absolute z-20 top-[70px] bottom-0 left-0 lg:border-none w-full p-4 h-screen ${
+          isOpen ? "" : "hidden"
         }`}
       >
-        <div className="flex items-center">
-          <div className="flex items-center">
-            <WalletIcon width={40} height={40} className="mr-3" />
-            <div className="text-gray-600">
-              <p className="font-bold">Address:</p>
-              <span className="break-all">{address}</span>
+        {status === "connected" ? (
+          <>
+            <div className="flex items-center mb-2">
+              <WalletIcon width={50} height={50} className="mr-4 dark:text-slate-100" />
+              <div className="text-gray-600">
+                <p className="font-bold">Address:</p>
+                <span className="break-all">{address}</span>
+              </div>
             </div>
-          </div>
-          <NetworkButton className="ml-0" />
-        </div>
-        <ul className="top-12 right-0 mt-5 space-y-5">
-          {links.map((link) => (
-            <li key={link.link}>
-              <Link href={link.link} passHref>
-                <a className="block text-gray-600 p-1">{link.name}</a>
-              </Link>
-            </li>
-          ))}
-          {status === "connected" ? (
-            <li>
-              <button
-                className="block text-gray-600 p-1 w-full text-left"
-                onClick={() => disconnect()}
-              >
-                Log out
-              </button>
-            </li>
-          ) : (
-            <li>
-              <ConnectButton label="Sign In" />
-            </li>
-          )}
-        </ul>
+            <NetworkButton className="ml-0" />
+            <ul className="top-12 right-0 mt-5 space-y-5">
+              {links.map((link) => (
+                <li key={link.link}>
+                  <Link href={link.link} passHref>
+                    <a className="text">{link.name}</a>
+                  </Link>
+                </li>
+              ))}
+              <li>
+                <button
+                  className="block text w-full text-left"
+                  onClick={() => disconnect()}
+                >
+                  Log out
+                </button>
+              </li>
+            </ul>
+          </>
+        ) : (
+          <ConnectButton label="Sign In" />
+        )}
       </div>
-      <div className="items-center justify-end space-x-2 sm:space-x-6">
-        <button
-          className="outline-none text-gray-900 block lg:hidden"
-          onClick={() => setMenuState(!menuState)}
-        >
-          {menuState ? (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          ) : (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16m-7 6h7"
-              />
-            </svg>
-          )}
-        </button>
+      <div className="items-center justify-end space-x-2 flex">
+        <ColourModeButton />
+        <NavMenuButton
+          isOpen={isOpen}
+          toggle={() => setIsOpen((prev) => !prev)}
+        />
       </div>
     </div>
   );

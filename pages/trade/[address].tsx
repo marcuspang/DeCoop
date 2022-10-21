@@ -24,14 +24,17 @@ const TradePage = () => {
 
   return (
     <div className="w-full lg:pl-0 px-4">
-      <div className="flex justify-between pt-3">
-        <h1 className="font-bold text-4xl">
+      <div className="flex justify-between pt-3 flex-wrap md:flex-nowrap flex-col-reverse md:flex-row">
+        <h1 className="font-bold text-4xl mt-2">
           Community Fund:{" "}
           <span className="font-semibold text-gray-700">
             {communityData?.name || "None found"}
           </span>
         </h1>
-        <FancyButton spanClassName="px-4 py-2 text-md">
+        <FancyButton
+          spanClassName="px-4 py-2 text-md"
+          buttonClassName="self-end"
+        >
           <Link href={"/fund/" + communityAddress} passHref>
             <a>
               <MagnifyingGlassIcon
